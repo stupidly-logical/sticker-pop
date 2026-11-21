@@ -31,4 +31,4 @@ A standalone design system used by several apps. Read `README.md` first;
   or a Mac, and never report it as tested when it wasn't.
 - Motion is still to be designed: any duration or animation goes through
   the `motion` tokens, never a hard-coded number.
-- Breaking changes bump the version in `CHANGELOG.md`; apps pin tags.
+- The version lives only in `VERSION`; change it with `node tools/version.mjs patch|minor|major` (or edit it and run `node tools/version.mjs sync`), never by hand in other files. Breaking changes bump it; apps pin tags.

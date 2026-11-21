@@ -104,13 +104,20 @@ Other modules: `tokens.mjs`, `format.mjs`, `charts.mjs` (same path).
 
 ### Releasing a new version
 
-1. Bump the version in `CHANGELOG.md`, `packages/flutter/sticker_pop/pubspec.yaml`,
-   `packages/web/package.json` and `packages/android/stickerpop/build.gradle.kts`;
-   `node tools/check-version.mjs` confirms they agree.
-2. `bash tools/check.sh`, commit, push.
-3. `git tag v0.2.0 && git push origin v0.2.0`. CI builds and tests every
-   platform, the Release workflow publishes a GitHub Release with the
-   changelog section, and the Docs workflow redeploys the site from `main`.
+The version lives in one place, the `VERSION` file. A helper copies it into
+everything else (pubspecs, `package.json`, Gradle, the docs site, the install
+snippets here and on the site) and bumps the sample apps' build numbers:
+
+```sh
+node tools/version.mjs minor     # or patch, major, or an exact version: 0.3.0
+# describe the release under its new heading in CHANGELOG.md
+bash tools/check.sh
+bash tools/publish.sh            # commit, push, tag; CI, Docs and Release run from there
+```
+
+Edited `VERSION` by hand? `node tools/version.mjs sync` copies it everywhere.
+`node tools/version.mjs check` (run by CI) fails if any place disagrees, and a
+release is refused while the changelog section still says TODO.
 
 Registries (pub.dev, npm, Maven Central) can be added later without
 changing how apps already use it.

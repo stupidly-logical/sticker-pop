@@ -9,7 +9,12 @@
     "site": "node tools/build-site.mjs --serve",
     "site:build": "node tools/build-site.mjs",
     "site:fast": "node tools/build-site.mjs --no-app --serve",
-    "version:check": "node tools/check-version.mjs"
+    "version": "node tools/version.mjs",
+    "version:check": "node tools/version.mjs check",
+    "version:sync": "node tools/version.mjs sync",
+    "bump:patch": "node tools/version.mjs patch",
+    "bump:minor": "node tools/version.mjs minor",
+    "bump:major": "node tools/version.mjs major"
   },
   "license": "MIT",
   "homepage": "https://stupidly-logical.github.io/sticker-pop/",

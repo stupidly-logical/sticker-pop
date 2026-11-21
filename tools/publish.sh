@@ -13,7 +13,7 @@ cd "$(dirname "$0")/.."
 
 OWNER=stupidly-logical
 REPO=sticker-pop
-VERSION="$(sed -n 's/^## \([0-9][0-9.]*\).*/\1/p' CHANGELOG.md | head -1)"
+VERSION="$(tr -d '[:space:]' < VERSION)"
 TAG="v$VERSION"
 DOCS="https://$OWNER.github.io/$REPO/"
 
@@ -21,7 +21,7 @@ echo "== Sticker Pop $TAG"
 node tools/check-version.mjs --tag "$TAG"
 
 if git rev-parse -q --verify "refs/tags/$TAG" >/dev/null 2>&1; then
-  echo "Tag $TAG already exists. Bump the version (see README › Releasing) and run again."
+  echo "Tag $TAG already exists. Bump it first: node tools/version.mjs patch|minor|major"
   exit 1
 fi
 

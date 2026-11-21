@@ -24,6 +24,8 @@ class _PopGalleryState extends State<PopGallery> {
   bool _transfers = true;
   bool _hideSmall = false;
   String _period = 'Month';
+  static final DateTime _today = DateTime(2026, 11, 21);
+  DateTime _date = DateTime(2026, 11, 21);
 
   static const List<PopSelectOption<String>> _accounts = <PopSelectOption<String>>[
     PopSelectOption(value: 'hdfc', label: 'HDFC', icon: Icons.account_balance_rounded, caption: 'Savings ·· 4821'),
@@ -452,6 +454,26 @@ class _PopGalleryState extends State<PopGallery> {
                       for (final p in const <String>['Week', 'Month', 'Year'])
                         PopRadioRow<String>(label: p, value: p, groupValue: _period, onChanged: (v) => setState(() => _period = v)),
                     ],
+                  ),
+                ],
+              ),
+
+              _Section(
+                'Dates',
+                children: <Widget>[
+                  PopDateTiles(
+                    dates: <DateTime>[for (var i = 4; i >= 0; i--) _today.subtract(Duration(days: i))],
+                    selected: _date,
+                    today: _today,
+                    onSelected: (d) => setState(() => _date = d),
+                    onMore: () async {
+                      final d = await showPopDatePicker(context: context, today: _today, initial: _date, lastDate: _today);
+                      if (d != null) setState(() => _date = d);
+                    },
+                  ),
+                  const SizedBox(height: PopSpace.lg),
+                  StickerCard(
+                    child: PopCalendar(selected: _date, today: _today, lastDate: _today, onSelected: (d) => setState(() => _date = d)),
                   ),
                 ],
               ),

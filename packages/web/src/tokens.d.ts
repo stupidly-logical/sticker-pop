@@ -283,6 +283,9 @@ export declare const tokens: {
     readonly swatch: 12;
     readonly dialOption: 56;
     readonly topBar: 64;
+    readonly dateTileWidth: 56;
+    readonly dateTileHeight: 68;
+    readonly calendarDay: 40;
     readonly checkbox: 24;
     readonly radioDot: 10;
     readonly menuMinWidth: 180;

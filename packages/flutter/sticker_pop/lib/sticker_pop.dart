@@ -8,6 +8,7 @@ export 'src/components/badges_and_lists.dart';
 export 'src/components/buttons.dart';
 export 'src/components/checks.dart';
 export 'src/components/data_viz.dart';
+export 'src/components/dates.dart';
 export 'src/components/inputs.dart';
 export 'src/components/menus.dart';
 export 'src/components/navigation.dart';

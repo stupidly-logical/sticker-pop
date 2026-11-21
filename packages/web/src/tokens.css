@@ -83,6 +83,9 @@
   --sp-size-swatch: 12px;
   --sp-size-dial-option: 56px;
   --sp-size-top-bar: 64px;
+  --sp-size-date-tile-width: 56px;
+  --sp-size-date-tile-height: 68px;
+  --sp-size-calendar-day: 40px;
   --sp-size-checkbox: 24px;
   --sp-size-radio-dot: 10px;
   --sp-size-menu-min-width: 180px;

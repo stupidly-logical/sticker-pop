@@ -6,7 +6,7 @@ import { guidePages } from './content/guides.js';
 import { foundationPages } from './content/foundations.js';
 import { otherPages } from './content/pages.js';
 import { esc, kebab, store, contrast } from './content/util.js';
-import { stabilizePopChips, wirePopDials, layoutPopDial, wirePopMenus, wirePopSelects, wirePopTopBars, wirePopSearch } from './sp/behaviors.mjs';
+import { stabilizePopChips, wirePopDials, layoutPopDial, wirePopMenus, wirePopSelects, wirePopTopBars, wirePopSearch, wirePopDateTiles, mountPopCalendar } from './sp/behaviors.mjs';
 
 const VERSION = '0.1.0';
 const main = document.getElementById('main');
@@ -90,6 +90,8 @@ function wireDemos(root) {
   wirePopSelects(root);
   wirePopTopBars(root);
   wirePopSearch(root);
+  wirePopDateTiles(root);
+  root.querySelectorAll('[data-calendar]').forEach((el) => mountPopCalendar(el, { value: new Date(2026, 10, 21), today: new Date(2026, 10, 21), max: new Date(2026, 10, 21), onChange: (d) => toast(`Picked ${d.getDate()} ${d.toLocaleString('en-GB', { month: 'short' })}`) }));
   root.querySelectorAll('input[data-indeterminate]').forEach((i) => { i.indeterminate = true; });
   root.querySelectorAll('.sp-chip[aria-pressed]:not(:disabled)').forEach((b) =>
     b.addEventListener('click', () => b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') !== 'true')));

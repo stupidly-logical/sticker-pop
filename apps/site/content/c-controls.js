@@ -189,6 +189,23 @@ export const controls = [
     a11y: 'The input is labelled by its hint; the clear button is "Clear search" and keeps focus in the field.',
   },
   {
+    id: 'dates', name: 'Date tiles and picker', group: 'Inputs', platforms: ALL,
+    summary: 'Expense apps live on dates. Date tiles are quick picks for the last few days: small stickers with the weekday over the day, the chosen one yellow. The last tile opens the date picker: a month calendar (in a bottom sheet on phones) where the chosen day is a yellow circle and today has an ink ring.',
+    states: [
+      { label: 'Date tiles (tap one)', html: '<div class="full"><div class="sp-date-tiles"><button class="sp-date-tile" aria-pressed="false" aria-label="17 November"><span class="sp-date-tile__top">Tue</span><span class="sp-date-tile__day">17</span></button><button class="sp-date-tile" aria-pressed="false" aria-label="18 November"><span class="sp-date-tile__top">Wed</span><span class="sp-date-tile__day">18</span></button><button class="sp-date-tile" aria-pressed="false" aria-label="19 November"><span class="sp-date-tile__top">Thu</span><span class="sp-date-tile__day">19</span></button><button class="sp-date-tile" aria-pressed="false" aria-label="20 November"><span class="sp-date-tile__top">Fri</span><span class="sp-date-tile__day">20</span></button><button class="sp-date-tile" aria-pressed="true" aria-label="21 November"><span class="sp-date-tile__top">Today</span><span class="sp-date-tile__day">21</span></button><button class="sp-date-tile" aria-label="Pick a date" data-snack="The calendar opens here"><span class="sp-icon">calendar_month</span></button></div></div>' },
+      { label: 'Calendar (keyboard: arrows, Enter)', html: '<div class="sp-card full" data-calendar></div>' },
+    ],
+    code: {
+      flutter: "PopDateTiles(\n  dates: [for (var i = 4; i >= 0; i--) today.subtract(Duration(days: i))],\n  selected: date,\n  today: today,\n  onSelected: (d) => setState(() => date = d),\n  onMore: () async {\n    final d = await showPopDatePicker(context: context, today: today, initial: date, lastDate: today);\n    if (d != null) setState(() => date = d);\n  },\n)",
+      compose: 'PopDateTiles((4 downTo 0).map { today.minusDays(it.toLong()) }, date, { date = it }, today, onMore = { picking = true })\nif (picking) PopDatePickerSheet(today, date, { date = it; picking = false }, { picking = false }, lastDate = today)',
+      swift: 'PopDateTiles(lastFiveDays, selection: $date, today: today) { picking = true }\n…\n.popBottomSheet(isPresented: $picking) {\n    PopDatePickerSheet(selection: $date, today: today, in: Date.distantPast...today) { picking = false }\n}',
+      html: '<div class="sp-date-tiles">\n  <button class="sp-date-tile" aria-pressed="false" aria-label="20 November"><span class="sp-date-tile__top">Fri</span><span class="sp-date-tile__day">20</span></button>\n  <button class="sp-date-tile" aria-pressed="true" aria-label="21 November"><span class="sp-date-tile__top">Today</span><span class="sp-date-tile__day">21</span></button>\n</div>\n<div id="calendar"></div>\n\n<script type="module">\n  import { wirePopDateTiles, mountPopCalendar } from \'@sticker-pop/web/behaviors.mjs\';\n  wirePopDateTiles();\n  mountPopCalendar(document.getElementById(\'calendar\'), { value: new Date(), max: new Date(), onChange: setDate });\n</script>',
+    },
+    spec: [['Tile', '56 × 68 white sticker, radius 18, 2 outline, 3/3 shadow'], ['Tile text', 'weekday 13/800 caps (muted), day 20/800 tabular'], ['Chosen tile', 'yellow, 2.5 outline'], ['Calendar title', 'month and year 20/800, previous / next icon buttons'], ['Days', '40 circles, 16/700; chosen yellow with 2.5 outline, 800; today 2 ink ring; out of range muted'], ['Week', 'starts on Monday by default (configurable)']],
+    rules: ['Offer tiles for the last few days; most entries are recent.', 'Don\'t allow future dates for things that already happened.', 'Write dates as "18 Nov 2026"; say "Today" and "Yesterday".'],
+    a11y: 'Each tile and day says its full date ("21 November, today") and whether it is chosen. In the calendar, arrow keys move by day and week; the month title is announced when it changes.',
+  },
+  {
     id: 'amount-field', name: 'Amount field', group: 'Inputs', platforms: ALL,
     summary: 'The big amount entry: a bright card with a currency prefix at the same 32/800 size. Choose the colour by meaning, for example yellow for money out, mint for money in, pink for withdrawals.',
     states: [

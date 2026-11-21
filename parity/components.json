@@ -294,6 +294,31 @@
       ]
     },
     {
+      "id": "dates",
+      "flutter": [
+        "PopDateTiles",
+        "PopCalendar",
+        "showPopDatePicker"
+      ],
+      "compose": [
+        "PopDateTiles",
+        "PopCalendar",
+        "PopDatePickerSheet"
+      ],
+      "swiftui": [
+        "PopDateTiles",
+        "PopCalendar",
+        "PopDatePickerSheet"
+      ],
+      "web": [
+        ".sp-date-tiles",
+        ".sp-date-tile",
+        ".sp-calendar",
+        "wirePopDateTiles()",
+        "mountPopCalendar()"
+      ]
+    },
+    {
       "id": "amount-field",
       "flutter": [
         "PopAmountField"

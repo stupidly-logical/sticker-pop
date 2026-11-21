@@ -215,6 +215,10 @@ public enum PopSize {
     public static let dialOption: CGFloat = 56.0
     /// Top app bar height (compact); the large bar grows with its title
     public static let topBar: CGFloat = 64.0
+    public static let dateTileWidth: CGFloat = 56.0
+    public static let dateTileHeight: CGFloat = 68.0
+    /// Day cell in the date picker (padded to 44)
+    public static let calendarDay: CGFloat = 40.0
     /// Checkbox and radio (padded to the 48 tap target)
     public static let checkbox: CGFloat = 24.0
     public static let radioDot: CGFloat = 10.0

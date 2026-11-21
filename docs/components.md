@@ -30,6 +30,8 @@ disappears.
 | PopSheet | paper, 2.5 top line, radius 24 top | — | — | inline error above the button | — |
 | PopTopBar (compact, large) | transparent, 22/800 or 34/800 title, back + up to 2 icon buttons | scrolled: paper fill, 2.5 ink bottom line | — | — | — |
 | PopSearchField | white, 2 outline, search icon | focused: 2.5 outline; ✕ while there is text | — | — | — |
+| PopDateTiles | white tiles, 2 outline, 3/3 shadow | yellow, 2.5 outline | — | — | moves 3/3, shadow goes |
+| PopCalendar | day numbers 16/700; today: 2 ink ring | yellow circle, 2.5 outline, 800 | out of range: muted | — | — |
 | PopSelect | field: white, 2 outline, radius 14, chevron; list rows white | chosen row yellow, 800, tick | paper fill, muted text, no list | 2.5 outline + ⚠ message | open: 2.5 outline |
 | PopMenu | white sticker, radius 16, 4/4 shadow, rows 15/700 | — | row inkMuted, no taps | — | row (hover, focus, press): yellow |
 | PopDialog | paper card, 6/6 shadow, 20 inset | — | — | — | — |

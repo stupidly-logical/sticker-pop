@@ -105,6 +105,9 @@ fun PopGallery(onOpenHome: () -> Unit = {}) {
     var account by remember { mutableStateOf<String?>("hdfc") }
     var transfers by remember { mutableStateOf(true) }
     var query by remember { mutableStateOf("") }
+    val today = java.time.LocalDate.of(2026, 11, 21)
+    var date by remember { mutableStateOf(today) }
+    var pickDate by remember { mutableStateOf(false) }
     var period by remember { mutableStateOf("Month") }
     var showSheet by remember { mutableStateOf(false) }
     var showDialog by remember { mutableStateOf(false) }
@@ -261,6 +264,12 @@ fun PopGallery(onOpenHome: () -> Unit = {}) {
                         { PopCheckboxRow("Sync", true, null) },
                     ))
                     StickerList(rows = listOf("Week", "Month", "Year").map { p -> @Composable { PopRadioRow(p, period == p, { period = p }) } })
+                }
+
+                Section("Dates") {
+                    PopDateTiles((4 downTo 0).map { today.minusDays(it.toLong()) }, date, { date = it }, today, onMore = { pickDate = true })
+                    StickerCard(Modifier.fillMaxWidth()) { PopCalendar(date, { date = it }, today, lastDate = today) }
+                    if (pickDate) PopDatePickerSheet(today, date, { date = it; pickDate = false }, { pickDate = false }, lastDate = today)
                 }
 
                 Section("Top app bar") {

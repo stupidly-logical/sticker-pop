@@ -8,6 +8,8 @@ private let slices = [
     PopDatum("Shopping", value: 10, color: PopColors.pink),
 ]
 
+private let galleryToday = Calendar(identifier: .gregorian).date(from: DateComponents(year: 2026, month: 11, day: 21))!
+
 private let accounts = [
     PopSelectOption("HDFC", value: "hdfc", systemImage: "building.columns", caption: "Savings ·· 4821"),
     PopSelectOption("ICICI", value: "icici", systemImage: "creditcard", caption: "Credit card ·· 4411"),
@@ -53,6 +55,8 @@ public struct PopGallery: View {
     @State private var paidFrom: String? = nil
     @State private var transfers = true
     @State private var query = ""
+    @State private var date = galleryToday
+    @State private var pickDate = false
     @State private var hideSmall = false
     @State private var period = "Month"
     @State private var name = ""
@@ -225,6 +229,12 @@ public struct PopGallery: View {
                     }
                 }
 
+                GallerySection(title: "Dates") {
+                    PopDateTiles((0...4).reversed().map { Calendar(identifier: .gregorian).date(byAdding: .day, value: -$0, to: galleryToday)! },
+                                 selection: $date, today: galleryToday) { pickDate = true }
+                    StickerCard { PopCalendar(selection: $date, today: galleryToday, in: Date.distantPast...galleryToday) }
+                }
+
                 GallerySection(title: "Top app bar") {
                     // In an app the compact bar tops a sub-screen and the large one tops the content.
                     PopTopBar("Insights", large: true) {
@@ -344,6 +354,9 @@ public struct PopGallery: View {
                       primaryLabel: "Delete",
                       onPrimary: { showDialog = false; snack.show("Deleted", actionLabel: "Undo") },
                       onCancel: { showDialog = false })
+        }
+        .popBottomSheet(isPresented: $pickDate) {
+            PopDatePickerSheet(selection: $date, today: galleryToday, in: Date.distantPast...galleryToday) { pickDate = false }
         }
         .popTourOverlay(tour)
         .popOverlayHost()

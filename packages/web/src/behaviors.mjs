@@ -16,6 +16,7 @@ export function wirePopControls(root = document) {
   wirePopSelects(root);
   wirePopTopBars(root);
   wirePopSearch(root);
+  wirePopDateTiles(root);
   root.querySelectorAll('.sp-chip[aria-pressed]:not(:disabled)').forEach((b) =>
     b.addEventListener('click', () => b.setAttribute('aria-pressed', String(b.getAttribute('aria-pressed') !== 'true'))));
   root.querySelectorAll('.sp-segmented:not([aria-disabled]) > button').forEach((b) =>
@@ -512,4 +513,83 @@ export function wirePopSearch(root = document) {
     });
     sync();
   });
+}
+
+// ---------------------------------------------------------------------------
+// Dates
+
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+const dayOnly = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+const sameDay = (a, b) => !!a && !!b && a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+
+/** Makes each `.sp-date-tiles` group single-select: the pressed tile gets aria-pressed="true". */
+export function wirePopDateTiles(root = document) {
+  root.querySelectorAll('.sp-date-tiles').forEach((group) => {
+    if (group.dataset.popWired) return;
+    group.dataset.popWired = '1';
+    group.addEventListener('click', (e) => {
+      const tile = e.target.closest('.sp-date-tile[aria-pressed]');
+      if (!tile) return;
+      group.querySelectorAll('.sp-date-tile[aria-pressed]').forEach((t) => t.setAttribute('aria-pressed', String(t === tile)));
+    });
+  });
+}
+
+/**
+ * Renders a month calendar into `el` and keeps it interactive: previous /
+ * next month, a 7-column grid of day buttons (chosen: yellow; today: ink
+ * ring), arrow keys to move by day or week, Enter to pick. Returns
+ * `{ get value, set(date) }`.
+ */
+export function mountPopCalendar(el, { value = null, today = new Date(), min = null, max = null, firstWeekday = 1, onChange = () => {} } = {}) {
+  let selected = value ? dayOnly(value) : null;
+  let month = new Date((selected ?? today).getFullYear(), (selected ?? today).getMonth(), 1);
+  let focusDay = null;
+  const t = dayOnly(today);
+  const lo = min ? dayOnly(min) : null;
+  const hi = max ? dayOnly(max) : null;
+  const ok = (d) => (!lo || d >= lo) && (!hi || d <= hi);
+  const render = () => {
+    const lead = (month.getDay() - firstWeekday + 7) % 7;
+    const days = new Date(month.getFullYear(), month.getMonth() + 1, 0).getDate();
+    const canPrev = !lo || new Date(month.getFullYear(), month.getMonth(), 0) >= lo;
+    const canNext = !hi || new Date(month.getFullYear(), month.getMonth() + 1, 1) <= hi;
+    const heads = Array.from({ length: 7 }, (_, i) => `<span class="sp-calendar__weekday" aria-hidden="true">${WEEKDAYS[(firstWeekday + 6 + i) % 7][0]}</span>`).join('');
+    const blanks = '<span></span>'.repeat(lead);
+    const cells = Array.from({ length: days }, (_, i) => {
+      const d = new Date(month.getFullYear(), month.getMonth(), i + 1);
+      const label = `${i + 1} ${MONTHS[d.getMonth()]} ${d.getFullYear()}${sameDay(d, t) ? ', today' : ''}`;
+      return `<button type="button" class="sp-calendar__day${sameDay(d, t) ? ' is-today' : ''}" data-day="${i + 1}" aria-pressed="${sameDay(d, selected)}" aria-label="${label}"${ok(d) ? '' : ' disabled'} tabindex="-1">${i + 1}</button>`;
+    }).join('');
+    el.innerHTML = `<div class="sp-calendar"><div class="sp-calendar__head"><h3 class="sp-calendar__title" aria-live="polite">${MONTHS[month.getMonth()]} ${month.getFullYear()}</h3><button type="button" class="sp-icon-button" data-nav="-1" aria-label="Previous month"${canPrev ? '' : ' disabled'}><span class="sp-icon">chevron_left</span></button><button type="button" class="sp-icon-button" data-nav="1" aria-label="Next month"${canNext ? '' : ' disabled'}><span class="sp-icon">chevron_right</span></button></div><div class="sp-calendar__grid">${heads}${blanks}${cells}</div></div>`;
+    const buttons = [...el.querySelectorAll('.sp-calendar__day')];
+    const target = buttons.find((b) => focusDay && +b.dataset.day === focusDay.getDate() && focusDay.getMonth() === month.getMonth())
+      ?? buttons.find((b) => b.getAttribute('aria-pressed') === 'true') ?? buttons.find((b) => b.classList.contains('is-today')) ?? buttons.find((b) => !b.disabled);
+    if (target) target.tabIndex = 0;
+    if (focusDay && target) target.focus();
+  };
+  el.addEventListener('click', (e) => {
+    const nav = e.target.closest('[data-nav]');
+    if (nav) { month = new Date(month.getFullYear(), month.getMonth() + Number(nav.dataset.nav), 1); focusDay = null; render(); return; }
+    const day = e.target.closest('.sp-calendar__day');
+    if (!day || day.disabled) return;
+    selected = new Date(month.getFullYear(), month.getMonth(), Number(day.dataset.day));
+    focusDay = selected;
+    render();
+    onChange(selected);
+  });
+  el.addEventListener('keydown', (e) => {
+    const day = e.target.closest('.sp-calendar__day');
+    const step = { ArrowLeft: -1, ArrowRight: 1, ArrowUp: -7, ArrowDown: 7 }[e.key];
+    if (!day || step === undefined) return;
+    e.preventDefault();
+    const d = new Date(month.getFullYear(), month.getMonth(), Number(day.dataset.day) + step);
+    if (!ok(d)) return;
+    focusDay = d;
+    if (d.getMonth() !== month.getMonth() || d.getFullYear() !== month.getFullYear()) month = new Date(d.getFullYear(), d.getMonth(), 1);
+    render();
+  });
+  render();
+  return { get value() { return selected; }, set(d) { selected = d ? dayOnly(d) : null; if (d) month = new Date(d.getFullYear(), d.getMonth(), 1); render(); } };
 }

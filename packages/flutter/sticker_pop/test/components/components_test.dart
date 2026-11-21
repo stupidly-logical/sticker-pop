@@ -407,6 +407,50 @@ void main() {
     });
   });
 
+  group('Dates', () {
+    final today = DateTime(2026, 11, 21);
+    testWidgets('date tiles: today reads Today, picking one calls back, more opens', (tester) async {
+      DateTime? picked;
+      var more = false;
+      await pumpPop(tester, onPaper(PopDateTiles(
+        dates: <DateTime>[for (var i = 3; i >= 0; i--) today.subtract(Duration(days: i))],
+        selected: today,
+        today: today,
+        onSelected: (d) => picked = d,
+        onMore: () => more = true,
+      )));
+      expect(find.text('TODAY'), findsOneWidget);
+      await tester.tap(find.text('19'));
+      expect(picked, DateTime(2026, 11, 19));
+      await tester.tap(find.bySemanticsLabel('Pick a date'));
+      expect(more, isTrue);
+    });
+
+    testWidgets('calendar: Monday-first grid, month paging, limits, picker returns the day', (tester) async {
+      DateTime? result;
+      await pumpPop(tester, Scaffold(body: Builder(builder: (context) => Center(child: PopTextButton(
+        label: 'Open',
+        onPressed: () async => result = await showPopDatePicker(context: context, today: today, initial: today, lastDate: today),
+      )))));
+      await tester.tap(find.text('Open'));
+      await tester.pumpAndSettle();
+      expect(find.text('November 2026'), findsOneWidget);
+      // 1 Nov 2026 is a Sunday: six blanks before it in a Monday-first week.
+      final one = tester.getRect(find.text('1').first);
+      final m = tester.getRect(find.text('M'));
+      expect(one.center.dx, greaterThan(m.center.dx + 200));
+      await tester.tap(find.bySemanticsLabel('22 November 2026'));
+      await tester.pump();
+      expect(find.byType(PopSheet), findsOneWidget); // after today: not pickable
+      await tester.tap(find.bySemanticsLabel('Previous month'));
+      await tester.pumpAndSettle();
+      expect(find.text('October 2026'), findsOneWidget);
+      await tester.tap(find.bySemanticsLabel('15 October 2026'));
+      await tester.pumpAndSettle();
+      expect(result, DateTime(2026, 10, 15));
+    });
+  });
+
   group('Tilt guard', () {
     test('cards reject tilt beyond ±3°', () {
       expect(() => StickerCard(tiltDegrees: 4, child: const SizedBox()), throwsAssertionError);

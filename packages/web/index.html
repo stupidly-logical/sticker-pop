@@ -123,6 +123,11 @@
     </div>
   </section>
 
+  <section><h2 class="sp-text-section-heading">Dates</h2>
+    <div class="sp-date-tiles"><button class="sp-date-tile" aria-pressed="false" aria-label="17 November"><span class="sp-date-tile__top">Tue</span><span class="sp-date-tile__day">17</span></button><button class="sp-date-tile" aria-pressed="false" aria-label="18 November"><span class="sp-date-tile__top">Wed</span><span class="sp-date-tile__day">18</span></button><button class="sp-date-tile" aria-pressed="false" aria-label="19 November"><span class="sp-date-tile__top">Thu</span><span class="sp-date-tile__day">19</span></button><button class="sp-date-tile" aria-pressed="false" aria-label="20 November"><span class="sp-date-tile__top">Fri</span><span class="sp-date-tile__day">20</span></button><button class="sp-date-tile" aria-pressed="true" aria-label="21 November"><span class="sp-date-tile__top">Today</span><span class="sp-date-tile__day">21</span></button><button class="sp-date-tile" aria-label="Pick a date" data-snack="The calendar opens here"><span class="sp-icon">calendar_month</span></button></div>
+    <div class="sp-card" id="g-calendar"></div>
+  </section>
+
   <section><h2 class="sp-text-section-heading">Checkbox and radio</h2>
     <div class="sp-card sp-list"><label class="sp-check-row"><input type="checkbox" class="sp-checkbox"  checked><span class="sp-check-row__text"><span class="sp-check-row__label">Include transfers</span><span class="sp-check-row__caption">Moving money between your own accounts</span></span></label><label class="sp-check-row"><input type="checkbox" class="sp-checkbox" ><span class="sp-check-row__text"><span class="sp-check-row__label">Hide small amounts</span></span></label><label class="sp-check-row"><input type="checkbox" class="sp-checkbox"  checked disabled><span class="sp-check-row__text"><span class="sp-check-row__label">Sync</span></span></label></div>
     <div class="sp-card sp-list" role="radiogroup" aria-label="Period"><label class="sp-check-row"><input type="radio" class="sp-radio" name="g-per"><span class="sp-check-row__text"><span class="sp-check-row__label">Week</span></span></label><label class="sp-check-row"><input type="radio" class="sp-radio" name="g-per" checked><span class="sp-check-row__text"><span class="sp-check-row__label">Month</span></span></label><label class="sp-check-row"><input type="radio" class="sp-radio" name="g-per"><span class="sp-check-row__text"><span class="sp-check-row__label">Year</span></span></label></div>
@@ -226,7 +231,8 @@
 </div>
 </div>
 <script type="module">
-  import { wirePopControls, showPopSnack, showPopTour } from './src/behaviors.mjs';
+  import { wirePopControls, showPopSnack, showPopTour, mountPopCalendar } from './src/behaviors.mjs';
+  mountPopCalendar(document.getElementById('g-calendar'), { max: new Date() });
   import { popDonutSvg } from './src/charts.mjs';
 
   wirePopControls();

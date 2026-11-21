@@ -222,6 +222,9 @@ object PopSize {
     val swatch: Dp = 12.dp
     val dialOption: Dp = 56.dp
     val topBar: Dp = 64.dp
+    val dateTileWidth: Dp = 56.dp
+    val dateTileHeight: Dp = 68.dp
+    val calendarDay: Dp = 40.dp
     val checkbox: Dp = 24.dp
     val radioDot: Dp = 10.dp
     val menuMinWidth: Dp = 180.dp

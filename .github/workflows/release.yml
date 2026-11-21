@@ -1,0 +1,32 @@
+# Pushing a tag like v0.2.0 creates a GitHub Release whose notes are that
+# version's section of CHANGELOG.md. CI (ci.yml) builds and tests the tag.
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Versions match the tag
+        run: node tools/check-version.mjs --tag "$GITHUB_REF_NAME"
+      - name: Release notes from CHANGELOG.md
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          awk -v v="$version" '
+            $0 ~ "^## "v"( |$)" { on = 1; next }
+            on && /^## / { exit }
+            on { print }
+          ' CHANGELOG.md > notes.md
+          test -s notes.md || { echo "No CHANGELOG.md section for $version"; exit 1; }
+      - name: Create the release
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: gh release create "$GITHUB_REF_NAME" --title "Sticker Pop $GITHUB_REF_NAME" --notes-file notes.md --verify-tag

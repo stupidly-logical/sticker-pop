@@ -1,0 +1,402 @@
+/* Sticker Pop components. Every value comes from tokens.css.
+   Rules: outline everything, hard shadows only, flat colour, ink text on
+   every fill, white text only on ink. */
+
+@font-face {
+  font-family: 'Bricolage Grotesque';
+  src: url('../fonts/BricolageGrotesque-Variable.ttf') format('truetype');
+  font-weight: 600 800;
+  font-display: swap;
+}
+
+.sp-root, .sp-root * { box-sizing: border-box; }
+.sp-root {
+  font-family: var(--sp-font-family);
+  font-weight: var(--sp-font-weight-body);
+  font-variation-settings: 'wght' 600;
+  color: var(--sp-color-ink);
+  -webkit-tap-highlight-color: transparent;
+}
+.sp-root button { font: inherit; color: inherit; }
+.sp-root :focus-visible { outline: 3px solid var(--sp-color-ink); outline-offset: 3px; }
+
+/* Paper: cream with the dot grid (the one allowed texture). */
+.sp-paper {
+  background-color: var(--sp-color-paper);
+  background-image: radial-gradient(circle, var(--sp-color-paper-dot) var(--sp-size-paper-dot-radius), transparent calc(var(--sp-size-paper-dot-radius) + 0.4px));
+  background-size: var(--sp-size-paper-dot-step) var(--sp-size-paper-dot-step);
+  background-position: calc(var(--sp-size-paper-dot-step) / 2) calc(var(--sp-size-paper-dot-step) / 2);
+}
+
+/* Hard shadow helper. */
+.sp-root { --sp-shadow-color: var(--sp-color-ink); }
+.sp-shadow-sm { box-shadow: var(--sp-shadow-small) var(--sp-shadow-small) 0 var(--sp-shadow-color); }
+.sp-shadow { box-shadow: var(--sp-shadow-regular) var(--sp-shadow-regular) 0 var(--sp-shadow-color); }
+.sp-shadow-lg { box-shadow: var(--sp-shadow-large) var(--sp-shadow-large) 0 var(--sp-shadow-color); }
+
+/* Fills (.sp-fill-*) are generated into fills.css, loaded after this file. */
+
+/* Tilt (garnish only) */
+.sp-tilt-l { transform: rotate(var(--sp-tilt-hero)); }
+.sp-tilt-r { transform: rotate(var(--sp-tilt-hero-alt)); }
+
+/* Card */
+.sp-card {
+  background: var(--sp-color-white);
+  border: var(--sp-border-regular) solid var(--sp-color-ink);
+  border-radius: var(--sp-radius-card);
+  padding: var(--sp-space-card);
+  box-shadow: var(--sp-shadow-regular) var(--sp-shadow-regular) 0 var(--sp-color-ink);
+}
+.sp-card--hero {
+  background: var(--sp-color-yellow);
+  padding: var(--sp-space-xl);
+  box-shadow: var(--sp-shadow-large) var(--sp-shadow-large) 0 var(--sp-color-ink);
+}
+.sp-card--info { background: var(--sp-color-blue); }
+button.sp-card { text-align: inherit; cursor: pointer; display: block; width: 100%; }
+button.sp-card:active { translate: var(--sp-shadow-regular) var(--sp-shadow-regular); box-shadow: none; }
+
+.sp-hint { display: flex; gap: var(--sp-space-md); background: var(--sp-color-lilac); }
+
+/* Primary button */
+.sp-button {
+  display: flex; align-items: center; justify-content: center;
+  width: 100%; height: var(--sp-size-button); padding: 0 var(--sp-space-lg);
+  background: var(--sp-color-ink); color: var(--sp-color-white);
+  border: var(--sp-border-regular) solid var(--sp-color-ink);
+  border-radius: var(--sp-radius-button);
+  box-shadow: var(--sp-shadow-regular) var(--sp-shadow-regular) 0 var(--sp-color-pink);
+  font-size: 18px; font-weight: 800; font-variation-settings: 'wght' 800;
+  cursor: pointer;
+}
+.sp-root .sp-button { color: var(--sp-color-white); }
+.sp-button:active:not(:disabled) { translate: var(--sp-shadow-regular) var(--sp-shadow-regular); box-shadow: none; }
+.sp-button:disabled { background: var(--sp-color-ink-muted); cursor: not-allowed; }
+
+/* Text button */
+.sp-text-button {
+  min-height: var(--sp-size-tap-target); padding: 0 var(--sp-space-xs);
+  background: none; border: 0; cursor: pointer;
+  font-size: 15px; font-weight: 800; font-variation-settings: 'wght' 800;
+}
+.sp-text-button--underline { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+.sp-text-button:disabled { color: var(--sp-color-ink-muted); cursor: not-allowed; }
+
+/* Icon button */
+.sp-icon-button {
+  display: inline-grid; place-items: center;
+  width: var(--sp-size-icon-button); height: var(--sp-size-icon-button);
+  background: var(--sp-color-white);
+  border: var(--sp-border-regular) solid var(--sp-color-ink); border-radius: 50%;
+  box-shadow: var(--sp-shadow-small) var(--sp-shadow-small) 0 var(--sp-color-ink);
+  cursor: pointer;
+}
+.sp-icon-button:active:not(:disabled) { translate: var(--sp-shadow-small) var(--sp-shadow-small); box-shadow: none; }
+.sp-icon-button[aria-pressed='true'] { border-width: var(--sp-border-spotlight); }
+.sp-icon-button:disabled { background: var(--sp-color-paper); color: var(--sp-color-ink-muted); box-shadow: none; cursor: not-allowed; }
+
+/* Icons: Material Symbols Rounded */
+.sp-icon { font-family: 'Material Symbols Rounded'; font-size: var(--sp-size-icon-nav); line-height: 1; font-weight: normal; font-variation-settings: 'FILL' 1, 'wght' 500; user-select: none; }
+
+/* Chip */
+/* A chip is the same size selected or not, so its neighbours never move:
+   the rest padding makes up for the thinner rest outline, and the label
+   reserves the width of its bold (selected) form. */
+.sp-chip {
+  --sp-chip-pad: calc(var(--sp-border-regular) - var(--sp-border-thin));
+  display: inline-flex; align-items: center; gap: 6px;
+  min-height: var(--sp-size-chip); padding: calc(6px + var(--sp-chip-pad)) calc(14px + var(--sp-chip-pad));
+  background: var(--sp-color-white);
+  border: var(--sp-border-thin) solid var(--sp-color-ink);
+  border-radius: var(--sp-radius-pill);
+  font-size: 14px; font-weight: 700; font-variation-settings: 'wght' 700;
+  cursor: pointer;
+}
+.sp-chip .sp-icon { font-size: var(--sp-size-icon-chip); }
+.sp-chip[aria-pressed='true'] {
+  background: var(--sp-chip-fill, var(--sp-color-yellow));
+  border-width: var(--sp-border-regular);
+  padding: 6px 14px;
+  box-shadow: var(--sp-shadow-chip) var(--sp-shadow-chip) 0 var(--sp-color-ink);
+  font-weight: 800; font-variation-settings: 'wght' 800;
+}
+.sp-chip:disabled { background: var(--sp-color-paper); color: var(--sp-color-ink-muted); cursor: not-allowed; }
+.sp-chip--removable { padding-right: calc(6px + var(--sp-chip-pad)); }
+.sp-chip--removable[aria-pressed='true'] { padding-right: 6px; }
+.sp-chip__label { display: inline-grid; }
+.sp-chip__label::after { content: attr(data-label); height: 0; overflow: hidden; visibility: hidden; font-weight: 800; font-variation-settings: 'wght' 800; }
+.sp-chip__remove { display: inline-grid; place-items: center; padding: 4px; background: none; border: 0; cursor: pointer; }
+
+/* Segmented */
+.sp-segmented {
+  display: flex; overflow: hidden;
+  background: var(--sp-color-white);
+  border: var(--sp-border-regular) solid var(--sp-color-ink);
+  border-radius: var(--sp-radius-tile);
+}
+.sp-segmented > button {
+  flex: 1; height: var(--sp-size-segment); background: none; border: 0; cursor: pointer;
+  font-size: 15px; font-weight: 700; font-variation-settings: 'wght' 700;
+}
+.sp-segmented > button + button { border-left: var(--sp-border-regular) solid var(--sp-color-ink); }
+.sp-segmented > button[aria-pressed='true'] { background: var(--sp-segment-fill, var(--sp-color-pink)); font-weight: 800; font-variation-settings: 'wght' 800; }
+.sp-segmented[aria-disabled='true'] { background: var(--sp-color-paper); }
+.sp-segmented[aria-disabled='true'] > button { color: var(--sp-color-ink-muted); cursor: not-allowed; background: none; }
+
+/* Switch: <button role="switch" aria-checked> */
+.sp-switch {
+  position: relative; width: var(--sp-size-switch-width); height: var(--sp-size-switch-height); padding: 0;
+  background: var(--sp-color-white);
+  border: var(--sp-border-regular) solid var(--sp-color-ink);
+  border-radius: var(--sp-radius-switch-track);
+  cursor: pointer; transition: background var(--sp-motion-toggle);
+}
+.sp-switch::after {
+  content: ''; position: absolute; top: 2px; left: 2px;
+  width: var(--sp-size-switch-knob); height: var(--sp-size-switch-knob);
+  background: var(--sp-color-white);
+  border: var(--sp-border-thin) solid var(--sp-color-ink); border-radius: 50%;
+  box-sizing: border-box; transition: translate var(--sp-motion-toggle) ease-out;
+}
+.sp-switch[aria-checked='true'] { background: var(--sp-color-mint); }
+.sp-switch[aria-checked='true']::after { translate: calc(var(--sp-size-switch-width) - var(--sp-size-switch-knob) - 9px) 0; }
+.sp-switch:disabled { background: var(--sp-color-paper); cursor: not-allowed; }
+.sp-switch:disabled::after { background: var(--sp-color-divider); }
+
+/* Text field */
+.sp-field { display: grid; gap: 6px; }
+.sp-field__label { font-size: 14px; font-weight: 700; font-variation-settings: 'wght' 700; color: var(--sp-color-ink-muted); }
+.sp-field__input {
+  min-height: var(--sp-size-tap-target); padding: 0 var(--sp-space-md); width: 100%;
+  background: var(--sp-color-white); color: var(--sp-color-ink);
+  border: var(--sp-border-thin) solid var(--sp-color-ink);
+  border-radius: var(--sp-radius-field);
+  font: inherit; font-size: 16px; font-weight: 700; font-variation-settings: 'wght' 700;
+}
+.sp-field__input::placeholder { color: var(--sp-color-ink-muted); font-weight: 600; }
+.sp-field__input:focus { outline: none; border-width: var(--sp-border-regular); }
+.sp-field__input[aria-invalid='true'] { border-width: var(--sp-border-regular); }
+.sp-field__input:disabled { background: var(--sp-color-paper); color: var(--sp-color-ink-muted); }
+.sp-form-error { display: flex; gap: 6px; align-items: flex-start; font-size: 14px; font-weight: 800; font-variation-settings: 'wght' 800; }
+.sp-form-error::before { content: '⚠'; }
+
+/* Hero amount entry */
+.sp-amount { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2px; }
+.sp-amount__row { display: flex; align-items: baseline; gap: var(--sp-space-xs); font-size: 32px; font-weight: 800; font-variation-settings: 'wght' 800; font-variant-numeric: tabular-nums; }
+.sp-amount__row input { flex: 1; width: 0; min-width: 0; background: none; border: 0; font: inherit; color: inherit; padding: 6px 0; }
+.sp-amount__row input:focus { outline: none; }
+
+/* Field row */
+.sp-field-row { display: flex; align-items: center; min-height: var(--sp-size-row-min); padding: 6px 14px; border-bottom: var(--sp-border-divider) solid var(--sp-color-divider); }
+.sp-field-row:last-child { border-bottom: 0; }
+.sp-field-row__label { width: var(--sp-size-field-label-column); flex: none; font-size: 14px; font-weight: 700; font-variation-settings: 'wght' 700; color: var(--sp-color-ink-muted); }
+.sp-field-row__value { flex: 1; font-size: 16px; font-weight: 800; font-variation-settings: 'wght' 800; }
+
+/* Badge */
+.sp-badge {
+  display: inline-block; padding: 2px 9px;
+  background: var(--sp-color-white);
+  border: var(--sp-border-thin) solid var(--sp-color-ink); border-radius: var(--sp-radius-badge);
+  font-size: 12px; font-weight: 800; font-variation-settings: 'wght' 800; font-variant-numeric: tabular-nums;
+  transform: rotate(var(--sp-tilt-badge));
+}
+.sp-badge--caps { text-transform: uppercase; letter-spacing: 0.6px; }
+
+/* Category dot */
+.sp-dot {
+  display: inline-grid; place-items: center; flex: none;
+  width: var(--sp-size-category-dot); height: var(--sp-size-category-dot);
+  background: var(--sp-dot-fill, var(--sp-color-white));
+  border: var(--sp-border-thin) solid var(--sp-color-ink); border-radius: 50%;
+  transform: rotate(var(--sp-tilt-category-dot));
+}
+.sp-dot .sp-icon { font-size: calc(var(--sp-size-category-dot) * 0.48); }
+
+/* List */
+/* No padding, and clipped to the corners: a selected row's fill reaches the outline on every edge. */
+.sp-list { padding: 0; overflow: hidden; }
+.sp-list > * + * { border-top: var(--sp-border-divider) solid var(--sp-color-divider); }
+.sp-row { display: flex; align-items: center; gap: var(--sp-space-md); min-height: var(--sp-size-row-min); padding: 11px var(--sp-space-lg); }
+.sp-row[aria-selected='true'] { background: var(--sp-color-yellow); }
+.sp-row__main { flex: 1; min-width: 0; }
+.sp-row__title { display: flex; align-items: center; gap: var(--sp-space-sm); flex-wrap: wrap; }
+.sp-row__amount { text-align: right; }
+
+/* Section label */
+.sp-section-label { display: flex; align-items: center; justify-content: space-between; }
+
+/* Bottom navigation */
+.sp-nav { display: flex; align-items: center; padding: 10px 8px; background: var(--sp-color-white); border-top: var(--sp-border-regular) solid var(--sp-color-ink); }
+.sp-nav__item { flex: 1; min-width: 0; padding: 0 2px; white-space: nowrap; display: grid; justify-items: center; gap: 3px; min-height: var(--sp-size-tap-target); background: none; border: 0; cursor: pointer; color: var(--sp-color-ink-muted); font-size: 12px; font-weight: 700; font-variation-settings: 'wght' 700; }
+.sp-nav__label { max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
+.sp-nav__pill { padding: 2px 10px; border: var(--sp-border-thin) solid transparent; border-radius: var(--sp-radius-nav-pill); }
+.sp-nav__item[aria-current='page'] { color: var(--sp-color-ink); font-weight: 800; font-variation-settings: 'wght' 800; }
+.sp-nav__item[aria-current='page'] .sp-nav__pill { background: var(--sp-color-yellow); border-color: var(--sp-color-ink); }
+/* The add slot takes the button's own width (plus room for tilt and shadow); the four items share the rest. */
+.sp-nav__add { flex: none; display: grid; place-items: center; padding: 0 calc(var(--sp-space-sm) + var(--sp-shadow-regular)) 0 var(--sp-space-sm); }
+.sp-add {
+  display: grid; place-items: center; padding: 13px;
+  background: var(--sp-color-pink);
+  border: var(--sp-border-regular) solid var(--sp-color-ink); border-radius: var(--sp-radius-add-button);
+  box-shadow: var(--sp-shadow-regular) var(--sp-shadow-regular) 0 var(--sp-color-ink);
+  transform: rotate(var(--sp-tilt-add-button)); cursor: pointer;
+}
+.sp-add .sp-icon { font-size: var(--sp-size-icon-add); }
+.sp-add:active { translate: var(--sp-shadow-regular) var(--sp-shadow-regular); box-shadow: none; }
+
+/* Add menu: the nav add button opens a small speed dial (for example Type it,
+   Say it, Scan it). Markup: .sp-dial[data-pop-dial] > .sp-add + .sp-dial__menu >
+   .sp-dial__option*. behaviors.mjs (wirePopDials) places the options and
+   toggles [data-open]. Every duration is a motion token; --sp-motion-scale
+   slows everything down for review (4 = four times slower). */
+.sp-dial {
+  --sp-dial-ease-pop: cubic-bezier(0.34, 1.56, 0.64, 1); /* lands about 10% past, then settles */
+  --sp-dial-ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --_s: var(--sp-motion-scale, 1);
+  --_open: calc(var(--sp-motion-dial-open) * var(--_s));
+  --_close: calc(var(--sp-motion-dial-close) * var(--_s));
+  --_stagger: calc(var(--sp-motion-dial-stagger) * var(--_s));
+  position: relative; z-index: 3;
+  display: grid; place-items: center;
+}
+.sp-dial .sp-add { transition: transform var(--_close) var(--sp-dial-ease-in); }
+.sp-dial .sp-add .sp-icon { display: inline-block; transition: rotate var(--_close) var(--sp-dial-ease-in); }
+.sp-dial[data-open] .sp-add { transform: rotate(0deg); transition: transform var(--_open) var(--sp-dial-ease-pop); }
+.sp-dial[data-open] .sp-add .sp-icon { rotate: 45deg; transition: rotate var(--_open) var(--sp-dial-ease-pop); }
+
+.sp-dial__menu { position: absolute; left: 50%; top: 50%; width: 0; height: 0; }
+.sp-dial__option {
+  --_in: calc(var(--i, 0) * var(--_stagger));
+  --_out: calc(var(--ri, 0) * var(--_stagger) / 2);
+  position: absolute; left: 0; top: 0;
+  display: grid; justify-items: center; gap: 6px;
+  padding: 0; background: none; border: 0; font: inherit; color: var(--sp-color-ink); cursor: pointer;
+  translate: -50% -50%; scale: 0.4; rotate: 0deg; opacity: 0; visibility: hidden; pointer-events: none;
+  transition:
+    translate var(--_close) var(--sp-dial-ease-in) var(--_out),
+    scale var(--_close) var(--sp-dial-ease-in) var(--_out),
+    rotate var(--_close) var(--sp-dial-ease-in) var(--_out),
+    opacity var(--_close) linear var(--_out),
+    visibility 0s linear calc(var(--_close) + var(--_out));
+}
+.sp-dial[data-open] .sp-dial__option {
+  translate: calc(-50% + var(--x, 0px)) calc(-50% + var(--y, 0px)); scale: 1; rotate: var(--tilt, 0deg);
+  opacity: 1; visibility: visible; pointer-events: auto;
+  transition:
+    translate var(--_open) var(--sp-dial-ease-pop) var(--_in),
+    scale var(--_open) var(--sp-dial-ease-pop) var(--_in),
+    rotate var(--_open) var(--sp-dial-ease-pop) var(--_in),
+    opacity calc(var(--_open) * 0.35) linear var(--_in),
+    visibility 0s linear var(--_in);
+}
+.sp-dial__sticker {
+  display: grid; place-items: center;
+  width: var(--sp-size-dial-option); height: var(--sp-size-dial-option);
+  background: var(--sp-color-white);
+  border: var(--sp-border-regular) solid var(--sp-color-ink); border-radius: var(--sp-radius-tile);
+  box-shadow: var(--sp-shadow-regular) var(--sp-shadow-regular) 0 var(--sp-color-ink);
+  transition: translate calc(var(--sp-motion-dial-press) * var(--_s)) linear, box-shadow calc(var(--sp-motion-dial-press) * var(--_s)) linear;
+}
+.sp-dial__sticker .sp-icon { font-size: var(--sp-size-icon-tile); }
+.sp-dial__option:active .sp-dial__sticker, .sp-dial__option[data-chosen] .sp-dial__sticker { translate: var(--sp-shadow-regular) var(--sp-shadow-regular); box-shadow: none; }
+.sp-dial__option:focus-visible { outline: none; }
+.sp-dial__option:focus-visible .sp-dial__sticker { outline: 3px solid var(--sp-color-ink); outline-offset: 3px; }
+.sp-dial__label {
+  padding: 2px 9px; white-space: nowrap;
+  background: var(--sp-color-white); border: var(--sp-border-thin) solid var(--sp-color-ink); border-radius: var(--sp-radius-badge);
+  font-size: 13px; font-weight: 800; font-variation-settings: 'wght' 800;
+  opacity: 0; translate: 0 4px;
+  transition: opacity calc(var(--_close) / 2) linear, translate calc(var(--_close) / 2) linear;
+}
+.sp-dial[data-open] .sp-dial__label {
+  opacity: 1; translate: 0 0;
+  transition: opacity calc(var(--_open) / 2) ease-out calc(var(--_in) + var(--_open) * 0.55), translate calc(var(--_open) / 2) ease-out calc(var(--_in) + var(--_open) * 0.55);
+}
+
+/* Stack layout: options in a column above the button, labels on the left. */
+.sp-dial--stack .sp-dial__option { grid-auto-flow: column; align-items: center; gap: 10px; transform-origin: calc(100% - var(--sp-size-dial-option) / 2) 50%; }
+.sp-dial--stack .sp-dial__label { order: -1; translate: 4px 0; }
+.sp-dial--stack .sp-dial__option { translate: calc(-100% + var(--sp-size-dial-option) / 2) -50%; }
+.sp-dial--stack[data-open] .sp-dial__option { translate: calc(-100% + var(--sp-size-dial-option) / 2 + var(--x, 0px)) calc(-50% + var(--y, 0px)); }
+
+/* The scrim sits in the screen ([data-pop-dial-root]) or covers the page. */
+[data-pop-dial-root] { position: relative; }
+.sp-dial-scrim {
+  position: absolute; inset: 0; z-index: 2;
+  background: var(--sp-color-paper-scrim);
+  opacity: 0; visibility: hidden;
+  transition: opacity calc(var(--sp-motion-dial-scrim) * var(--sp-motion-scale, 1)) linear, visibility 0s linear calc(var(--sp-motion-dial-scrim) * var(--sp-motion-scale, 1));
+}
+.sp-dial-scrim--page { position: fixed; }
+.sp-dial-scrim[data-open] { opacity: 1; visibility: visible; transition: opacity calc(var(--sp-motion-dial-scrim) * var(--sp-motion-scale, 1)) linear; }
+
+/* Reduced motion: no travel, scale or spin; options and labels fade in place. */
+.sp-motion-reduced .sp-dial__option, .sp-motion-reduced .sp-dial[data-open] .sp-dial__option {
+  translate: calc(-50% + var(--x, 0px)) calc(-50% + var(--y, 0px)); scale: 1; rotate: var(--tilt, 0deg);
+  transition: opacity calc(var(--sp-motion-fade) * var(--_s)) linear, visibility 0s linear calc(var(--sp-motion-fade) * var(--_s));
+}
+.sp-motion-reduced .sp-dial[data-open] .sp-dial__option { transition: opacity calc(var(--sp-motion-fade) * var(--_s)) linear; }
+.sp-motion-reduced .sp-dial--stack .sp-dial__option, .sp-motion-reduced .sp-dial--stack[data-open] .sp-dial__option { translate: calc(-100% + var(--sp-size-dial-option) / 2 + var(--x, 0px)) calc(-50% + var(--y, 0px)); }
+.sp-motion-reduced .sp-dial__label, .sp-motion-reduced .sp-dial[data-open] .sp-dial__label { translate: 0 0; transition: none; }
+.sp-motion-reduced .sp-dial .sp-add, .sp-motion-reduced .sp-dial .sp-add .sp-icon { transition: none; }
+@media (prefers-reduced-motion: reduce) {
+  .sp-dial__option, .sp-dial[data-open] .sp-dial__option {
+    translate: calc(-50% + var(--x, 0px)) calc(-50% + var(--y, 0px)); scale: 1; rotate: var(--tilt, 0deg);
+    transition: opacity var(--sp-motion-fade) linear, visibility 0s linear var(--sp-motion-fade);
+  }
+  .sp-dial[data-open] .sp-dial__option { transition: opacity var(--sp-motion-fade) linear; }
+  .sp-dial--stack .sp-dial__option, .sp-dial--stack[data-open] .sp-dial__option { translate: calc(-100% + var(--sp-size-dial-option) / 2 + var(--x, 0px)) calc(-50% + var(--y, 0px)); }
+  .sp-dial__label, .sp-dial[data-open] .sp-dial__label { translate: 0 0; transition: none; }
+  .sp-dial .sp-add, .sp-dial .sp-add .sp-icon { transition: none; }
+}
+
+/* Quick add */
+.sp-quick-add { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-space-md); }
+.sp-quick-add > button { display: grid; justify-items: center; gap: var(--sp-space-xs); padding: var(--sp-space-md) var(--sp-space-xs); font-size: 15px; font-weight: 800; font-variation-settings: 'wght' 800; }
+.sp-quick-add .sp-icon { font-size: var(--sp-size-icon-tile); }
+
+/* Sheet */
+.sp-sheet { display: grid; gap: var(--sp-space-lg); padding: var(--sp-space-xl) var(--sp-space-xl) var(--sp-space-xxl); background: var(--sp-color-paper); border-top: var(--sp-border-regular) solid var(--sp-color-ink); border-radius: var(--sp-radius-sheet) var(--sp-radius-sheet) 0 0; max-height: 90vh; overflow: auto; }
+
+/* Dialog */
+.sp-dialog { max-height: calc(100dvh - 2 * var(--sp-space-xl)); overflow: auto; margin: var(--sp-space-xl); padding: var(--sp-space-xl); background: var(--sp-color-paper); border: var(--sp-border-regular) solid var(--sp-color-ink); border-radius: var(--sp-radius-card); box-shadow: var(--sp-shadow-large) var(--sp-shadow-large) 0 var(--sp-color-ink); }
+
+/* Snackbar */
+.sp-snackbar { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-space-md); padding: 14px var(--sp-space-lg); background: var(--sp-color-ink); color: var(--sp-color-white); border-radius: var(--sp-radius-snackbar); font-size: 15px; font-weight: 700; font-variation-settings: 'wght' 700; }
+.sp-snackbar button { background: none; border: 0; color: var(--sp-color-yellow); font-weight: 800; font-variation-settings: 'wght' 800; cursor: pointer; }
+
+/* Progress */
+.sp-progress { height: var(--sp-size-progress-bar); background: var(--sp-color-white); border: var(--sp-border-thin) solid var(--sp-color-ink); border-radius: var(--sp-radius-progress-track); overflow: hidden; }
+.sp-progress > span { display: block; height: 100%; width: var(--value, 0%); background: var(--sp-progress-fill, var(--sp-color-mint)); border-right: var(--sp-border-thin) solid var(--sp-color-ink); }
+/* The track clips the fill, so its leading edge is a straight ink cut. No line at 0% or 100%. */
+.sp-progress > span[style*='--value:0%'], .sp-progress[style*='--value:0%'] > span, .sp-progress[style*='--value:100%'] > span { border-right: 0; }
+
+/* Charts */
+.sp-legend { display: grid; gap: 8px; }
+.sp-legend > div { display: flex; align-items: center; gap: var(--sp-space-sm); font-size: 14px; font-weight: 700; font-variation-settings: 'wght' 700; }
+.sp-legend b { margin-left: auto; font-weight: 800; font-variation-settings: 'wght' 800; font-variant-numeric: tabular-nums; }
+.sp-swatch { width: var(--sp-size-swatch); height: var(--sp-size-swatch); background: var(--sp-swatch-fill, var(--sp-color-white)); border: var(--sp-border-swatch) solid var(--sp-color-ink); border-radius: var(--sp-radius-swatch); }
+/* Bars sit on a common baseline; labels below can grow with text size. */
+.sp-bars { display: flex; align-items: flex-end; gap: 8px; min-height: 120px; }
+.sp-bars > div { flex: 1; display: grid; justify-items: stretch; gap: 6px; text-align: center; font-size: 12px; font-weight: 700; color: var(--sp-color-ink-muted); }
+.sp-bars i { display: block; height: var(--h); background: var(--sp-bar-fill, var(--sp-color-blue)); border: var(--sp-border-thin) solid var(--sp-color-ink); border-radius: 8px 8px 0 0; }
+.sp-bars .is-current { color: var(--sp-color-ink); font-weight: 800; }
+.sp-bars .is-current i { border-width: 3px; box-shadow: 2px 2px 0 var(--sp-color-ink); }
+
+/* Tour */
+.sp-dots { display: flex; gap: 6px; }
+.sp-dots > i { width: var(--sp-size-progress-dot); height: var(--sp-size-progress-dot); background: var(--sp-color-white); border: var(--sp-border-thin) solid var(--sp-color-ink); border-radius: 5px; }
+.sp-dots > i.is-reached { background: var(--sp-color-pink); }
+.sp-dots > i.is-current { width: var(--sp-size-progress-dot-current); background: var(--sp-color-pink); }
+.sp-tour-card { display: grid; gap: var(--sp-space-sm); background: var(--sp-color-yellow); padding: var(--sp-space-xl); border: var(--sp-border-regular) solid var(--sp-color-ink); border-radius: var(--sp-radius-card); box-shadow: var(--sp-shadow-large) var(--sp-shadow-large) 0 var(--sp-color-ink); }
+/* The spotlight wraps the real control and owns the scrim, so pressing the
+   control (which drops its own shadow) never touches the dark overlay. The
+   negative margin keeps the layout exactly as it was. */
+.sp-spotlight { position: relative; z-index: 1; display: grid; padding: 6px; margin: -6px; border: var(--sp-border-spotlight) solid var(--sp-color-yellow); border-radius: var(--sp-radius-spotlight); box-shadow: 0 0 0 100vmax var(--sp-color-scrim); pointer-events: none; }
+.sp-spotlight > * { pointer-events: auto; }
+
+/* Dialog and sheet as native <dialog> elements (see behaviors.mjs). */
+dialog.sp-dialog, dialog.sp-sheet { color: inherit; }
+dialog.sp-dialog::backdrop, dialog.sp-sheet::backdrop { background: rgb(20 20 20 / 45%); }
+dialog.sp-sheet { margin: auto 0 0; width: 100%; max-width: none; border-left: 0; border-right: 0; border-bottom: 0; }

@@ -1,0 +1,29 @@
+name: sticker_pop
+description: Sticker Pop, a bold sticker-style design system for Flutter. Tokens, theme and components.
+version: 0.1.0
+homepage: https://stupidly-logical.github.io/sticker-pop/
+repository: https://github.com/stupidly-logical/sticker-pop/tree/main/packages/flutter/sticker_pop
+issue_tracker: https://github.com/stupidly-logical/sticker-pop/issues
+# Installed from GitHub (see README); not on pub.dev yet.
+publish_to: none
+
+environment:
+  sdk: ^3.13.0
+  flutter: ">=3.50.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  material_ui: ^1.11.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  fonts:
+    # Bricolage Grotesque variable, SIL Open Font License (assets/fonts/OFL.txt).
+    - family: BricolageGrotesque
+      fonts:
+        - asset: assets/fonts/BricolageGrotesque-Variable.ttf

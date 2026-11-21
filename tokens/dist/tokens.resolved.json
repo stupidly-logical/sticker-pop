@@ -1,0 +1,300 @@
+{
+  "color": {
+    "paper": "#FFF3D6",
+    "paperDot": "#EBD9A6",
+    "ink": "#141414",
+    "inkMuted": "#4A4A4A",
+    "white": "#FFFFFF",
+    "divider": "#E3D3A6",
+    "yellow": "#FFD43B",
+    "pink": "#FF6FAE",
+    "blue": "#8DB8FF",
+    "mint": "#5EE0A8",
+    "lilac": "#C3AEFF",
+    "orange": "#FF9C5B",
+    "scrim": "#141414B8",
+    "paperScrim": "#FFF3D6E0"
+  },
+  "gradient": {
+    "sunrise": {
+      "angle": 135,
+      "stops": [
+        {
+          "color": "#FFD43B",
+          "position": 0
+        },
+        {
+          "color": "#FF9C5B",
+          "position": 1
+        }
+      ]
+    },
+    "candy": {
+      "angle": 135,
+      "stops": [
+        {
+          "color": "#FF6FAE",
+          "position": 0
+        },
+        {
+          "color": "#C3AEFF",
+          "position": 1
+        }
+      ]
+    },
+    "lagoon": {
+      "angle": 135,
+      "stops": [
+        {
+          "color": "#8DB8FF",
+          "position": 0
+        },
+        {
+          "color": "#5EE0A8",
+          "position": 1
+        }
+      ]
+    }
+  },
+  "font": {
+    "family": "BricolageGrotesque",
+    "weight": {
+      "body": 600,
+      "label": 700,
+      "strong": 800
+    }
+  },
+  "text": {
+    "welcomeTitle": {
+      "size": 44,
+      "weight": 800,
+      "letterSpacing": -1.5
+    },
+    "screenTitle": {
+      "size": 34,
+      "weight": 800,
+      "letterSpacing": -1
+    },
+    "heroAmount": {
+      "size": 40,
+      "weight": 800,
+      "tabular": true
+    },
+    "amountEntry": {
+      "size": 32,
+      "weight": 800,
+      "tabular": true
+    },
+    "subScreenTitle": {
+      "size": 30,
+      "weight": 800,
+      "letterSpacing": -1
+    },
+    "cardFigure": {
+      "size": 28,
+      "weight": 800,
+      "tabular": true
+    },
+    "sheetTitle": {
+      "size": 22,
+      "weight": 800
+    },
+    "sectionHeading": {
+      "size": 20,
+      "weight": 800
+    },
+    "buttonLabel": {
+      "size": 18,
+      "weight": 800,
+      "color": "white"
+    },
+    "rowTitle": {
+      "size": 16,
+      "weight": 800
+    },
+    "rowAmount": {
+      "size": 16,
+      "weight": 800,
+      "tabular": true
+    },
+    "input": {
+      "size": 16,
+      "weight": 700
+    },
+    "inputHint": {
+      "size": 16,
+      "weight": 600,
+      "color": "inkMuted"
+    },
+    "body": {
+      "size": 15,
+      "weight": 600,
+      "lineHeight": 1.3
+    },
+    "tileLabel": {
+      "size": 15,
+      "weight": 800
+    },
+    "textButton": {
+      "size": 15,
+      "weight": 800
+    },
+    "chip": {
+      "size": 14,
+      "weight": 700
+    },
+    "chipSelected": {
+      "size": 14,
+      "weight": 800
+    },
+    "segment": {
+      "size": 15,
+      "weight": 700
+    },
+    "segmentSelected": {
+      "size": 15,
+      "weight": 800
+    },
+    "fieldLabel": {
+      "size": 14,
+      "weight": 700,
+      "color": "inkMuted"
+    },
+    "formError": {
+      "size": 14,
+      "weight": 800
+    },
+    "legendLabel": {
+      "size": 14,
+      "weight": 700
+    },
+    "legendValue": {
+      "size": 14,
+      "weight": 800,
+      "tabular": true
+    },
+    "caption": {
+      "size": 13,
+      "weight": 600,
+      "color": "inkMuted"
+    },
+    "sectionLabel": {
+      "size": 13,
+      "weight": 800,
+      "letterSpacing": 0.6,
+      "caps": true
+    },
+    "navLabel": {
+      "size": 12,
+      "weight": 700,
+      "color": "inkMuted"
+    },
+    "navLabelSelected": {
+      "size": 12,
+      "weight": 800
+    },
+    "badge": {
+      "size": 12,
+      "weight": 800,
+      "letterSpacing": 0.6,
+      "caps": true
+    },
+    "snackbar": {
+      "size": 15,
+      "weight": 700,
+      "color": "white"
+    }
+  },
+  "space": {
+    "xs": 4,
+    "sm": 8,
+    "md": 12,
+    "lg": 16,
+    "xl": 20,
+    "xxl": 24,
+    "screen": 20,
+    "card": 16,
+    "cardGap": 16,
+    "section": 24
+  },
+  "border": {
+    "regular": 2.5,
+    "thin": 2,
+    "spotlight": 3,
+    "swatch": 1.5,
+    "divider": 2
+  },
+  "radius": {
+    "card": 22,
+    "button": 20,
+    "addButton": 20,
+    "tile": 18,
+    "pill": 19,
+    "field": 14,
+    "badge": 10,
+    "sheet": 24,
+    "snackbar": 16,
+    "spotlight": 18,
+    "switchTrack": 15,
+    "navPill": 12,
+    "progressTrack": 9,
+    "progressFill": 7,
+    "swatch": 4
+  },
+  "shadow": {
+    "none": 0,
+    "chip": 2,
+    "small": 3,
+    "regular": 4,
+    "large": 6
+  },
+  "tilt": {
+    "cardMax": 3,
+    "hero": -1.5,
+    "heroAlt": 1.5,
+    "badge": -4,
+    "categoryDot": -5,
+    "addButton": -6,
+    "max": 6
+  },
+  "size": {
+    "tapTarget": 48,
+    "button": 58,
+    "iconButton": 46,
+    "chip": 40,
+    "segment": 44,
+    "switchWidth": 52,
+    "switchHeight": 30,
+    "switchKnob": 21,
+    "categoryDot": 42,
+    "rowMin": 52,
+    "fieldLabelColumn": 76,
+    "progressBar": 18,
+    "progressDot": 10,
+    "progressDotCurrent": 22,
+    "swatch": 12,
+    "dialOption": 56,
+    "iconNav": 22,
+    "iconChip": 16,
+    "iconTile": 26,
+    "iconAdd": 28,
+    "paperDotRadius": 1.3,
+    "paperDotStep": 18,
+    "sheetMaxHeightFraction": 0.9
+  },
+  "motion": {
+    "toggle": 150,
+    "sheet": 250,
+    "fade": 150,
+    "snackbar": 3000,
+    "snackbarWithAction": 6000,
+    "dialOpen": 280,
+    "dialClose": 180,
+    "dialStagger": 40,
+    "dialScrim": 200,
+    "dialPress": 90
+  },
+  "opacity": {
+    "scrim": 0.72
+  }
+}

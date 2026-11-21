@@ -1,0 +1,187 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "$description": "Sticker Pop design system. Light only. Units are dp/pt. This file is the single source of truth; run `node tools/build-tokens.mjs` after editing it.",
+
+  "color": {
+    "$type": "color",
+    "paper": { "$value": "#FFF3D6", "$description": "Screen background (cream), sheets, dialogs" },
+    "paperDot": { "$value": "#EBD9A6", "$description": "Dot grid on the paper background" },
+    "ink": { "$value": "#141414", "$description": "All text, outlines, hard shadows, primary button fill, snackbars" },
+    "inkMuted": { "$value": "#4A4A4A", "$description": "Secondary text, labels, hints, inactive nav icons, disabled button fill" },
+    "white": { "$value": "#FFFFFF", "$description": "Default card and input fill, nav bar, unselected chips and segments" },
+    "divider": { "$value": "#E3D3A6", "$description": "2px lines between rows inside a card" },
+    "yellow": { "$value": "#FFD43B", "$description": "Hero cards, selected nav pill, default selected chip, tour cards, snackbar action" },
+    "pink": { "$value": "#FF6FAE", "$description": "Add button, primary button shadow, selected segment, voice, progress dots" },
+    "blue": { "$value": "#8DB8FF", "$description": "Info cards and neutral highlights" },
+    "mint": { "$value": "#5EE0A8", "$description": "Positive and success states, switches on" },
+    "lilac": { "$value": "#C3AEFF", "$description": "Hints and empty states" },
+    "orange": { "$value": "#FF9C5B", "$description": "Warnings and needs-attention states" },
+    "scrim": { "$value": "#141414B8", "$description": "Tour scrim: ink at about 72% opacity" },
+    "paperScrim": { "$value": "#FFF3D6E0", "$description": "Add menu scrim: paper at about 88% opacity, so ink outlines and shadows stay visible over it" }
+  },
+
+
+  "gradient": {
+    "$type": "gradient",
+    "$description": "Gradient fills, built only from the brights. Text on them is ink (contrast is checked at every stop); outlines and hard shadows still apply. angle is CSS-style degrees: 0 = to top, 90 = to right, 135 = to bottom right. These three are starters: rename or replace them.",
+    "sunrise": { "$value": { "angle": 135, "stops": [ { "color": "{color.yellow}", "position": 0 }, { "color": "{color.orange}", "position": 1 } ] } },
+    "candy": { "$value": { "angle": 135, "stops": [ { "color": "{color.pink}", "position": 0 }, { "color": "{color.lilac}", "position": 1 } ] } },
+    "lagoon": { "$value": { "angle": 135, "stops": [ { "color": "{color.blue}", "position": 0 }, { "color": "{color.mint}", "position": 1 } ] } }
+  },
+
+  "font": {
+    "family": { "$type": "fontFamily", "$value": "BricolageGrotesque", "$description": "Bricolage Grotesque variable (SIL OFL). Set the wght axis to match the weight." },
+    "weight": {
+      "$type": "fontWeight",
+      "body": { "$value": 600 },
+      "label": { "$value": 700 },
+      "strong": { "$value": 800 }
+    }
+  },
+
+  "text": {
+    "$type": "typography",
+    "$description": "size / weight / letterSpacing. tabular = tabular figures; caps = ALL CAPS; color defaults to ink.",
+    "welcomeTitle": { "$value": { "size": 44, "weight": 800, "letterSpacing": -1.5 } },
+    "screenTitle": { "$value": { "size": 34, "weight": 800, "letterSpacing": -1 } },
+    "heroAmount": { "$value": { "size": 40, "weight": 800, "tabular": true } },
+    "amountEntry": { "$value": { "size": 32, "weight": 800, "tabular": true } },
+    "subScreenTitle": { "$value": { "size": 30, "weight": 800, "letterSpacing": -1 } },
+    "cardFigure": { "$value": { "size": 28, "weight": 800, "tabular": true } },
+    "sheetTitle": { "$value": { "size": 22, "weight": 800 } },
+    "sectionHeading": { "$value": { "size": 20, "weight": 800 }, "$description": "20–22; use 22 when it sits alone on a screen" },
+    "buttonLabel": { "$value": { "size": 18, "weight": 800, "color": "white" } },
+    "rowTitle": { "$value": { "size": 16, "weight": 800 } },
+    "rowAmount": { "$value": { "size": 16, "weight": 800, "tabular": true } },
+    "input": { "$value": { "size": 16, "weight": 700 }, "$description": "16–17" },
+    "inputHint": { "$value": { "size": 16, "weight": 600, "color": "inkMuted" } },
+    "body": { "$value": { "size": 15, "weight": 600, "lineHeight": 1.3 } },
+    "tileLabel": { "$value": { "size": 15, "weight": 800 } },
+    "textButton": { "$value": { "size": 15, "weight": 800 } },
+    "chip": { "$value": { "size": 14, "weight": 700 } },
+    "chipSelected": { "$value": { "size": 14, "weight": 800 } },
+    "segment": { "$value": { "size": 15, "weight": 700 } },
+    "segmentSelected": { "$value": { "size": 15, "weight": 800 } },
+    "fieldLabel": { "$value": { "size": 14, "weight": 700, "color": "inkMuted" } },
+    "formError": { "$value": { "size": 14, "weight": 800 } },
+    "legendLabel": { "$value": { "size": 14, "weight": 700 } },
+    "legendValue": { "$value": { "size": 14, "weight": 800, "tabular": true } },
+    "caption": { "$value": { "size": 13, "weight": 600, "color": "inkMuted" } },
+    "sectionLabel": { "$value": { "size": 13, "weight": 800, "letterSpacing": 0.6, "caps": true } },
+    "navLabel": { "$value": { "size": 12, "weight": 700, "color": "inkMuted" } },
+    "navLabelSelected": { "$value": { "size": 12, "weight": 800 } },
+    "badge": { "$value": { "size": 12, "weight": 800, "letterSpacing": 0.6, "caps": true }, "$description": "11–13" },
+    "snackbar": { "$value": { "size": 15, "weight": 700, "color": "white" } }
+  },
+
+  "space": {
+    "$type": "dimension",
+    "xs": { "$value": 4 },
+    "sm": { "$value": 8 },
+    "md": { "$value": 12 },
+    "lg": { "$value": 16 },
+    "xl": { "$value": 20 },
+    "xxl": { "$value": 24 },
+    "screen": { "$value": "{space.xl}", "$description": "Screen side padding" },
+    "card": { "$value": "{space.lg}", "$description": "Card padding" },
+    "cardGap": { "$value": "{space.lg}", "$description": "Gap between cards" },
+    "section": { "$value": "{space.xxl}", "$description": "Gap between sections (20–24)" }
+  },
+
+  "border": {
+    "$type": "dimension",
+    "regular": { "$value": 2.5, "$description": "Cards, buttons, inputs, segmented, switches, nav top edge, selected chips" },
+    "thin": { "$value": 2, "$description": "Chips at rest, badges, category dots, switch knobs, text fields, progress track" },
+    "spotlight": { "$value": 3, "$description": "Tour cut-out outline (yellow)" },
+    "swatch": { "$value": 1.5, "$description": "Chart legend swatches" },
+    "divider": { "$value": 2 }
+  },
+
+  "radius": {
+    "$type": "dimension",
+    "card": { "$value": 22 },
+    "button": { "$value": 20 },
+    "addButton": { "$value": 20 },
+    "tile": { "$value": 18 },
+    "pill": { "$value": 19 },
+    "field": { "$value": 14 },
+    "badge": { "$value": 10 },
+    "sheet": { "$value": 24 },
+    "snackbar": { "$value": 16 },
+    "spotlight": { "$value": 18 },
+    "switchTrack": { "$value": 15 },
+    "navPill": { "$value": 12 },
+    "progressTrack": { "$value": 9 },
+    "progressFill": { "$value": 7 },
+    "swatch": { "$value": 4 }
+  },
+
+  "shadow": {
+    "$type": "dimension",
+    "$description": "Hard shadows: solid ink, zero blur, offset x = y.",
+    "none": { "$value": 0 },
+    "chip": { "$value": 2 },
+    "small": { "$value": 3 },
+    "regular": { "$value": 4, "$description": "The default shadow: cards and the primary button" },
+    "large": { "$value": 6 }
+  },
+
+  "tilt": {
+    "$type": "number",
+    "$description": "Degrees. Never tilt lists, inputs or long text. Never beyond ±6.",
+    "cardMax": { "$value": 3 },
+    "hero": { "$value": -1.5 },
+    "heroAlt": { "$value": 1.5 },
+    "badge": { "$value": -4 },
+    "categoryDot": { "$value": -5 },
+    "addButton": { "$value": -6 },
+    "max": { "$value": 6 }
+  },
+
+  "size": {
+    "$type": "dimension",
+    "tapTarget": { "$value": 48 },
+    "button": { "$value": 58 },
+    "iconButton": { "$value": 46 },
+    "chip": { "$value": 40 },
+    "segment": { "$value": 44 },
+    "switchWidth": { "$value": 52 },
+    "switchHeight": { "$value": 30 },
+    "switchKnob": { "$value": 21 },
+    "categoryDot": { "$value": 42 },
+    "rowMin": { "$value": 52 },
+    "fieldLabelColumn": { "$value": 76 },
+    "progressBar": { "$value": 18 },
+    "progressDot": { "$value": 10 },
+    "progressDotCurrent": { "$value": 22 },
+    "swatch": { "$value": 12 },
+    "dialOption": { "$value": 56, "$description": "Add menu option sticker (square, radius tile)" },
+    "iconNav": { "$value": 22 },
+    "iconChip": { "$value": 16 },
+    "iconTile": { "$value": 26 },
+    "iconAdd": { "$value": 28 },
+    "paperDotRadius": { "$value": 1.3 },
+    "paperDotStep": { "$value": 18 },
+    "sheetMaxHeightFraction": { "$value": 0.9, "$type": "number" }
+  },
+
+  "motion": {
+    "$type": "duration",
+    "$description": "Motion is still to be designed. Every duration the libraries use comes from here, so animations can be added or retuned in one place.",
+    "toggle": { "$value": 150, "$description": "Switch knob slide" },
+    "sheet": { "$value": 250, "$description": "Sheet slide in/out" },
+    "fade": { "$value": 150, "$description": "Scrims, dialogs, snackbar enter/exit" },
+    "snackbar": { "$value": 3000, "$description": "How long a snackbar stays (not an animation)" },
+    "snackbarWithAction": { "$value": 6000, "$description": "How long a snackbar with an action stays" },
+    "dialOpen": { "$value": 280, "$description": "Add menu: each option flies out and pops (overshoot easing); the + turns into ×" },
+    "dialClose": { "$value": 180, "$description": "Add menu: options return behind the button (ease-in)" },
+    "dialStagger": { "$value": 40, "$description": "Add menu: delay between options opening (halved, and reversed, when closing)" },
+    "dialScrim": { "$value": 200, "$description": "Add menu: paper scrim fade" },
+    "dialPress": { "$value": 90, "$description": "Add menu: a chosen option presses into its shadow before the menu closes" }
+  },
+
+  "opacity": {
+    "$type": "number",
+    "scrim": { "$value": 0.72 }
+  }
+}

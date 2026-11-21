@@ -1,0 +1,16 @@
+.dart_tool/
+build/
+.flutter-plugins*
+pubspec.lock
+!packages/flutter/sticker_pop/example/pubspec.lock
+node_modules/
+.gradle/
+local.properties
+.build/
+.swiftpm/
+*.iml
+.idea/
+.DS_Store
+_to_delete/
+/dist/
+packages/flutter/sticker_pop/test/qa/shots/

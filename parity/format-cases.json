@@ -1,0 +1,41 @@
+{
+  "$description": "Shared formatting cases. Every platform's tests load this file and must produce exactly these strings. Amounts are integer paise; times are local, without a zone.",
+  "formatInr": [
+    { "paise": 12500000, "out": "₹1,25,000" },
+    { "paise": 125050, "out": "₹1,250.50" },
+    { "paise": 123456789000, "out": "₹1,23,45,67,890" },
+    { "paise": 99900, "out": "₹999" },
+    { "paise": 0, "out": "₹0" },
+    { "paise": 5, "out": "₹0.05" },
+    { "paise": -45000, "out": "−₹450" },
+    { "paise": 45000, "sign": "always", "out": "+₹450" },
+    { "paise": -45000, "sign": "always", "out": "−₹450" },
+    { "paise": -45000, "sign": "none", "out": "₹450" },
+    { "paise": 0, "sign": "always", "out": "₹0" },
+    { "paise": 45000, "alwaysPaise": true, "out": "₹450.00" }
+  ],
+  "formatInrCompact": [
+    { "paise": 5120000, "out": "₹51.2k" },
+    { "paise": 12500000, "out": "₹1.25L" },
+    { "paise": 2100000000, "out": "₹2.1Cr" },
+    { "paise": 95000, "out": "₹950" },
+    { "paise": 100000, "out": "₹1k" },
+    { "paise": -5120000, "out": "−₹51.2k" },
+    { "paise": 5120000, "sign": "always", "out": "+₹51.2k" }
+  ],
+  "formatPopDate": [
+    { "now": "2026-11-18T13:12", "date": "2026-11-18T09:05", "out": "Today" },
+    { "now": "2026-11-18T13:12", "date": "2026-11-17T23:00", "out": "Yesterday" },
+    { "now": "2026-11-18T13:12", "date": "2026-11-02T00:00", "out": "2 Nov 2026" },
+    { "now": "2026-01-01T08:00", "date": "2025-12-31T22:00", "out": "Yesterday" }
+  ],
+  "formatPopMonth": [
+    { "date": "2026-11-18T13:12", "out": "Nov 2026" }
+  ],
+  "formatPopTime": [
+    { "time": "2026-11-18T13:12", "out": "1:12 pm" },
+    { "time": "2026-01-01T00:05", "out": "12:05 am" },
+    { "time": "2026-01-01T12:00", "out": "12:00 pm" },
+    { "time": "2026-01-01T09:30", "out": "9:30 am" }
+  ]
+}

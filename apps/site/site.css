@@ -1,0 +1,112 @@
+/* Layout for the docs site. Components come from sp/sticker-pop.css. */
+html { scroll-behavior: smooth; }
+body { margin: 0; min-height: 100vh; }
+.skip { position: absolute; left: -999px; top: 8px; z-index: 10; background: var(--sp-color-yellow); border: 2.5px solid var(--sp-color-ink); border-radius: 12px; padding: 8px 12px; font-weight: 800; }
+.skip:focus { left: 8px; }
+code, pre { font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 13px; }
+
+.topbar { position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 12px; height: 64px; padding: 0 20px; background: var(--sp-color-white); border-bottom: 2.5px solid var(--sp-color-ink); }
+.brand { display: flex; align-items: center; gap: 10px; color: inherit; text-decoration: none; font-size: 22px; font-weight: 800; font-variation-settings: 'wght' 800; letter-spacing: -0.5px; }
+.brand__mark { display: grid; place-items: center; width: 34px; height: 34px; background: var(--sp-color-pink); border: 2.5px solid var(--sp-color-ink); border-radius: 10px; box-shadow: 3px 3px 0 var(--sp-color-ink); transform: rotate(-6deg); font-size: 16px; }
+.topbar__gh { margin-left: auto; display: inline-flex; align-items: center; color: var(--sp-color-ink); text-decoration-thickness: 2px; }
+.menu-btn { display: none; }
+.site-footer { margin-top: 48px; padding-top: 16px; border-top: 2px solid var(--sp-color-divider); }
+
+.layout { display: grid; grid-template-columns: 260px minmax(0, 1fr); max-width: 1320px; margin: 0 auto; }
+.sidebar { position: sticky; top: 64px; align-self: start; height: calc(100vh - 64px); overflow: auto; padding: 20px 12px 40px 20px; }
+.sidebar h2 { margin: 20px 0 6px 8px; font-size: 13px; font-weight: 800; font-variation-settings: 'wght' 800; letter-spacing: 0.6px; text-transform: uppercase; color: var(--sp-color-ink-muted); }
+.sidebar a { display: block; padding: 8px 10px; margin: 2px 0; border: 2px solid transparent; border-radius: 12px; color: var(--sp-color-ink); text-decoration: none; font-size: 15px; font-weight: 700; font-variation-settings: 'wght' 700; }
+.sidebar a:hover { border-color: var(--sp-color-ink); background: var(--sp-color-white); }
+.sidebar a[aria-current='page'] { background: var(--sp-color-yellow); border-color: var(--sp-color-ink); box-shadow: 2px 2px 0 var(--sp-color-ink); font-weight: 800; font-variation-settings: 'wght' 800; }
+@media (max-width: 860px) {
+  .layout { grid-template-columns: 1fr; }
+  .menu-btn { display: inline-grid; }
+  .sidebar { display: none; position: fixed; inset: 64px 0 0 0; z-index: 4; height: auto; background: var(--sp-color-paper); border-top: 2.5px solid var(--sp-color-ink); }
+  .sidebar.is-open { display: block; }
+}
+
+/* overflow-x: clip keeps tilted stickers from causing a sideways scroll on phones. */
+main { padding: 32px 40px 96px; min-width: 0; outline: none; overflow-x: clip; }
+@media (max-width: 600px) { main { padding: 24px 20px 80px; } }
+/* Small phones: tighter top bar; the version is still on the Install page and in the footer. */
+@media (max-width: 400px) {
+  .topbar { gap: 8px; padding: 0 12px; }
+  .brand { font-size: 19px; }
+  .topbar__version { display: none; }
+}
+.page code { overflow-wrap: anywhere; }
+.page { max-width: 920px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; }
+.page > h1 { margin: 0; font-size: clamp(32px, 9vw, 44px); overflow-wrap: break-word; font-weight: 800; font-variation-settings: 'wght' 800; letter-spacing: -1.5px; line-height: 1.05; }
+.lede { margin: 0; font-size: 18px; line-height: 1.45; max-width: 680px; }
+.page h2 { margin: 24px 0 0; font-size: 22px; font-weight: 800; font-variation-settings: 'wght' 800; }
+.page h3 { margin: 8px 0 0; font-size: 16px; font-weight: 800; font-variation-settings: 'wght' 800; }
+.page p, .page li { font-size: 15px; line-height: 1.55; max-width: 720px; }
+.page ul { margin: 0; padding-left: 20px; }
+.page a { color: var(--sp-color-ink); font-weight: 800; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+
+.grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr)); }
+.grid--wide { grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); }
+.tile-link { display: grid; gap: 6px; color: inherit !important; text-decoration: none; }
+.tile-link .sp-icon { font-size: 26px; }
+
+/* Demo stage */
+.stage { display: grid; gap: 16px; }
+.state-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr)); }
+.state { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr; gap: 10px; padding: 16px; min-width: 0; background: var(--sp-color-paper); border: 2px dashed var(--sp-color-divider); border-radius: 18px; }
+.state__label { font-size: 13px; font-weight: 800; font-variation-settings: 'wght' 800; letter-spacing: 0.6px; text-transform: uppercase; color: var(--sp-color-ink-muted); }
+.state__body { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; min-height: 48px; }
+.state__body > * { min-width: 0; max-width: 100%; }
+.state__body > .full { flex-basis: 100%; }
+/* Bars are phone-wide: give them the whole row, capped at a large phone. */
+.state:has(.sp-nav) { grid-column: 1 / -1; }
+.state:has(.sp-nav) .sp-nav { flex: 1 1 100%; max-width: 430px; }
+
+/* Code tabs */
+.code { border: 2.5px solid var(--sp-color-ink); border-radius: 18px; overflow: hidden; background: var(--sp-color-white); box-shadow: 4px 4px 0 var(--sp-color-ink); }
+.code__tabs { display: flex; flex-wrap: wrap; gap: 0; border-bottom: 2.5px solid var(--sp-color-ink); background: var(--sp-color-white); }
+.code__tabs button { min-height: 44px; padding: 0 16px; background: none; border: 0; border-right: 2.5px solid var(--sp-color-ink); font-size: 14px; font-weight: 700; font-variation-settings: 'wght' 700; cursor: pointer; }
+.code__tabs button[aria-selected='true'] { background: var(--sp-color-yellow); font-weight: 800; font-variation-settings: 'wght' 800; }
+.code__copy { margin-left: auto; border-right: 0 !important; border-left: 2.5px solid var(--sp-color-ink) !important; }
+.code pre { margin: 0; padding: 16px 18px; overflow: auto; background: var(--sp-color-ink); color: var(--sp-color-white); line-height: 1.5; max-height: 460px; }
+
+/* Tables */
+.table-wrap { overflow-x: auto; border: 2.5px solid var(--sp-color-ink); border-radius: 18px; background: var(--sp-color-white); box-shadow: 4px 4px 0 var(--sp-color-ink); }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { text-align: left; padding: 10px 14px; border-bottom: 2px solid var(--sp-color-divider); vertical-align: middle; }
+tr:last-child td { border-bottom: 0; }
+th { font-size: 12px; font-weight: 800; font-variation-settings: 'wght' 800; letter-spacing: 0.6px; text-transform: uppercase; color: var(--sp-color-ink-muted); background: var(--sp-color-paper); }
+td code { background: var(--sp-color-paper); border: 1.5px solid var(--sp-color-divider); border-radius: 6px; padding: 1px 6px; }
+
+/* Token visuals */
+.swatch-card { display: grid; gap: 0; overflow: hidden; padding: 0 !important; }
+.swatch-card__chip { height: 92px; border-bottom: 2.5px solid var(--sp-color-ink); display: flex; align-items: flex-end; justify-content: flex-end; padding: 8px; }
+.swatch-card__meta { padding: 12px 14px; display: grid; gap: 2px; }
+.swatch-card__meta b { font-size: 16px; font-weight: 800; font-variation-settings: 'wght' 800; }
+.ratio { font-size: 12px; }
+.bar-viz { height: 18px; background: var(--sp-color-pink); border: 2px solid var(--sp-color-ink); border-radius: 4px; }
+.radius-viz { width: 72px; height: 56px; background: var(--sp-color-white); border: 2.5px solid var(--sp-color-ink); }
+.shadow-viz { width: 72px; height: 48px; background: var(--sp-color-white); border: 2.5px solid var(--sp-color-ink); border-radius: 14px; }
+.tilt-viz { width: 64px; height: 40px; background: var(--sp-color-yellow); border: 2.5px solid var(--sp-color-ink); border-radius: 10px; box-shadow: 3px 3px 0 var(--sp-color-ink); }
+
+/* Do / don't */
+.dd { display: grid; gap: 16px; grid-template-columns: 1fr 1fr; }
+@media (max-width: 700px) { .dd { grid-template-columns: 1fr; } }
+.dd > div { display: grid; gap: 10px; align-content: start; }
+.dd__tag { justify-self: start; }
+.dont-soft { padding: 16px; border-radius: 22px; background: #fff; box-shadow: 0 8px 24px rgba(0,0,0,.18); font-weight: 700; }
+
+/* Phone frame */
+.phone { width: 390px; max-width: 100%; min-width: 0; height: min(844px, 85vh); border: 2.5px solid var(--sp-color-ink); border-radius: 40px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 6px 6px 0 var(--sp-color-ink); background-color: var(--sp-color-paper); }
+.phone__body { flex: 1; overflow: auto; padding: 16px 20px 24px; display: grid; gap: 20px; align-content: start; }
+.app-frame { width: 100%; height: 860px; border: 2.5px solid var(--sp-color-ink); border-radius: 22px; box-shadow: 6px 6px 0 var(--sp-color-ink); background: var(--sp-color-paper); }
+.row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.toast-host { position: fixed; left: 50%; bottom: 24px; translate: -50% 0; z-index: 20; min-width: 280px; }
+.pager { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 24px; }
+.pager b, .tile-link b { overflow-wrap: anywhere; }
+
+/* Add menu lab */
+.dial-lab { display: grid; grid-template-columns: minmax(0, 390px) minmax(0, 1fr); gap: 24px; align-items: start; }
+.dial-lab__phone { height: 600px; }
+.dial-lab__controls { display: grid; gap: 12px; position: sticky; top: 88px; }
+.dial-lab__toggle { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-weight: 700; font-variation-settings: 'wght' 700; }
+@media (max-width: 860px) { .dial-lab { grid-template-columns: minmax(0, 1fr); } .dial-lab__controls { position: static; } }

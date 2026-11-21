@@ -1,0 +1,116 @@
+# Builds and tests all four libraries on every push and pull request.
+# Every platform gets the same treatment: compile, the shared formatting
+# cases, screenshot tests of the gallery and Home sample, and a sample app.
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  shared:
+    name: Tokens, parity, web and docs site
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: node tools/build-tokens.mjs --check
+      - run: node tools/check-version.mjs
+      - run: node tools/check-parity.mjs --table
+      - run: node packages/web/scripts/check.mjs
+      - run: node packages/web/scripts/test-format.mjs
+      - run: node tools/check-site.mjs
+
+  web-screenshots:
+    name: Web (screenshots)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm install --no-save playwright@1 && npx playwright install --with-deps chromium
+      - run: node tools/build-site.mjs --no-app
+      - name: Screenshot the web gallery and Home sample
+        run: node packages/web/scripts/screenshots.mjs dist/site packages/web/screenshots
+      - uses: actions/upload-artifact@v4
+        with: { name: web-screenshots, path: packages/web/screenshots }
+
+  flutter:
+    name: Flutter
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with: { flutter-version: 3.50.0, channel: stable }
+      - working-directory: packages/flutter/sticker_pop
+        run: |
+          flutter pub get
+          flutter analyze --no-fatal-infos
+          flutter test --exclude-tags qa
+          flutter test --tags qa --update-goldens test/qa
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: flutter-layout-qa, path: packages/flutter/sticker_pop/test/qa/shots }
+      - working-directory: packages/flutter/sticker_pop/example
+        run: |
+          flutter pub get
+          flutter analyze --no-fatal-infos
+          flutter build web --release --no-tree-shake-icons
+      - if: failure()
+        uses: actions/upload-artifact@v4
+        with: { name: flutter-golden-failures, path: packages/flutter/sticker_pop/test/goldens/failures }
+
+  compose:
+    name: Compose (Android)
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: packages/android } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: 21 }
+      - uses: android-actions/setup-android@v3
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Compile, unit tests (shared formatting cases)
+        run: ./gradlew :stickerpop:compileDebugKotlin :stickerpop:testDebugUnitTest --tests 'dev.stickerpop.PopFormatTest'
+      - name: Screenshot tests (record the first time, verify after)
+        run: |
+          if [ -d stickerpop/src/test/snapshots/images ]; then
+            ./gradlew :stickerpop:verifyPaparazziDebug
+          else
+            ./gradlew :stickerpop:recordPaparazziDebug
+          fi
+      - run: ./gradlew :sample:assembleDebug
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: compose-screenshots-and-sample
+          path: |
+            packages/android/stickerpop/src/test/snapshots
+            packages/android/stickerpop/build/paparazzi/failures
+            packages/android/sample/build/outputs/apk/debug/*.apk
+
+  swiftui:
+    name: SwiftUI (iOS and macOS)
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and test (macOS)
+        run: swift build && swift test
+      - name: Build for iOS
+        run: xcodebuild -scheme StickerPop -destination 'generic/platform=iOS Simulator' build | xcbeautify || exit ${PIPESTATUS[0]}
+      - name: Screenshot tests on an iPhone simulator (record the first time, verify after)
+        run: |
+          if [ ! -d packages/ios/StickerPop/Tests/StickerPopTests/__Snapshots__ ]; then export SNAPSHOT_RECORD=1; fi
+          xcodebuild test -scheme StickerPop-Package \
+            -destination 'platform=iOS Simulator,name=iPhone 16' \
+            -only-testing StickerPopTests/ScreensTests | xcbeautify || [ "${SNAPSHOT_RECORD:-0}" = "1" ]
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: swiftui-screenshots, path: packages/ios/StickerPop/Tests/StickerPopTests/__Snapshots__ }

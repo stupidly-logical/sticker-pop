@@ -1,0 +1,20 @@
+{
+  "name": "sticker-pop",
+  "private": true,
+  "description": "Sticker Pop, a bold sticker-style design system for Flutter, Compose, SwiftUI and the web.",
+  "type": "module",
+  "scripts": {
+    "tokens": "node tools/build-tokens.mjs",
+    "check": "bash tools/check.sh",
+    "site": "node tools/build-site.mjs --serve",
+    "site:build": "node tools/build-site.mjs",
+    "site:fast": "node tools/build-site.mjs --no-app --serve",
+    "version:check": "node tools/check-version.mjs"
+  },
+  "license": "MIT",
+  "homepage": "https://stupidly-logical.github.io/sticker-pop/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stupidly-logical/sticker-pop.git"
+  }
+}

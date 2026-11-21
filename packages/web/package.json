@@ -1,0 +1,45 @@
+{
+  "name": "@sticker-pop/web",
+  "version": "0.1.0",
+  "description": "Sticker Pop design system for the web: CSS tokens, CSS components and a JS token module.",
+  "type": "module",
+  "private": true,
+  "main": "src/tokens.mjs",
+  "types": "src/tokens.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/tokens.d.ts",
+      "default": "./src/tokens.mjs"
+    },
+    "./sticker-pop.css": "./src/sticker-pop.css",
+    "./tokens.css": "./src/tokens.css",
+    "./components.css": "./src/components.css",
+    "./fills.css": "./src/fills.css",
+    "./format": {
+      "types": "./src/format.d.ts",
+      "default": "./src/format.mjs"
+    },
+    "./behaviors": {
+      "default": "./src/behaviors.mjs"
+    },
+    "./charts": {
+      "default": "./src/charts.mjs"
+    }
+  },
+  "files": [
+    "src",
+    "fonts"
+  ],
+  "scripts": {
+    "check": "node scripts/check.mjs",
+    "gallery": "python3 -m http.server 4173",
+    "test": "node scripts/test-format.mjs"
+  },
+  "license": "MIT",
+  "homepage": "https://stupidly-logical.github.io/sticker-pop/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stupidly-logical/sticker-pop.git",
+    "directory": "packages/web"
+  }
+}

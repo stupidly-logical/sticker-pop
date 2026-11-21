@@ -1,0 +1,503 @@
+{
+  "$description": "Every component on every platform. tools/check-parity.mjs fails if a listed symbol isn't declared, or a docs page has no entry here. Flutter, Compose and SwiftUI list type or function names; web lists CSS classes (.x) and JS exports (name()).",
+  "platforms": {
+    "flutter": "packages/flutter/sticker_pop/lib",
+    "compose": "packages/android/stickerpop/src/main/kotlin",
+    "swiftui": "packages/ios/StickerPop/Sources/StickerPop",
+    "web": "packages/web/src"
+  },
+  "components": [
+    {
+      "id": "sticker-card",
+      "flutter": [
+        "StickerCard"
+      ],
+      "compose": [
+        "StickerCard",
+        "StickerHeroCard",
+        "StickerInfoCard"
+      ],
+      "swiftui": [
+        "StickerCard",
+        "StickerHeroCard",
+        "StickerInfoCard"
+      ],
+      "web": [
+        ".sp-card",
+        ".sp-card--hero",
+        ".sp-card--info"
+      ]
+    },
+    {
+      "id": "hint-card",
+      "flutter": [
+        "PopHintCard"
+      ],
+      "compose": [
+        "PopHintCard"
+      ],
+      "swiftui": [
+        "PopHintCard"
+      ],
+      "web": [
+        ".sp-hint"
+      ]
+    },
+    {
+      "id": "sticker-list",
+      "flutter": [
+        "StickerList",
+        "StickerListRow"
+      ],
+      "compose": [
+        "StickerList",
+        "StickerListRow"
+      ],
+      "swiftui": [
+        "StickerList",
+        "StickerListRow"
+      ],
+      "web": [
+        ".sp-list",
+        ".sp-row"
+      ]
+    },
+    {
+      "id": "sticker-badge",
+      "flutter": [
+        "StickerBadge"
+      ],
+      "compose": [
+        "StickerBadge"
+      ],
+      "swiftui": [
+        "StickerBadge"
+      ],
+      "web": [
+        ".sp-badge"
+      ]
+    },
+    {
+      "id": "category-dot",
+      "flutter": [
+        "CategoryDot"
+      ],
+      "compose": [
+        "CategoryDot"
+      ],
+      "swiftui": [
+        "CategoryDot"
+      ],
+      "web": [
+        ".sp-dot"
+      ]
+    },
+    {
+      "id": "sticker-button",
+      "flutter": [
+        "StickerButton"
+      ],
+      "compose": [
+        "StickerButton"
+      ],
+      "swiftui": [
+        "StickerButton"
+      ],
+      "web": [
+        ".sp-button"
+      ]
+    },
+    {
+      "id": "text-button",
+      "flutter": [
+        "PopTextButton"
+      ],
+      "compose": [
+        "PopTextButton"
+      ],
+      "swiftui": [
+        "PopTextButton"
+      ],
+      "web": [
+        ".sp-text-button"
+      ]
+    },
+    {
+      "id": "icon-button",
+      "flutter": [
+        "PopIconButton"
+      ],
+      "compose": [
+        "PopIconButton"
+      ],
+      "swiftui": [
+        "PopIconButton"
+      ],
+      "web": [
+        ".sp-icon-button"
+      ]
+    },
+    {
+      "id": "chip",
+      "flutter": [
+        "PopChip"
+      ],
+      "compose": [
+        "PopChip"
+      ],
+      "swiftui": [
+        "PopChip"
+      ],
+      "web": [
+        ".sp-chip",
+        "wirePopControls()"
+      ]
+    },
+    {
+      "id": "segmented",
+      "flutter": [
+        "PopSegmented"
+      ],
+      "compose": [
+        "PopSegmented"
+      ],
+      "swiftui": [
+        "PopSegmented"
+      ],
+      "web": [
+        ".sp-segmented"
+      ]
+    },
+    {
+      "id": "switch",
+      "flutter": [
+        "PopSwitch"
+      ],
+      "compose": [
+        "PopSwitch"
+      ],
+      "swiftui": [
+        "PopSwitch"
+      ],
+      "web": [
+        ".sp-switch"
+      ]
+    },
+    {
+      "id": "text-field",
+      "flutter": [
+        "PopTextField",
+        "PopFormError"
+      ],
+      "compose": [
+        "PopTextField",
+        "PopFormError"
+      ],
+      "swiftui": [
+        "PopTextField",
+        "PopFormError"
+      ],
+      "web": [
+        ".sp-field",
+        ".sp-form-error"
+      ]
+    },
+    {
+      "id": "amount-field",
+      "flutter": [
+        "PopAmountField"
+      ],
+      "compose": [
+        "PopAmountField"
+      ],
+      "swiftui": [
+        "PopAmountField"
+      ],
+      "web": [
+        ".sp-amount"
+      ]
+    },
+    {
+      "id": "field-row",
+      "flutter": [
+        "PopFieldRow"
+      ],
+      "compose": [
+        "PopFieldRow"
+      ],
+      "swiftui": [
+        "PopFieldRow"
+      ],
+      "web": [
+        ".sp-field-row"
+      ]
+    },
+    {
+      "id": "progress-bar",
+      "flutter": [
+        "PopProgressBar"
+      ],
+      "compose": [
+        "PopProgressBar"
+      ],
+      "swiftui": [
+        "PopProgressBar"
+      ],
+      "web": [
+        ".sp-progress"
+      ]
+    },
+    {
+      "id": "charts",
+      "flutter": [
+        "PopDonut",
+        "PopBarChart",
+        "PopLegend"
+      ],
+      "compose": [
+        "PopDonut",
+        "PopBarChart",
+        "PopLegend"
+      ],
+      "swiftui": [
+        "PopDonut",
+        "PopBarChart",
+        "PopLegend"
+      ],
+      "web": [
+        "popDonutSvg()",
+        "popBarsHtml()",
+        "popLegendHtml()",
+        ".sp-bars",
+        ".sp-legend"
+      ]
+    },
+    {
+      "id": "section-label",
+      "flutter": [
+        "PopSectionLabel"
+      ],
+      "compose": [
+        "PopSectionLabel"
+      ],
+      "swiftui": [
+        "PopSectionLabel"
+      ],
+      "web": [
+        ".sp-section-label"
+      ]
+    },
+    {
+      "id": "nav-bar",
+      "flutter": [
+        "PopNavBar",
+        "PopAddButton"
+      ],
+      "compose": [
+        "PopNavBar",
+        "PopAddButton"
+      ],
+      "swiftui": [
+        "PopNavBar",
+        "PopAddButton"
+      ],
+      "web": [
+        ".sp-nav",
+        ".sp-add"
+      ]
+    },
+    {
+      "id": "quick-add",
+      "flutter": [
+        "PopQuickAddRow"
+      ],
+      "compose": [
+        "PopQuickAddRow"
+      ],
+      "swiftui": [
+        "PopQuickAddRow"
+      ],
+      "web": [
+        ".sp-quick-add"
+      ]
+    },
+    {
+      "id": "sheet",
+      "flutter": [
+        "PopSheet",
+        "showPopSheet"
+      ],
+      "compose": [
+        "PopSheet",
+        "PopBottomSheet"
+      ],
+      "swiftui": [
+        "PopSheet",
+        "popBottomSheet"
+      ],
+      "web": [
+        ".sp-sheet",
+        "openPop()"
+      ]
+    },
+    {
+      "id": "dialog",
+      "flutter": [
+        "PopDialog",
+        "showPopDialog"
+      ],
+      "compose": [
+        "PopDialog"
+      ],
+      "swiftui": [
+        "PopDialog",
+        "popDialog"
+      ],
+      "web": [
+        ".sp-dialog",
+        "openPop()"
+      ]
+    },
+    {
+      "id": "snackbar",
+      "flutter": [
+        "showPopSnack"
+      ],
+      "compose": [
+        "PopSnackbarHost",
+        "PopSnackbarState"
+      ],
+      "swiftui": [
+        "popSnackbarHost",
+        "PopSnackbarState"
+      ],
+      "web": [
+        ".sp-snackbar",
+        "showPopSnack()"
+      ]
+    },
+    {
+      "id": "tour",
+      "flutter": [
+        "showPopTour",
+        "PopTourCard",
+        "PopProgressDots"
+      ],
+      "compose": [
+        "PopTourOverlay",
+        "PopTourCard",
+        "PopProgressDots"
+      ],
+      "swiftui": [
+        "popTourOverlay",
+        "PopTourCard",
+        "PopProgressDots"
+      ],
+      "web": [
+        "showPopTour()",
+        ".sp-tour-card",
+        ".sp-dots",
+        ".sp-spotlight"
+      ]
+    }
+  ],
+  "foundations": [
+    {
+      "id": "paper",
+      "flutter": [
+        "PaperBackground"
+      ],
+      "compose": [
+        "PaperBackground"
+      ],
+      "swiftui": [
+        "PaperBackground"
+      ],
+      "web": [
+        ".sp-paper"
+      ]
+    },
+    {
+      "id": "gradient",
+      "flutter": [
+        "PopGradients"
+      ],
+      "compose": [
+        "PopGradients",
+        "PopGradient"
+      ],
+      "swiftui": [
+        "PopGradients"
+      ],
+      "web": [
+        ".sp-fill-sunrise",
+        ".sp-fill-candy",
+        ".sp-fill-lagoon"
+      ]
+    },
+    {
+      "id": "text",
+      "flutter": [
+        "PopText",
+        "popTextOf"
+      ],
+      "compose": [
+        "PopText",
+        "popTextStyle"
+      ],
+      "swiftui": [
+        "PopText"
+      ],
+      "web": [
+        ".sp-text-body"
+      ]
+    },
+    {
+      "id": "format",
+      "flutter": [
+        "formatInr",
+        "formatInrCompact",
+        "formatPopDate",
+        "formatPopMonth",
+        "formatPopTime"
+      ],
+      "compose": [
+        "formatInr",
+        "formatInrCompact",
+        "formatPopDate",
+        "formatPopMonth",
+        "formatPopTime"
+      ],
+      "swiftui": [
+        "formatInr",
+        "formatInrCompact",
+        "formatPopDate",
+        "formatPopMonth",
+        "formatPopTime"
+      ],
+      "web": [
+        "formatInr()",
+        "formatInrCompact()",
+        "formatPopDate()",
+        "formatPopMonth()",
+        "formatPopTime()"
+      ]
+    },
+    {
+      "id": "samples",
+      "flutter": [
+        "PopGallery",
+        "PopHomeSample"
+      ],
+      "compose": [
+        "PopGallery",
+        "PopHomeSample"
+      ],
+      "swiftui": [
+        "PopGallery",
+        "PopHomeSample"
+      ],
+      "web": []
+    }
+  ]
+}

@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sticker Pop · web gallery</title>
+<link rel="stylesheet" href="src/sticker-pop.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,1,0">
+<style>
+  body { margin: 0; }
+  .page { display: grid; grid-template-columns: minmax(0, 1fr) 390px; gap: 40px; max-width: 1200px; margin: 0 auto; padding: 32px 20px 64px; align-items: start; overflow-x: clip; }
+  @media (max-width: 900px) { .page { grid-template-columns: 1fr; } }
+  section { margin-top: 32px; display: grid; gap: 12px; }
+  .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 12px; }
+  .swatch { height: 72px; display: flex; align-items: flex-end; padding: 8px; border: 2.5px solid var(--sp-color-ink); border-radius: 18px; box-shadow: 3px 3px 0 var(--sp-color-ink); font-weight: 800; font-size: 13px; }
+  .phone { position: sticky; top: 24px; width: 390px; max-width: 100%; height: min(844px, 90vh); border: 2.5px solid var(--sp-color-ink); border-radius: 36px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 6px 6px 0 var(--sp-color-ink); }
+  .phone main { flex: 1; overflow: auto; padding: 16px 20px 24px; display: grid; gap: 20px; align-content: start; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+</style>
+</head>
+<body class="sp-root sp-paper">
+<div class="page">
+<div>
+  <h1 class="sp-text-welcome-title" style="margin:0">Sticker Pop</h1>
+  <p class="sp-text-body">Sticker Pop for the web. Every value comes from <code>src/tokens.css</code>, generated from the shared token file.</p>
+
+  <section><h2 class="sp-text-section-heading">Colour</h2>
+    <div class="swatches">
+      <div class="swatch" style="background:var(--sp-color-paper)">paper</div>
+      <div class="swatch" style="background:var(--sp-color-ink);color:#fff">ink</div>
+      <div class="swatch" style="background:var(--sp-color-ink-muted);color:#fff">inkMuted</div>
+      <div class="swatch" style="background:var(--sp-color-white)">white</div>
+      <div class="swatch" style="background:var(--sp-color-divider)">divider</div>
+      <div class="swatch" style="background:var(--sp-color-yellow)">yellow</div>
+      <div class="swatch" style="background:var(--sp-color-pink)">pink</div>
+      <div class="swatch" style="background:var(--sp-color-blue)">blue</div>
+      <div class="swatch" style="background:var(--sp-color-mint)">mint</div>
+      <div class="swatch" style="background:var(--sp-color-lilac)">lilac</div>
+      <div class="swatch" style="background:var(--sp-color-orange)">orange</div>
+    </div>
+  </section>
+
+  <section><h2 class="sp-text-section-heading">Type</h2>
+    <div class="sp-text-screen-title">Screen title 34</div>
+    <div class="sp-text-hero-amount">₹1,25,000</div>
+    <div class="sp-text-sheet-title">Sheet title 22</div>
+    <div class="sp-text-row-title">Row title 16</div>
+    <div class="sp-text-body">Body 15 for sentences people read.</div>
+    <div class="sp-text-caption">Caption 13 in muted ink</div>
+    <div class="sp-text-section-label">Section label</div>
+  </section>
+
+  <section><h2 class="sp-text-section-heading">Cards</h2>
+    <div class="sp-card sp-text-body">Default: white, 4/4 shadow</div>
+    <div class="sp-card sp-card--hero sp-tilt-l"><div class="sp-text-section-label">Net worth</div><div class="sp-text-hero-amount">₹12,40,500</div></div>
+    <div class="two"><div class="sp-card sp-card--info sp-text-body">Info, blue</div><div class="sp-card sp-fill-mint sp-text-body">Info, mint</div></div>
+    <div class="two" style="grid-template-columns:repeat(3,1fr)"><div class="sp-card sp-fill-sunrise sp-text-chip-selected" style="text-align:center">sunrise</div><div class="sp-card sp-fill-candy sp-text-chip-selected" style="text-align:center">candy</div><div class="sp-card sp-fill-lagoon sp-text-chip-selected" style="text-align:center">lagoon</div></div>
+    <div class="sp-card sp-hint"><span class="sp-icon">lightbulb</span><span class="sp-text-body">Goals you add show up here. Tap Add goal to start one.</span></div>
+  </section>
+
+  <section><h2 class="sp-text-section-heading">Buttons</h2>
+    <button class="sp-button">Save</button>
+    <button class="sp-button" disabled>Save (disabled)</button>
+    <div class="row">
+      <button class="sp-text-button">Cancel</button>
+      <button class="sp-text-button sp-text-button--underline">Skip</button>
+      <button class="sp-text-button" disabled>Disabled</button>
+      <button class="sp-icon-button" aria-label="Back"><span class="sp-icon">arrow_back</span></button>
+      <button class="sp-icon-button sp-fill-pink" aria-label="Voice"><span class="sp-icon">mic</span></button>
+      <button class="sp-icon-button sp-fill-yellow" aria-label="Filters" aria-pressed="true"><span class="sp-icon">tune</span></button>
+      <button class="sp-icon-button" aria-label="Close" disabled><span class="sp-icon">close</span></button>
+    </div>
+  </section>
+
+  <section><h2 class="sp-text-section-heading">Chips, segments, switches</h2>
+    <div class="row" data-group="chips">
+      <button class="sp-chip" aria-pressed="true">Food</button>
+      <button class="sp-chip" aria-pressed="false">Travel</button>
+      <button class="sp-chip" aria-pressed="false">Bills</button>
+      <button class="sp-chip" aria-pressed="true" style="--sp-chip-fill:var(--sp-color-mint)"><span class="sp-icon">eco</span>Mint</button>
+      <button class="sp-chip" disabled>Disabled</button>
+      <span class="sp-chip sp-chip--removable">Office<button class="sp-chip__remove" aria-label="Remove Office"><span class="sp-icon" style="font-size:16px">close</span></button></span>
+    </div>
+    <div class="sp-segmented" role="group" aria-label="Type">
+      <button aria-pressed="true">Expense</button><button aria-pressed="false">Income</button><button aria-pressed="false">Transfer</button>
+    </div>
+    <div class="sp-segmented" aria-disabled="true"><button aria-pressed="true" disabled>Month</button><button disabled>Year</button></div>
+    <div class="row">
+      <button class="sp-switch" role="switch" aria-checked="true" aria-label="Reminders"></button>
+      <button class="sp-switch" role="switch" aria-checked="false" aria-label="Weekly summary"></button>
+      <button class="sp-switch" role="switch" aria-checked="false" aria-label="Sync" disabled></button>
+    </div>
+  </section>
+
+  <section><h2 class="sp-text-section-heading">Text fields</h2>
+    <label class="sp-field"><span class="sp-field__label">Note</span><input class="sp-field__input" placeholder="Add a note"></label>
+    <label class="sp-field"><span class="sp-field__label">Payee</span><input class="sp-field__input" placeholder="Who was it?" aria-invalid="true" aria-describedby="payee-err"><span id="payee-err" class="sp-form-error">Add who you paid.</span></label>
+    <label class="sp-field"><span class="sp-field__label">Account</span><input class="sp-field__input" value="HDFC ·· 4821" disabled></label>
+    <div class="sp-card sp-fill-yellow sp-amount"><span class="sp-text-section-label">Expense</span><label class="sp-amount__row">₹<input inputmode="decimal" value="1250.50" aria-label="Amount"></label></div>
+    <div class="sp-card" style="padding:0">
+      <div class="sp-field-row"><span class="sp-field-row__label">Paid to</span><span class="sp-field-row__value">Chai Point</span></div>
+      <div class="sp-field-row"><span class="sp-field-row__label">Account</span><span class="sp-field-row__value">HDFC ·· 4821</span><span class="sp-icon">chevron_right</span></div>
+    </div>
+  </section>
+
+  <section><h2 class="sp-text-section-heading">Badges and category dots</h2>
+    <div class="row">
+      <span class="sp-badge">UPI</span>
+      <span class="sp-badge sp-fill-orange">Unsure</span>
+      <span class="sp-badge sp-fill-mint">+12.4%</span>
+      <span class="sp-badge sp-badge--caps sp-fill-lilac">Coming soon</span>
+    </div>
+    <div class="row">
+      <span class="sp-dot" style="--sp-dot-fill:var(--sp-color-orange)"><span class="sp-icon">local_cafe</span></span>
+      <span class="sp-dot" style="--sp-dot-fill:var(--sp-color-mint)"><span class="sp-icon">shopping_cart</span></span>
+      <span class="sp-dot" style="--sp-dot-fill:var(--sp-color-blue)"><span class="sp-icon">directions_car</span></span>
+      <span class="sp-dot" style="--sp-dot-fill:var(--sp-color-lilac)"><span class="sp-icon">bolt</span></span>
+      <span class="sp-dot" style="--sp-dot-fill:var(--sp-color-pink)"><span class="sp-icon">shopping_bag</span></span>
+      <span class="sp-dot" style="--sp-dot-fill:var(--sp-color-white)"><span class="sp-icon">more_horiz</span></span>
+    </div>
+  </section>
+
+  <section><h2 class="sp-text-section-heading">Progress and charts</h2>
+    <div class="sp-progress" role="progressbar" aria-valuenow="80" aria-label="Food budget" style="--value:80%;--sp-progress-fill:var(--sp-color-orange)"><span></span></div>
+    <div class="sp-text-caption">₹8,000 of ₹10,000 · 80% used</div>
+    <div class="sp-card two" style="align-items:center">
+      <div data-donut></div>
+      <div class="sp-legend">
+        <div><i class="sp-swatch" style="--sp-swatch-fill:var(--sp-color-orange)"></i>Food<b>32%</b></div>
+        <div><i class="sp-swatch" style="--sp-swatch-fill:var(--sp-color-mint)"></i>Groceries<b>24%</b></div>
+        <div><i class="sp-swatch" style="--sp-swatch-fill:var(--sp-color-blue)"></i>Transport<b>18%</b></div>
+        <div><i class="sp-swatch" style="--sp-swatch-fill:var(--sp-color-lilac)"></i>Bills<b>16%</b></div>
+        <div><i class="sp-swatch" style="--sp-swatch-fill:var(--sp-color-pink)"></i>Shopping<b>10%</b></div>
+      </div>
+    </div>
+    <div class="sp-card"><div class="sp-bars" role="img" aria-label="Spend by month, Nov is lowest">
+      <div><i style="--h:110px"></i>Jun</div><div><i style="--h:121px"></i>Jul</div><div><i style="--h:89px"></i>Aug</div>
+      <div><i style="--h:135px"></i>Sep</div><div><i style="--h:140px"></i>Oct</div><div class="is-current"><i style="--h:78px;--sp-bar-fill:var(--sp-color-yellow)"></i>Nov</div>
+    </div></div>
+  </section>
+
+  <section><h2 class="sp-text-section-heading">Overlays</h2>
+    <div class="sp-sheet" style="border-left:2.5px solid;border-right:2.5px solid">
+      <div class="sp-text-sheet-title">Rename account</div>
+      <input class="sp-field__input" placeholder="Account name">
+      <span class="sp-form-error">Names need at least one letter.</span>
+      <button class="sp-button">Save</button>
+    </div>
+    <div class="sp-dialog" style="margin:0">
+      <div class="sp-text-sheet-title">Delete this transaction?</div>
+      <p class="sp-text-body">It goes from this phone straight away. You can undo for a few seconds.</p>
+      <button class="sp-button">Delete</button>
+      <div style="text-align:center"><button class="sp-text-button">Cancel</button></div>
+    </div>
+    <div class="sp-snackbar">Deleted<button>Undo</button></div>
+    <div class="row"><button class="sp-chip" data-snack="Saved">Show snackbar</button><button class="sp-chip" data-snack="Deleted" data-action="Undo">With action</button><button class="sp-chip" data-tour>Start tour</button></div>
+    <div class="sp-tour-card sp-tilt-r">
+      <div class="row" style="justify-content:space-between"><div class="sp-dots"><i class="is-reached"></i><i class="is-current"></i><i></i></div><button class="sp-text-button sp-text-button--underline">Skip</button></div>
+      <div class="sp-text-sheet-title">Say it</div>
+      <div class="sp-text-body">Speak an expense like “450 for lunch”. It is read on the phone and not kept.</div>
+      <button class="sp-button">Next</button>
+    </div>
+  </section>
+</div>
+
+<!-- Home sample -->
+<div class="phone sp-paper" aria-label="Home sample">
+  <main>
+    <div class="row" style="justify-content:space-between"><h1 class="sp-text-screen-title" style="margin:0">Home</h1><button class="sp-icon-button" aria-label="Settings"><span class="sp-icon">settings</span></button></div>
+    <button class="sp-card sp-card--hero sp-tilt-l">
+      <div class="row" style="justify-content:space-between"><span class="sp-text-section-label">Spent in Nov 2026</span><span class="sp-badge">11% of budget</span></div>
+      <div class="sp-text-hero-amount">₹4,461.70</div>
+      <div class="sp-progress" style="--value:11%;--sp-progress-fill:var(--sp-color-pink);margin:12px 0 8px"><span></span></div>
+      <div class="sp-text-body">₹35,538.30 left of ₹40k · 12 days to go</div>
+    </button>
+    <div class="sp-quick-add">
+      <button class="sp-card" style="transform:rotate(-1.5deg)"><span class="sp-icon">keyboard</span>Type it</button>
+      <button class="sp-card sp-fill-pink" style="transform:rotate(1.5deg)"><span class="sp-icon">mic</span>Say it</button>
+      <button class="sp-card sp-fill-mint" style="transform:rotate(-1deg)"><span class="sp-icon">document_scanner</span>Scan it</button>
+    </div>
+    <div class="sp-section-label"><span class="sp-text-section-label">Recent</span><button class="sp-text-button">See all</button></div>
+    <div class="sp-card sp-list">
+      <div class="sp-row"><span class="sp-dot" style="--sp-dot-fill:var(--sp-color-orange)"><span class="sp-icon">local_cafe</span></span><div class="sp-row__main"><div class="sp-row__title"><span class="sp-text-row-title">Chai Point</span><span class="sp-badge" style="font-size:11px">UPI</span></div><div class="sp-text-caption">Today · 12:32 pm · HDFC</div></div><div class="sp-text-row-amount">−₹120</div></div>
+      <div class="sp-row"><span class="sp-dot" style="--sp-dot-fill:var(--sp-color-blue)"><span class="sp-icon">directions_car</span></span><div class="sp-row__main"><div class="sp-row__title"><span class="sp-text-row-title">Uber</span><span class="sp-badge" style="font-size:11px">UPI</span></div><div class="sp-text-caption">Today · 9:12 am · ICICI</div></div><div class="sp-text-row-amount">−₹346.50</div></div>
+      <div class="sp-row"><span class="sp-dot" style="--sp-dot-fill:var(--sp-color-mint)"><span class="sp-icon">shopping_cart</span></span><div class="sp-row__main"><div class="sp-row__title"><span class="sp-text-row-title">BigBasket</span><span class="sp-badge sp-fill-orange">Unsure</span></div><div class="sp-text-caption">Yesterday · HDFC</div></div><div class="sp-text-row-amount">−₹1,845.20</div></div>
+      <div class="sp-row"><span class="sp-dot" style="--sp-dot-fill:var(--sp-color-mint)"><span class="sp-icon">work</span></span><div class="sp-row__main"><div class="sp-text-row-title">Salary</div><div class="sp-text-caption">15 Nov 2026 · HDFC</div></div><div class="sp-text-row-amount">+₹1,25,000</div></div>
+    </div>
+  </main>
+  <nav class="sp-nav" aria-label="Main">
+    <button class="sp-nav__item" aria-current="page"><span class="sp-nav__pill"><span class="sp-icon">home</span></span><span class="sp-nav__label">Home</span></button>
+    <button class="sp-nav__item"><span class="sp-nav__pill"><span class="sp-icon">receipt_long</span></span><span class="sp-nav__label">Activity</span></button>
+    <div class="sp-nav__add"><button class="sp-add" aria-label="Add transaction"><span class="sp-icon">add</span></button></div>
+    <button class="sp-nav__item"><span class="sp-nav__pill"><span class="sp-icon">insights</span></span><span class="sp-nav__label">Insights</span></button>
+    <button class="sp-nav__item"><span class="sp-nav__pill"><span class="sp-icon">savings</span></span><span class="sp-nav__label">Wealth</span></button>
+  </nav>
+</div>
+</div>
+<script type="module">
+  import { wirePopControls, showPopSnack, showPopTour } from './src/behaviors.mjs';
+  import { popDonutSvg } from './src/charts.mjs';
+
+  wirePopControls();
+  // The donut is drawn by the library's chart helper.
+  document.querySelector('[data-donut]').innerHTML = popDonutSvg([
+    { label: 'Food', value: 32, color: 'var(--sp-color-orange)' },
+    { label: 'Groceries', value: 24, color: 'var(--sp-color-mint)' },
+    { label: 'Transport', value: 18, color: 'var(--sp-color-blue)' },
+    { label: 'Bills', value: 16, color: 'var(--sp-color-lilac)' },
+    { label: 'Shopping', value: 10, color: 'var(--sp-color-pink)' },
+  ], { size: 140, thickness: 30, center: '₹51.2k', label: 'Spending by category' });
+  document.querySelectorAll('[data-snack]').forEach((b) => b.addEventListener('click', () => showPopSnack(b.dataset.snack, { actionLabel: b.dataset.action })));
+  document.querySelector('[data-tour]')?.addEventListener('click', () => showPopTour([
+    { target: '[data-group="chips"]', title: 'Pick a category', body: 'Tap a chip to choose it. Chips you pick get a fill and a thicker outline.' },
+    { target: '.sp-add', title: 'Add anything', body: 'The pink button adds an expense, income or transfer.' },
+  ]));
+</script>
+</body>
+</html>

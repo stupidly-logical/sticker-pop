@@ -480,6 +480,24 @@ class _PopGalleryState extends State<PopGallery> {
               ),
 
               _Section(
+                'Banners',
+                children: <Widget>[
+                  PopBanner(
+                    tone: PopBannerTone.warning,
+                    title: 'Back up soon',
+                    message: 'Your last backup was 30 days ago.',
+                    actionLabel: 'Back up now',
+                    onAction: () {},
+                    onDismiss: () {},
+                  ),
+                  const SizedBox(height: PopSpace.md),
+                  const PopBanner(message: 'Prices update every morning at 9.'),
+                  const SizedBox(height: PopSpace.md),
+                  const PopBanner(tone: PopBannerTone.success, message: 'All caught up: nothing needs a category.'),
+                ],
+              ),
+
+              _Section(
                 'Loading',
                 children: const <Widget>[
                   PopSkeletonList(rows: 2),

@@ -236,6 +236,12 @@ public struct PopGallery: View {
                     StickerCard { PopCalendar(selection: $date, today: galleryToday, in: Date.distantPast...galleryToday) }
                 }
 
+                GallerySection(title: "Banners") {
+                    PopBanner("Your last backup was 30 days ago.", title: "Back up soon", tone: .warning, actionLabel: "Back up now", onDismiss: {})
+                    PopBanner("Prices update every morning at 9.")
+                    PopBanner("All caught up: nothing needs a category.", tone: .success)
+                }
+
                 GallerySection(title: "Loading") {
                     PopSkeletonList(rows: 2)
                     HStack(spacing: PopSpace.md) {

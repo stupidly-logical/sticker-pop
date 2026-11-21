@@ -66,6 +66,24 @@ export const overlays = [
     rules: ['Never for form errors: a floating snackbar covers the Save button.'],
   },
   {
+    id: 'banner', name: 'Banner', group: 'Overlays and feedback', platforms: ALL,
+    summary: 'A message that stays in the page until it is dealt with, unlike a snackbar: a bright sticker card with an icon, an optional title, the message, and an optional action and close button. Blue for information, orange for something that needs attention, mint for good news. Never red.',
+    states: [
+      { label: 'Warning, with action and close', html: '<div class="sp-card sp-banner sp-banner--warning full" role="status"><span class="sp-icon" aria-hidden="true">warning</span><div class="sp-banner__body"><span class="sp-banner__title">Back up soon</span><span class="sp-text-body">Your last backup was 30 days ago.</span><button class="sp-text-button sp-text-button--underline" data-snack="Backing up…">Back up now</button></div><button class="sp-banner__close" aria-label="Dismiss" onclick="this.closest(\'.sp-banner\').remove()"><span class="sp-icon">close</span></button></div>' },
+      { label: 'Info', html: '<div class="sp-card sp-banner full" role="status"><span class="sp-icon" aria-hidden="true">info</span><div class="sp-banner__body"><span class="sp-text-body">Prices update every morning at 9.</span></div></div>' },
+      { label: 'Success', html: '<div class="sp-card sp-banner sp-banner--success full" role="status"><span class="sp-icon" aria-hidden="true">check_circle</span><div class="sp-banner__body"><span class="sp-text-body">All caught up: nothing needs a category.</span></div></div>' },
+    ],
+    code: {
+      flutter: "PopBanner(\n  tone: PopBannerTone.warning,\n  title: 'Back up soon',\n  message: 'Your last backup was 30 days ago.',\n  actionLabel: 'Back up now',\n  onAction: backUp,\n  onDismiss: hide,\n)",
+      compose: 'PopBanner("Your last backup was 30 days ago.", title = "Back up soon", tone = PopBannerTone.Warning, actionLabel = "Back up now", onAction = ::backUp, onDismiss = ::hide)',
+      swift: 'PopBanner("Your last backup was 30 days ago.", title: "Back up soon", tone: .warning, actionLabel: "Back up now", onAction: backUp, onDismiss: hide)',
+      html: '<div class="sp-card sp-banner sp-banner--warning" role="status">\n  <span class="sp-icon" aria-hidden="true">warning</span>\n  <div class="sp-banner__body">\n    <span class="sp-banner__title">Back up soon</span>\n    <span class="sp-text-body">Your last backup was 30 days ago.</span>\n    <button class="sp-text-button sp-text-button--underline">Back up now</button>\n  </div>\n  <button class="sp-banner__close" aria-label="Dismiss"><span class="sp-icon">close</span></button>\n</div>',
+    },
+    spec: [['Card', 'StickerCard: 2.5 outline, radius 22, 4/4 shadow; blue, orange or mint'], ['Padding', '16 left, 12 top and bottom'], ['Icon', '22 ink, 12 before the text'], ['Text', 'title 16/800, message 15/600'], ['Action', 'underlined text button'], ['Close', '20 ✕ in a 40 target']],
+    rules: ['Use a banner for something that stays true until handled; a snackbar for a passing confirmation.', 'One banner per screen, at the top of the content.', 'Never red: warnings are orange, and the words carry the meaning.'],
+    a11y: 'A status region, so new banners are announced. The close button is labelled "Dismiss".',
+  },
+  {
     id: 'loading', name: 'Loading states', group: 'Overlays and feedback', platforms: ALL,
     summary: 'Show the shape of what is coming. Skeletons are divider-coloured lines, circles and blocks with no outline, gently pulsing, laid out like the content that will replace them. A small spinner is for short waits with no layout to hint at. Under reduced motion both stand still.',
     states: [

@@ -490,6 +490,25 @@ void main() {
     });
   });
 
+  group('PopBanner', () {
+    testWidgets('warning is orange; action and dismiss call back', (tester) async {
+      var acted = false;
+      var dismissed = false;
+      await pumpPop(tester, onPaper(PopBanner(
+        tone: PopBannerTone.warning,
+        title: 'Back up soon',
+        message: 'Your last backup was 30 days ago.',
+        actionLabel: 'Back up now',
+        onAction: () => acted = true,
+        onDismiss: () => dismissed = true,
+      )));
+      expect(tester.widget<StickerCard>(find.byType(StickerCard)).color, PopColors.orange);
+      await tester.tap(find.text('Back up now'));
+      await tester.tap(find.bySemanticsLabel('Dismiss'));
+      expect(acted && dismissed, isTrue);
+    });
+  });
+
   group('Tilt guard', () {
     test('cards reject tilt beyond ±3°', () {
       expect(() => StickerCard(tiltDegrees: 4, child: const SizedBox()), throwsAssertionError);

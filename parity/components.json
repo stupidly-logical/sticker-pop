@@ -556,6 +556,27 @@
       ]
     },
     {
+      "id": "banner",
+      "flutter": [
+        "PopBanner",
+        "PopBannerTone"
+      ],
+      "compose": [
+        "PopBanner",
+        "PopBannerTone"
+      ],
+      "swiftui": [
+        "PopBanner",
+        "PopBannerTone"
+      ],
+      "web": [
+        ".sp-banner",
+        ".sp-banner--warning",
+        ".sp-banner--success",
+        ".sp-banner__close"
+      ]
+    },
+    {
       "id": "loading",
       "flutter": [
         "PopSkeleton",

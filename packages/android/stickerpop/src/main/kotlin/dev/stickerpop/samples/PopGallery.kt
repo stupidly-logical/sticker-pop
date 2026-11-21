@@ -273,6 +273,12 @@ fun PopGallery(onOpenHome: () -> Unit = {}) {
                     if (pickDate) PopDatePickerSheet(today, date, { date = it; pickDate = false }, { pickDate = false }, lastDate = today)
                 }
 
+                Section("Banners") {
+                    PopBanner("Your last backup was 30 days ago.", title = "Back up soon", tone = PopBannerTone.Warning, actionLabel = "Back up now", onDismiss = {})
+                    PopBanner("Prices update every morning at 9.")
+                    PopBanner("All caught up: nothing needs a category.", tone = PopBannerTone.Success)
+                }
+
                 Section("Loading") {
                     PopSkeletonList(rows = 2)
                     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(PopSpace.md)) {

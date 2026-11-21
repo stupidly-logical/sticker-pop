@@ -400,6 +400,17 @@ select.sp-select:disabled { background-color: var(--sp-color-paper); color: var(
 .sp-tabs > [role='tab'][aria-selected='true'] { background: var(--sp-color-yellow); color: var(--sp-color-ink); border-color: var(--sp-color-ink); font-weight: 800; font-variation-settings: 'wght' 800; }
 .sp-tabs > [role='tab']:focus-visible { outline: 3px solid var(--sp-color-ink); outline-offset: 2px; }
 
+/* Banner: <div class="sp-banner sp-banner--warning" role="status">. */
+.sp-banner { display: flex; align-items: flex-start; gap: var(--sp-space-md); padding: var(--sp-space-md) var(--sp-space-sm) var(--sp-space-md) var(--sp-space-lg); background: var(--sp-color-blue); }
+.sp-banner--warning { background: var(--sp-color-orange); }
+.sp-banner--success { background: var(--sp-color-mint); }
+.sp-banner > .sp-icon { margin-top: 2px; }
+.sp-banner__body { flex: 1; min-width: 0; display: grid; gap: 2px; padding-right: var(--sp-space-sm); }
+.sp-banner__title { font-size: 16px; font-weight: 800; font-variation-settings: 'wght' 800; }
+.sp-banner__body .sp-text-button { justify-self: start; margin-top: var(--sp-space-xs); }
+.sp-banner__close { display: grid; place-items: center; flex: none; width: 40px; height: 40px; margin: -8px 0; padding: 0; background: none; border: 0; color: var(--sp-color-ink); cursor: pointer; border-radius: 50%; }
+.sp-banner__close:focus-visible { outline: 3px solid var(--sp-color-ink); outline-offset: -3px; }
+
 /* Field row */
 .sp-field-row { display: flex; align-items: center; min-height: var(--sp-size-row-min); padding: 6px 14px; border-bottom: var(--sp-border-divider) solid var(--sp-color-divider); }
 .sp-field-row:last-child { border-bottom: 0; }

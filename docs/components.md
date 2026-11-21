@@ -29,6 +29,7 @@ disappears.
 | PopQuickAddRow | white −1.5°, pink +1.5°, mint −1° | — | — | — | moves 4/4 |
 | PopSheet | paper, 2.5 top line, radius 24 top | — | — | inline error above the button | — |
 | PopTopBar (compact, large) | transparent, 22/800 or 34/800 title, back + up to 2 icon buttons | scrolled: paper fill, 2.5 ink bottom line | — | — | — |
+| PopSearchField | white, 2 outline, search icon | focused: 2.5 outline; ✕ while there is text | — | — | — |
 | PopSelect | field: white, 2 outline, radius 14, chevron; list rows white | chosen row yellow, 800, tick | paper fill, muted text, no list | 2.5 outline + ⚠ message | open: 2.5 outline |
 | PopMenu | white sticker, radius 16, 4/4 shadow, rows 15/700 | — | row inkMuted, no taps | — | row (hover, focus, press): yellow |
 | PopDialog | paper card, 6/6 shadow, 20 inset | — | — | — | — |

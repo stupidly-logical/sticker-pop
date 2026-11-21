@@ -353,6 +353,8 @@ class _PopGalleryState extends State<PopGallery> {
                     hint: 'HDFC ·· 4821',
                     enabled: false,
                   ),
+                  const SizedBox(height: PopSpace.md),
+                  PopSearchField(hint: 'Search transactions', onCancel: () {}),
                   const SizedBox(height: PopSpace.lg),
                   PopAmountField(controller: _amount, label: 'Expense'),
                   const SizedBox(height: PopSpace.lg),

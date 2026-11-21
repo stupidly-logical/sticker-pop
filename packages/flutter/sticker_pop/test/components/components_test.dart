@@ -391,6 +391,22 @@ void main() {
     });
   });
 
+  group('PopSearchField', () {
+    testWidgets('clear appears with text and empties it; cancel calls back', (tester) async {
+      var cancelled = false;
+      final c = TextEditingController();
+      await pumpPop(tester, onPaper(PopSearchField(controller: c, onCancel: () => cancelled = true)));
+      expect(find.bySemanticsLabel('Clear search'), findsNothing);
+      await tester.enterText(find.byType(TextField), 'chai');
+      await tester.pump();
+      await tester.tap(find.bySemanticsLabel('Clear search'));
+      await tester.pump();
+      expect(c.text, isEmpty);
+      await tester.tap(find.text('Cancel'));
+      expect(cancelled, isTrue);
+    });
+  });
+
   group('Tilt guard', () {
     test('cards reject tilt beyond ±3°', () {
       expect(() => StickerCard(tiltDegrees: 4, child: const SizedBox()), throwsAssertionError);

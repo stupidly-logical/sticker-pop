@@ -171,6 +171,24 @@ export const controls = [
     a11y: 'Announced as a button with its label and the chosen value ("Account, HDFC, opens a list"). In the list the chosen option is announced as selected. On the web: arrow keys, Home, End, type-ahead, Enter to pick, Escape to close.',
   },
   {
+    id: 'search-field', name: 'Search field', group: 'Inputs', platforms: ALL,
+    summary: 'A text field for finding things: a search icon, the query, and a ✕ that clears it while it has text. On a search screen, a "Cancel" text button after it clears the search and leaves.',
+    states: [
+      { label: 'Empty', html: '<div class="full"><div class="sp-search"><span class="sp-icon" aria-hidden="true">search</span><input type="search" class="sp-search__input" placeholder="Search transactions" aria-label="Search transactions"><button type="button" class="sp-search__clear" aria-label="Clear search" hidden><span class="sp-icon">cancel</span></button></div></div>' },
+      { label: 'With text (type, then ✕)', html: '<div class="full"><div class="sp-search"><span class="sp-icon" aria-hidden="true">search</span><input type="search" class="sp-search__input" placeholder="Search transactions" aria-label="Search transactions" value="chai"><button type="button" class="sp-search__clear" aria-label="Clear search" hidden><span class="sp-icon">cancel</span></button></div></div>' },
+      { label: 'With Cancel', html: '<div class="sp-search-row full"><div class="sp-search"><span class="sp-icon" aria-hidden="true">search</span><input type="search" class="sp-search__input" placeholder="Search transactions" aria-label="Search transactions"><button type="button" class="sp-search__clear" aria-label="Clear search" hidden><span class="sp-icon">cancel</span></button></div><button class="sp-text-button">Cancel</button></div>' },
+    ],
+    code: {
+      flutter: "PopSearchField(\n  hint: 'Search transactions',\n  onChanged: filter,\n  onCancel: () => Navigator.pop(context),\n)",
+      compose: 'PopSearchField(query, { query = it }, hint = "Search transactions", onCancel = ::close)',
+      swift: 'PopSearchField("Search transactions", text: $query, onCancel: { dismiss() })',
+      html: '<div class="sp-search-row">\n  <div class="sp-search">\n    <span class="sp-icon" aria-hidden="true">search</span>\n    <input type="search" class="sp-search__input" placeholder="Search transactions" aria-label="Search transactions">\n    <button type="button" class="sp-search__clear" aria-label="Clear search" hidden><span class="sp-icon">cancel</span></button>\n  </div>\n  <button class="sp-text-button">Cancel</button>\n</div>\n\n<script type="module">\n  import { wirePopSearch } from \'@sticker-pop/web/behaviors.mjs\';\n  wirePopSearch();\n</script>',
+    },
+    spec: [['Field', 'like a text field: white, 2 outline (focus 2.5), radius 14, 48 high'], ['Icon', '22 search, ink, 8 before the text'], ['Clear', '20 ✕ in a 40 target, only while there is text'], ['Cancel', 'a text button 12 after the field']],
+    rules: ['Filter as people type when the list is on the phone; there is no search button.', 'Say what is searched in the hint: "Search transactions".'],
+    a11y: 'The input is labelled by its hint; the clear button is "Clear search" and keeps focus in the field.',
+  },
+  {
     id: 'amount-field', name: 'Amount field', group: 'Inputs', platforms: ALL,
     summary: 'The big amount entry: a bright card with a currency prefix at the same 32/800 size. Choose the colour by meaning, for example yellow for money out, mint for money in, pink for withdrawals.',
     states: [

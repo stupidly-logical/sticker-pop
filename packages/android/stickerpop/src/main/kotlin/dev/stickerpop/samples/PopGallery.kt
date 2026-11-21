@@ -104,6 +104,7 @@ fun PopGallery(onOpenHome: () -> Unit = {}) {
     var amount by remember { mutableStateOf("1250.50") }
     var account by remember { mutableStateOf<String?>("hdfc") }
     var transfers by remember { mutableStateOf(true) }
+    var query by remember { mutableStateOf("") }
     var period by remember { mutableStateOf("Month") }
     var showSheet by remember { mutableStateOf(false) }
     var showDialog by remember { mutableStateOf(false) }
@@ -223,6 +224,7 @@ fun PopGallery(onOpenHome: () -> Unit = {}) {
                     PopTextField(note, { note = it }, hint = "Add a note", label = "Note")
                     PopTextField(payee, { payee = it }, hint = "Who was it?", label = "Payee", error = "Add who you paid.")
                     PopTextField("HDFC ·· 4821", {}, label = "Account", enabled = false)
+                    PopSearchField(query, { query = it }, hint = "Search transactions", onCancel = { query = "" })
                     PopAmountField(amount, { amount = it }, label = "Expense")
                     // A details card: field rows draw their own dividers.
                     StickerCard(Modifier.fillMaxWidth(), padding = androidx.compose.foundation.layout.PaddingValues(0.dp)) {

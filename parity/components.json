@@ -248,6 +248,24 @@
       ]
     },
     {
+      "id": "search-field",
+      "flutter": [
+        "PopSearchField"
+      ],
+      "compose": [
+        "PopSearchField"
+      ],
+      "swiftui": [
+        "PopSearchField"
+      ],
+      "web": [
+        ".sp-search",
+        ".sp-search__input",
+        ".sp-search__clear",
+        "wirePopSearch()"
+      ]
+    },
+    {
       "id": "select",
       "flutter": [
         "PopSelect",

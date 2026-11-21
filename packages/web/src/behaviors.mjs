@@ -15,6 +15,7 @@ export function wirePopControls(root = document) {
   wirePopMenus(root);
   wirePopSelects(root);
   wirePopTopBars(root);
+  wirePopSearch(root);
   root.querySelectorAll('.sp-chip[aria-pressed]:not(:disabled)').forEach((b) =>
     b.addEventListener('click', () => b.setAttribute('aria-pressed', String(b.getAttribute('aria-pressed') !== 'true'))));
   root.querySelectorAll('.sp-segmented:not([aria-disabled]) > button').forEach((b) =>
@@ -488,5 +489,27 @@ export function wirePopTopBars(root = document) {
     };
     scroller.addEventListener('scroll', update, { passive: true });
     update();
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Search field
+
+/** Shows each `.sp-search` clear button while its input has text; the button empties the input and keeps focus there. */
+export function wirePopSearch(root = document) {
+  root.querySelectorAll('.sp-search').forEach((box) => {
+    if (box.dataset.popWired) return;
+    box.dataset.popWired = '1';
+    const input = box.querySelector('input');
+    const clear = box.querySelector('.sp-search__clear');
+    if (!input || !clear) return;
+    const sync = () => { clear.hidden = !input.value; };
+    input.addEventListener('input', sync);
+    clear.addEventListener('click', () => {
+      input.value = '';
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+      input.focus();
+    });
+    sync();
   });
 }

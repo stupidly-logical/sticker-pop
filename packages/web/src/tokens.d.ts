@@ -137,6 +137,10 @@ export declare const tokens: {
       readonly size: 15;
       readonly weight: 800;
     };
+    readonly menuItem: {
+      readonly size: 15;
+      readonly weight: 700;
+    };
     readonly textButton: {
       readonly size: 15;
       readonly weight: 800;
@@ -236,6 +240,7 @@ export declare const tokens: {
     readonly badge: 10;
     readonly sheet: 24;
     readonly snackbar: 16;
+    readonly menu: 16;
     readonly spotlight: 18;
     readonly switchTrack: 15;
     readonly navPill: 12;
@@ -276,6 +281,9 @@ export declare const tokens: {
     readonly progressDotCurrent: 22;
     readonly swatch: 12;
     readonly dialOption: 56;
+    readonly menuMinWidth: 180;
+    readonly menuMaxWidth: 280;
+    readonly menuMaxHeight: 360;
     readonly iconNav: 22;
     readonly iconChip: 16;
     readonly iconTile: 26;

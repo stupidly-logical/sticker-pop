@@ -26,6 +26,8 @@ disappears.
 | PopAddButton | pink sticker, radius 20, −6° | — | — | — | moves 4/4 |
 | PopQuickAddRow | white −1.5°, pink +1.5°, mint −1° | — | — | — | moves 4/4 |
 | PopSheet | paper, 2.5 top line, radius 24 top | — | — | inline error above the button | — |
+| PopSelect | field: white, 2 outline, radius 14, chevron; list rows white | chosen row yellow, 800, tick | paper fill, muted text, no list | 2.5 outline + ⚠ message | open: 2.5 outline |
+| PopMenu | white sticker, radius 16, 4/4 shadow, rows 15/700 | — | row inkMuted, no taps | — | row (hover, focus, press): yellow |
 | PopDialog | paper card, 6/6 shadow, 20 inset | — | — | — | — |
 | Snackbar | ink, 15/700 white, yellow action; 3 s / 6 s | — | — | never used for errors | — |
 | PopProgressBar | white track 18, 2 outline, bright fill clipped to radius 7, straight 2 ink leading edge | — | — | — | — |

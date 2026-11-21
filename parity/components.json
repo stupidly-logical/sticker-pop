@@ -203,6 +203,34 @@
       ]
     },
     {
+      "id": "select",
+      "flutter": [
+        "PopSelect",
+        "PopSelectOption",
+        "showPopSelectSheet",
+        "PopOptionRow"
+      ],
+      "compose": [
+        "PopSelect",
+        "PopSelectOption",
+        "PopSelectSheet",
+        "PopOptionRow"
+      ],
+      "swiftui": [
+        "PopSelect",
+        "PopSelectOption",
+        "PopSelectSheet",
+        "PopOptionRow",
+        "popOverlayHost"
+      ],
+      "web": [
+        ".sp-select",
+        ".sp-select__trigger",
+        ".sp-select__list",
+        "wirePopSelects()"
+      ]
+    },
+    {
       "id": "amount-field",
       "flutter": [
         "PopAmountField"
@@ -356,6 +384,35 @@
       "web": [
         ".sp-dialog",
         "openPop()"
+      ]
+    },
+    {
+      "id": "menu",
+      "flutter": [
+        "PopMenu",
+        "PopMenuItem",
+        "PopMenuDivider",
+        "PopMenuPanel"
+      ],
+      "compose": [
+        "PopMenu",
+        "PopMenuItem",
+        "PopMenuDivider",
+        "PopMenuPanel"
+      ],
+      "swiftui": [
+        "PopMenu",
+        "PopMenuItem",
+        "PopMenuEntry",
+        "PopMenuPanel",
+        "popOverlayHost"
+      ],
+      "web": [
+        ".sp-menu",
+        ".sp-menu__item",
+        ".sp-menu__divider",
+        "wirePopMenus()",
+        "placePopover()"
       ]
     },
     {

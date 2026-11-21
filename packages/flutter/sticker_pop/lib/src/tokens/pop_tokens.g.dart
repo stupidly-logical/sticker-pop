@@ -116,6 +116,8 @@ abstract final class PopTextSpecs {
   static const PopTextSpec inputHint = PopTextSpec(size: 16.0, weight: FontWeight.w600, color: PopColors.inkMuted);
   static const PopTextSpec body = PopTextSpec(size: 15.0, weight: FontWeight.w600, height: 1.3);
   static const PopTextSpec tileLabel = PopTextSpec(size: 15.0, weight: FontWeight.w800);
+  /// Menu rows; 800 (tileLabel) for the selected or destructive row
+  static const PopTextSpec menuItem = PopTextSpec(size: 15.0, weight: FontWeight.w700);
   static const PopTextSpec textButton = PopTextSpec(size: 15.0, weight: FontWeight.w800);
   static const PopTextSpec chip = PopTextSpec(size: 14.0, weight: FontWeight.w700);
   static const PopTextSpec chipSelected = PopTextSpec(size: 14.0, weight: FontWeight.w800);
@@ -173,6 +175,8 @@ abstract final class PopRadius {
   static const double badge = 10.0;
   static const double sheet = 24.0;
   static const double snackbar = 16.0;
+  /// Menus and select popovers
+  static const double menu = 16.0;
   static const double spotlight = 18.0;
   static const double switchTrack = 15.0;
   static const double navPill = 12.0;
@@ -220,6 +224,10 @@ abstract final class PopSize {
   static const double swatch = 12.0;
   /// Add menu option sticker (square, radius tile)
   static const double dialOption = 56.0;
+  static const double menuMinWidth = 180.0;
+  static const double menuMaxWidth = 280.0;
+  /// Taller menus and select lists scroll
+  static const double menuMaxHeight = 360.0;
   static const double iconNav = 22.0;
   static const double iconChip = 16.0;
   static const double iconTile = 26.0;

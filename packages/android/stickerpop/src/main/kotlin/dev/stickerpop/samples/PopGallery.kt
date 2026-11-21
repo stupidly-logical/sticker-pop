@@ -21,7 +21,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.AccountBalance
 import androidx.compose.material.icons.rounded.Bolt
+import androidx.compose.material.icons.rounded.ContentCopy
+import androidx.compose.material.icons.rounded.CreditCard
+import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material.icons.rounded.Payments
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.DirectionsCar
 import androidx.compose.material.icons.rounded.DocumentScanner
@@ -93,6 +99,7 @@ fun PopGallery(onOpenHome: () -> Unit = {}) {
     var note by remember { mutableStateOf("") }
     var payee by remember { mutableStateOf("") }
     var amount by remember { mutableStateOf("1250.50") }
+    var account by remember { mutableStateOf<String?>("hdfc") }
     var showSheet by remember { mutableStateOf(false) }
     var showDialog by remember { mutableStateOf(false) }
     val snack = rememberPopSnackbarState()
@@ -216,6 +223,27 @@ fun PopGallery(onOpenHome: () -> Unit = {}) {
                     StickerCard(Modifier.fillMaxWidth(), padding = androidx.compose.foundation.layout.PaddingValues(0.dp)) {
                         PopFieldRow("Paid to") { PopText("Chai Point", PopTextSpecs.rowTitle) }
                         PopFieldRow("Account", showChevron = true, divider = false, onClick = {}) { PopText("HDFC ·· 4821", PopTextSpecs.rowTitle) }
+                    }
+                }
+
+                Section("Select and menu") {
+                    val accounts = listOf(
+                        PopSelectOption("hdfc", "HDFC", Icons.Rounded.AccountBalance, caption = "Savings ·· 4821"),
+                        PopSelectOption("icici", "ICICI", Icons.Rounded.CreditCard, caption = "Credit card ·· 4411"),
+                        PopSelectOption("cash", "Cash", Icons.Rounded.Payments),
+                    )
+                    PopSelect(accounts, account, { account = it }, label = "Account")
+                    PopSelect(accounts, null, {}, label = "Paid from", hint = "Choose an account", error = "Choose where the money came from.")
+                    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                        PopText("Chai Point", PopTextSpecs.rowTitle, Modifier.weight(1f))
+                        PopMenu(
+                            listOf(
+                                PopMenuItem("Edit", Icons.Rounded.Edit) { snack.show("Edit opens here") },
+                                PopMenuItem("Duplicate", Icons.Rounded.ContentCopy) { snack.show("Duplicated") },
+                                PopMenuDivider,
+                                PopMenuItem("Delete", Icons.Rounded.Delete, destructive = true) { snack.show("Deleted", "Undo") },
+                            ),
+                        ) { toggle, _ -> PopIconButton(Icons.Rounded.MoreHoriz, "More for Chai Point", onClick = toggle) }
                     }
                 }
 

@@ -8,6 +8,10 @@ All four libraries share one version.
   components each, formatting helpers checked against shared cases, a
   gallery and Home sample per platform, screenshot tests per platform, the
   docs site, and CI for all four.
+- Select (dropdown) and Menu on all four platforms. Select opens a sheet
+  list on phones and a popover list on the web (built on a native
+  `<select>`, so forms keep working); Menu is a sticker popover of actions.
+  SwiftUI adds `.popOverlayHost()` so sheets and menus draw above the screen.
 - Fill and gradient classes on the web (`.sp-fill-*`) live in a generated
   `fills.css` loaded after the components, so they always win.
 - Add menu (design preview, web first): the nav add button can open a

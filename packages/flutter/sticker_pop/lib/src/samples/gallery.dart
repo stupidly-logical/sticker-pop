@@ -20,6 +20,13 @@ class _PopGalleryState extends State<PopGallery> {
   bool _switch = true;
   int _nav = 0;
   final Set<String> _tags = <String>{'Office', 'Trip'};
+  String? _account = 'hdfc';
+
+  static const List<PopSelectOption<String>> _accounts = <PopSelectOption<String>>[
+    PopSelectOption(value: 'hdfc', label: 'HDFC', icon: Icons.account_balance_rounded, caption: 'Savings ·· 4821'),
+    PopSelectOption(value: 'icici', label: 'ICICI', icon: Icons.credit_card_rounded, caption: 'Credit card ·· 4411'),
+    PopSelectOption(value: 'cash', label: 'Cash', icon: Icons.payments_rounded),
+  ];
   final TextEditingController _amount = TextEditingController(text: '1250.50');
 
   @override
@@ -370,6 +377,51 @@ class _PopGalleryState extends State<PopGallery> {
                         ),
                       ],
                     ),
+                  ),
+                ],
+              ),
+
+              _Section(
+                'Select and menu',
+                children: <Widget>[
+                  PopSelect<String>(
+                    label: 'Account',
+                    options: _accounts,
+                    value: _account,
+                    onChanged: (v) => setState(() => _account = v),
+                  ),
+                  const SizedBox(height: PopSpace.md),
+                  PopSelect<String>(
+                    label: 'Paid from',
+                    hint: 'Choose an account',
+                    options: _accounts,
+                    value: null,
+                    onChanged: (_) {},
+                    errorText: 'Choose where the money came from.',
+                  ),
+                  const SizedBox(height: PopSpace.lg),
+                  Row(
+                    children: <Widget>[
+                      const Expanded(child: PopText('Chai Point', spec: PopTextSpecs.rowTitle)),
+                      PopMenu(
+                        items: <PopMenuEntry>[
+                          PopMenuItem(label: 'Edit', icon: Icons.edit_rounded, onTap: () => showPopSnack(context, 'Edit opens here')),
+                          PopMenuItem(label: 'Duplicate', icon: Icons.content_copy_rounded, onTap: () => showPopSnack(context, 'Duplicated')),
+                          const PopMenuDivider(),
+                          PopMenuItem(
+                            label: 'Delete',
+                            icon: Icons.delete_rounded,
+                            destructive: true,
+                            onTap: () => showPopSnack(context, 'Deleted', actionLabel: 'Undo', onAction: () {}),
+                          ),
+                        ],
+                        builder: (context, toggle, open) => PopIconButton(
+                          icon: Icons.more_horiz_rounded,
+                          label: 'More for Chai Point',
+                          onTap: toggle,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

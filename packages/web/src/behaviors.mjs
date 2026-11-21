@@ -6,11 +6,14 @@ const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&
 
 /**
  * Makes chips, segments, switches and nav items in `root` toggle their ARIA
- * state on click (aria-pressed, aria-checked, aria-current), and wires add menus.
+ * state on click (aria-pressed, aria-checked, aria-current), and wires add menus, menus
+ * and selects.
  */
 export function wirePopControls(root = document) {
   stabilizePopChips(root);
   wirePopDials(root);
+  wirePopMenus(root);
+  wirePopSelects(root);
   root.querySelectorAll('.sp-chip[aria-pressed]:not(:disabled)').forEach((b) =>
     b.addEventListener('click', () => b.setAttribute('aria-pressed', String(b.getAttribute('aria-pressed') !== 'true'))));
   root.querySelectorAll('.sp-segmented:not([aria-disabled]) > button').forEach((b) =>
@@ -246,5 +249,213 @@ export function wirePopDials(root = document) {
       setTimeout(() => { set(false); o.removeAttribute('data-chosen'); }, tokens.motion.dialPress * motionScale(dial));
     }));
     dial.popDial = { open: () => set(true, { focus: false }), close: () => set(false, { focus: false }), get isOpen() { return open; } };
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Menus and selects (popovers)
+
+const EDGE = tokens.space.sm;
+
+/**
+ * Places a popover next to its anchor: below, lined up with the anchor's
+ * trailing edge (`align: 'end'`, menus) or leading edge (`'start'`, selects),
+ * flipped above when there's no room, and kept 8 from the window edges.
+ */
+export function placePopover(pop, anchor, { align = 'end', matchWidth = false } = {}) {
+  const a = anchor.getBoundingClientRect();
+  if (matchWidth) pop.style.minWidth = `${Math.max(a.width, tokens.size.menuMinWidth)}px`;
+  const w = pop.offsetWidth;
+  const h = pop.offsetHeight;
+  const vw = document.documentElement.clientWidth;
+  const vh = window.innerHeight;
+  let x = align === 'end' ? a.right - w : a.left;
+  x = Math.min(Math.max(x, EDGE), Math.max(EDGE, vw - w - EDGE));
+  const below = a.bottom + EDGE;
+  const above = below + h > vh - EDGE && a.top - EDGE - h >= EDGE;
+  const y = above ? a.top - EDGE - h : Math.min(below, Math.max(EDGE, vh - h - EDGE));
+  pop.style.left = `${Math.round(x)}px`;
+  pop.style.top = `${Math.round(y)}px`;
+  pop.classList.toggle('is-above', above);
+}
+
+/** Keeps an open popover next to its anchor while the page scrolls or resizes. */
+function follow(pop, anchor, opts) {
+  const place = () => pop.matches(':popover-open') && placePopover(pop, anchor, opts);
+  pop.addEventListener('toggle', (e) => {
+    if (e.newState === 'open') {
+      window.addEventListener('scroll', place, true);
+      window.addEventListener('resize', place);
+    } else {
+      window.removeEventListener('scroll', place, true);
+      window.removeEventListener('resize', place);
+    }
+  });
+}
+
+/** Arrow keys, Home and End move focus between `items`. */
+function roveFocus(container, items) {
+  container.addEventListener('keydown', (e) => {
+    const list = items().filter((x) => !x.disabled && x.getAttribute('aria-disabled') !== 'true');
+    const i = list.indexOf(document.activeElement);
+    const to = { ArrowDown: i + 1, ArrowUp: i - 1, Home: 0, End: list.length - 1 }[e.key];
+    if (to === undefined || !list.length) return;
+    e.preventDefault();
+    list[(to + list.length) % list.length].focus();
+  });
+}
+
+const supportsPopover = typeof HTMLElement !== 'undefined' && 'popover' in HTMLElement.prototype;
+
+/**
+ * Wires every `.sp-menu[popover]` in `root` that a `[popovertarget]` button
+ * opens: positions it under the button (trailing edges lined up), moves focus
+ * to the first item, arrow keys move between items, and picking an item
+ * closes it. The browser handles Escape and taps outside.
+ */
+export function wirePopMenus(root = document) {
+  if (!supportsPopover) return;
+  root.querySelectorAll('.sp-menu[popover]:not(.sp-select__list)').forEach((menu) => {
+    if (menu.dataset.popWired) return;
+    menu.dataset.popWired = '1';
+    if (!menu.getAttribute('role')) menu.setAttribute('role', 'menu');
+    const items = () => [...menu.querySelectorAll('.sp-menu__item')];
+    items().forEach((it) => { if (!it.getAttribute('role')) it.setAttribute('role', 'menuitem'); });
+    const invoker = () => document.querySelector(`[popovertarget="${CSS.escape(menu.id)}"]`);
+    invoker()?.setAttribute('aria-haspopup', 'menu');
+    menu.addEventListener('toggle', (e) => {
+      const button = invoker();
+      button?.setAttribute('aria-expanded', String(e.newState === 'open'));
+      if (e.newState !== 'open' || !button) return;
+      placePopover(menu, button, { align: 'end' });
+      items().find((x) => !x.disabled)?.focus({ preventScroll: true });
+    });
+    const button = invoker();
+    if (button) follow(menu, button, { align: 'end' });
+    roveFocus(menu, items);
+    menu.addEventListener('keydown', (e) => { if (e.key === 'Tab') menu.hidePopover(); });
+    menu.addEventListener('click', (e) => {
+      const item = e.target.closest('.sp-menu__item');
+      if (item && !item.disabled && item.getAttribute('aria-disabled') !== 'true') menu.hidePopover();
+    });
+  });
+}
+
+let popSeq = 0;
+
+/**
+ * Turns every native `select.sp-select` in `root` into a Sticker Pop select:
+ * a field-style trigger and a listbox popover of sticker rows (the chosen one
+ * yellow with a tick). The native select stays in the DOM and in sync, so
+ * forms, `change` events and `select.value` keep working. Options can carry
+ * `data-icon` (a Material Symbols name) and `data-caption`; an option with
+ * `value=""` is the placeholder. Without popover support the native select is
+ * left as it is (still styled).
+ */
+export function wirePopSelects(root = document) {
+  if (!supportsPopover) return;
+  root.querySelectorAll('select.sp-select').forEach((select) => {
+    if (select.dataset.popWired) return;
+    select.dataset.popWired = '1';
+    const n = ++popSeq;
+    const wrap = document.createElement('div');
+    wrap.className = 'sp-select-wrap';
+    select.before(wrap);
+    wrap.append(select);
+    select.tabIndex = -1;
+    select.setAttribute('aria-hidden', 'true');
+
+    const trigger = document.createElement('button');
+    trigger.type = 'button';
+    trigger.className = 'sp-select__trigger';
+    trigger.setAttribute('aria-haspopup', 'listbox');
+    trigger.setAttribute('aria-expanded', 'false');
+    const list = document.createElement('div');
+    list.className = 'sp-menu sp-select__list';
+    list.id = `sp-select-list-${n}`;
+    list.setAttribute('role', 'listbox');
+    list.popover = 'auto';
+    trigger.setAttribute('aria-controls', list.id);
+    trigger.popoverTargetElement = list;
+    wrap.append(trigger, list);
+
+    const label = select.id ? document.querySelector(`label[for="${CSS.escape(select.id)}"]`) : null;
+    const valueId = `sp-select-value-${n}`;
+    if (label) {
+      label.id ||= `sp-select-label-${n}`;
+      trigger.setAttribute('aria-labelledby', `${label.id} ${valueId}`);
+      label.addEventListener('click', (e) => { e.preventDefault(); trigger.focus(); });
+    } else if (select.getAttribute('aria-label')) {
+      trigger.setAttribute('aria-label', select.getAttribute('aria-label'));
+    }
+
+    const rows = () => [...list.querySelectorAll('.sp-menu__item')];
+    const build = () => {
+      list.replaceChildren(...[...select.options].filter((o) => o.value !== '' && !o.hidden).map((o) => {
+        const row = document.createElement('div');
+        row.className = 'sp-menu__item';
+        row.setAttribute('role', 'option');
+        row.tabIndex = -1;
+        row.dataset.value = o.value;
+        if (o.disabled) row.setAttribute('aria-disabled', 'true');
+        row.innerHTML = `${o.dataset.icon ? `<span class="sp-icon" aria-hidden="true">${esc(o.dataset.icon)}</span>` : ''}<span class="sp-menu__text"><span class="sp-menu__label">${esc(o.textContent.trim())}</span>${o.dataset.caption ? `<span class="sp-menu__caption">${esc(o.dataset.caption)}</span>` : ''}</span><span class="sp-icon sp-menu__check" aria-hidden="true">check</span>`;
+        return row;
+      }));
+    };
+    const render = () => {
+      const o = select.selectedOptions[0];
+      const placeholder = !o || o.value === '';
+      const icon = !placeholder && o.dataset.icon ? `<span class="sp-icon" aria-hidden="true">${esc(o.dataset.icon)}</span>` : '';
+      trigger.innerHTML = `${icon}<span class="sp-select__value${placeholder ? ' is-placeholder' : ''}" id="${valueId}">${esc(o?.textContent.trim() ?? '')}</span><span class="sp-icon sp-select__chevron" aria-hidden="true">expand_more</span>`;
+      trigger.disabled = select.disabled;
+      wrap.classList.toggle('is-invalid', select.getAttribute('aria-invalid') === 'true');
+      rows().forEach((r) => r.setAttribute('aria-selected', String(r.dataset.value === select.value && !placeholder)));
+    };
+    const pick = (row) => {
+      if (!row || row.getAttribute('aria-disabled') === 'true') return;
+      if (select.value !== row.dataset.value) {
+        select.value = row.dataset.value;
+        select.dispatchEvent(new Event('input', { bubbles: true }));
+        select.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+      render();
+      list.hidePopover();
+    };
+
+    build();
+    render();
+    follow(list, trigger, { align: 'start', matchWidth: true });
+    roveFocus(list, rows);
+    list.addEventListener('toggle', (e) => {
+      const open = e.newState === 'open';
+      trigger.setAttribute('aria-expanded', String(open));
+      if (open) {
+        placePopover(list, trigger, { align: 'start', matchWidth: true });
+        const current = rows().find((r) => r.getAttribute('aria-selected') === 'true') ?? rows()[0];
+        current?.focus({ preventScroll: true });
+        current?.scrollIntoView({ block: 'nearest' });
+      } else if (list.contains(document.activeElement) || document.activeElement === document.body) {
+        trigger.focus({ preventScroll: true });
+      }
+    });
+    list.addEventListener('click', (e) => pick(e.target.closest('.sp-menu__item')));
+    let typed = '';
+    let typedAt = 0;
+    list.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(document.activeElement.closest?.('.sp-menu__item')); return; }
+      if (e.key === 'Tab') { list.hidePopover(); return; }
+      if (e.key.length === 1 && /\S/.test(e.key)) {
+        // Type-ahead: jump to the first option starting with what was typed.
+        typed = Date.now() - typedAt > 700 ? e.key : typed + e.key;
+        typedAt = Date.now();
+        rows().find((r) => r.textContent.trim().toLowerCase().startsWith(typed.toLowerCase()))?.focus();
+      }
+    });
+    trigger.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); list.showPopover(); }
+    });
+    select.addEventListener('change', render);
+    new MutationObserver(() => { build(); render(); }).observe(select, { childList: true, subtree: true, attributes: true, attributeFilter: ['disabled', 'aria-invalid'] });
+    select.popSelect = { refresh: () => { build(); render(); } };
   });
 }

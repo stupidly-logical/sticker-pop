@@ -8,6 +8,12 @@ private let slices = [
     PopDatum("Shopping", value: 10, color: PopColors.pink),
 ]
 
+private let accounts = [
+    PopSelectOption("HDFC", value: "hdfc", systemImage: "building.columns", caption: "Savings ·· 4821"),
+    PopSelectOption("ICICI", value: "icici", systemImage: "creditcard", caption: "Credit card ·· 4411"),
+    PopSelectOption("Cash", value: "cash", systemImage: "banknote"),
+]
+
 private struct GallerySection<Content: View>: View {
     let title: String
     @ViewBuilder let content: Content
@@ -35,6 +41,8 @@ public struct PopGallery: View {
     @State private var payee = ""
     @State private var account = "HDFC ·· 4821"
     @State private var amount = "1250.50"
+    @State private var account: String? = "hdfc"
+    @State private var paidFrom: String? = nil
     @State private var name = ""
     @State private var showSheet = false
     @State private var showDialog = false
@@ -166,6 +174,24 @@ public struct PopGallery: View {
                     }
                 }
 
+                GallerySection(title: "Select and menu") {
+                    PopSelect(accounts, selection: $account, label: "Account")
+                    PopSelect(accounts, selection: $paidFrom, label: "Paid from", hint: "Choose an account",
+                              error: "Choose where the money came from.")
+                    HStack {
+                        PopText("Chai Point", PopTextSpecs.rowTitle)
+                        Spacer()
+                        PopMenu([
+                            .item("Edit", systemImage: "pencil") { snack.show("Edit opens here") },
+                            .item("Duplicate", systemImage: "doc.on.doc") { snack.show("Duplicated") },
+                            .divider,
+                            .item("Delete", systemImage: "trash", destructive: true) { snack.show("Deleted", actionLabel: "Undo") },
+                        ]) { toggle in
+                            PopIconButton(systemImage: "ellipsis", label: "More for Chai Point", action: toggle)
+                        }
+                    }
+                }
+
                 GallerySection(title: "Badges and category dots") {
                     PopWrap(spacing: PopSpace.md, runSpacing: PopSpace.md) {
                         StickerBadge("UPI")
@@ -273,6 +299,7 @@ public struct PopGallery: View {
                       onCancel: { showDialog = false })
         }
         .popTourOverlay(tour)
+        .popOverlayHost()
     }
 }
 

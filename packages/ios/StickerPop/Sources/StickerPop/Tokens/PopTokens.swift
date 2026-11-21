@@ -104,6 +104,8 @@ public enum PopTextSpecs {
     public static let inputHint = PopTextSpec(size: 16.0, weight: 600, color: .inkMuted)
     public static let body = PopTextSpec(size: 15.0, weight: 600, lineHeight: 1.3)
     public static let tileLabel = PopTextSpec(size: 15.0, weight: 800)
+    /// Menu rows; 800 (tileLabel) for the selected or destructive row
+    public static let menuItem = PopTextSpec(size: 15.0, weight: 700)
     public static let textButton = PopTextSpec(size: 15.0, weight: 800)
     public static let chip = PopTextSpec(size: 14.0, weight: 700)
     public static let chipSelected = PopTextSpec(size: 14.0, weight: 800)
@@ -161,6 +163,8 @@ public enum PopRadius {
     public static let badge: CGFloat = 10.0
     public static let sheet: CGFloat = 24.0
     public static let snackbar: CGFloat = 16.0
+    /// Menus and select popovers
+    public static let menu: CGFloat = 16.0
     public static let spotlight: CGFloat = 18.0
     public static let switchTrack: CGFloat = 15.0
     public static let navPill: CGFloat = 12.0
@@ -208,6 +212,10 @@ public enum PopSize {
     public static let swatch: CGFloat = 12.0
     /// Add menu option sticker (square, radius tile)
     public static let dialOption: CGFloat = 56.0
+    public static let menuMinWidth: CGFloat = 180.0
+    public static let menuMaxWidth: CGFloat = 280.0
+    /// Taller menus and select lists scroll
+    public static let menuMaxHeight: CGFloat = 360.0
     public static let iconNav: CGFloat = 22.0
     public static let iconChip: CGFloat = 16.0
     public static let iconTile: CGFloat = 26.0

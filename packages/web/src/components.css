@@ -187,6 +187,82 @@ button.sp-card:active { translate: var(--sp-shadow-regular) var(--sp-shadow-regu
 .sp-amount__row input { flex: 1; width: 0; min-width: 0; background: none; border: 0; font: inherit; color: inherit; padding: 6px 0; }
 .sp-amount__row input:focus { outline: none; }
 
+/* Select: a native <select class="sp-select"> styled as a field. With
+   wirePopSelects() it becomes a trigger plus a sticker listbox popover; the
+   native select stays in the form, in sync. */
+select.sp-select {
+  appearance: none; -webkit-appearance: none;
+  width: 100%; min-height: var(--sp-size-tap-target); padding: 0 calc(var(--sp-space-md) + 28px) 0 var(--sp-space-md);
+  background: var(--sp-color-white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5' fill='none' stroke='%23141414' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right var(--sp-space-md) center;
+  border: var(--sp-border-thin) solid var(--sp-color-ink); border-radius: var(--sp-radius-field);
+  font: inherit; font-size: 16px; font-weight: 700; font-variation-settings: 'wght' 700; color: var(--sp-color-ink);
+}
+select.sp-select:focus { outline: none; border-width: var(--sp-border-regular); }
+select.sp-select[aria-invalid='true'] { border-width: var(--sp-border-regular); }
+select.sp-select:disabled { background-color: var(--sp-color-paper); color: var(--sp-color-ink-muted); }
+
+.sp-select-wrap { position: relative; display: grid; }
+.sp-select-wrap > select.sp-select { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; pointer-events: none; }
+.sp-select__trigger {
+  display: flex; align-items: center; gap: var(--sp-space-sm);
+  width: 100%; min-height: var(--sp-size-tap-target); padding: 10px var(--sp-space-md);
+  background: var(--sp-color-white); color: var(--sp-color-ink);
+  border: var(--sp-border-thin) solid var(--sp-color-ink); border-radius: var(--sp-radius-field);
+  font: inherit; font-size: 16px; font-weight: 700; font-variation-settings: 'wght' 700; text-align: left; cursor: pointer;
+}
+.sp-select__trigger:focus-visible, .sp-select__trigger[aria-expanded='true'], .sp-select-wrap.is-invalid .sp-select__trigger { outline: none; border-width: var(--sp-border-regular); padding-inline: calc(var(--sp-space-md) - 0.5px); }
+.sp-select__trigger:disabled { background: var(--sp-color-paper); color: var(--sp-color-ink-muted); cursor: default; }
+.sp-select__value { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sp-select__value.is-placeholder { color: var(--sp-color-ink-muted); font-weight: 600; font-variation-settings: 'wght' 600; }
+.sp-select__chevron { transition: rotate var(--sp-motion-fade) ease-out; }
+.sp-select__trigger[aria-expanded='true'] .sp-select__chevron { rotate: 180deg; }
+
+/* Menu: a white sticker popover of actions (also the select's listbox).
+   Uses the HTML popover attribute: top layer, light dismiss and Escape come
+   from the browser; behaviors.mjs positions it next to its trigger. */
+.sp-menu {
+  min-width: var(--sp-size-menu-min-width); max-width: min(var(--sp-size-menu-max-width), calc(100vw - 2 * var(--sp-space-sm)));
+  max-height: min(var(--sp-size-menu-max-height), calc(100vh - 2 * var(--sp-space-sm)));
+  overflow: auto; overscroll-behavior: contain;
+  padding: 6px 0; margin: 0;
+  background: var(--sp-color-white); color: var(--sp-color-ink);
+  border: var(--sp-border-regular) solid var(--sp-color-ink); border-radius: var(--sp-radius-menu);
+  box-shadow: var(--sp-shadow-regular) var(--sp-shadow-regular) 0 var(--sp-color-ink);
+}
+.sp-menu[popover] {
+  position: fixed; inset: auto;
+  opacity: 1; scale: 1; transform-origin: top right;
+  transition: opacity var(--sp-motion-fade) ease-out, scale var(--sp-motion-fade) ease-out,
+    display var(--sp-motion-fade) allow-discrete, overlay var(--sp-motion-fade) allow-discrete;
+}
+.sp-menu[popover]:not(:popover-open) { opacity: 0; scale: 0.96; }
+@starting-style { .sp-menu[popover]:popover-open { opacity: 0; scale: 0.96; } }
+.sp-menu.is-above { transform-origin: bottom right; }
+.sp-select__list[popover] { transform-origin: top left; max-width: calc(100vw - 2 * var(--sp-space-sm)); }
+.sp-menu__item {
+  display: flex; align-items: center; gap: var(--sp-space-md);
+  width: 100%; min-height: var(--sp-size-tap-target); padding: 10px var(--sp-space-lg);
+  background: none; border: 0; color: inherit; text-align: left; cursor: pointer;
+  font: inherit; font-size: 15px; font-weight: 700; font-variation-settings: 'wght' 700;
+}
+.sp-menu__item:hover, .sp-menu__item:focus-visible { outline: none; background: var(--sp-color-yellow); }
+.sp-menu__item:disabled, .sp-menu__item[aria-disabled='true'] { color: var(--sp-color-ink-muted); cursor: default; background: none; }
+.sp-menu__item--destructive { font-weight: 800; font-variation-settings: 'wght' 800; }
+.sp-menu__divider { height: var(--sp-border-divider); margin: 6px 0; border: 0; background: var(--sp-color-divider); }
+.sp-menu__text { flex: 1; min-width: 0; display: grid; }
+.sp-menu__caption { font-size: 13px; font-weight: 600; font-variation-settings: 'wght' 600; color: var(--sp-color-ink-muted); }
+.sp-menu__check { visibility: hidden; }
+/* In a listbox the chosen option is yellow with a tick; hover and focus are paper. */
+.sp-select__list .sp-menu__item { font-size: 16px; }
+.sp-select__list .sp-menu__item:hover, .sp-select__list .sp-menu__item:focus-visible { background: var(--sp-color-paper); }
+.sp-select__list .sp-menu__item[aria-selected='true'] { background: var(--sp-color-yellow); font-weight: 800; font-variation-settings: 'wght' 800; }
+.sp-select__list .sp-menu__item[aria-selected='true'] .sp-menu__check { visibility: visible; }
+@media (prefers-reduced-motion: reduce) {
+  .sp-menu[popover], .sp-menu[popover]:not(:popover-open) { scale: 1; }
+  @starting-style { .sp-menu[popover]:popover-open { scale: 1; } }
+  .sp-select__chevron { transition: none; }
+}
+
 /* Field row */
 .sp-field-row { display: flex; align-items: center; min-height: var(--sp-size-row-min); padding: 6px 14px; border-bottom: var(--sp-border-divider) solid var(--sp-color-divider); }
 .sp-field-row:last-child { border-bottom: 0; }

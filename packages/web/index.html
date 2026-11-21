@@ -104,6 +104,24 @@
     </div>
   </section>
 
+  <section><h2 class="sp-text-section-heading">Select and menu</h2>
+    <div class="sp-field"><label class="sp-field__label" for="g-account">Account</label>
+      <select class="sp-select" id="g-account"><option value="" disabled hidden>Choose an account</option><option value="hdfc" data-icon="account_balance" data-caption="Savings ·· 4821" selected>HDFC</option><option value="icici" data-icon="credit_card" data-caption="Credit card ·· 4411">ICICI</option><option value="cash" data-icon="payments">Cash</option></select></div>
+    <div class="sp-field"><label class="sp-field__label" for="g-paid">Paid from</label>
+      <select class="sp-select" id="g-paid" aria-invalid="true"><option value="" disabled selected hidden>Choose an account</option><option value="hdfc" data-icon="account_balance">HDFC</option><option value="cash" data-icon="payments">Cash</option></select>
+      <span class="sp-form-error">Choose where the money came from.</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <span class="sp-text-row-title">Chai Point</span>
+      <button class="sp-icon-button" popovertarget="g-menu" aria-label="More for Chai Point"><span class="sp-icon">more_horiz</span></button>
+      <div class="sp-menu" id="g-menu" popover>
+        <button class="sp-menu__item"><span class="sp-icon">edit</span>Edit</button>
+        <button class="sp-menu__item"><span class="sp-icon">content_copy</span>Duplicate</button>
+        <hr class="sp-menu__divider">
+        <button class="sp-menu__item sp-menu__item--destructive"><span class="sp-icon">delete</span>Delete</button>
+      </div>
+    </div>
+  </section>
+
   <section><h2 class="sp-text-section-heading">Badges and category dots</h2>
     <div class="row">
       <span class="sp-badge">UPI</span>

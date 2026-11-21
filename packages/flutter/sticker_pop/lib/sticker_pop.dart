@@ -8,6 +8,7 @@ export 'src/components/badges_and_lists.dart';
 export 'src/components/buttons.dart';
 export 'src/components/data_viz.dart';
 export 'src/components/inputs.dart';
+export 'src/components/menus.dart';
 export 'src/components/navigation.dart';
 export 'src/components/overlays.dart';
 export 'src/components/selection.dart';

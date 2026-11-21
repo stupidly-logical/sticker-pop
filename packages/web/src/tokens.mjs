@@ -137,6 +137,10 @@ export const tokens = {
       "size": 15,
       "weight": 800
     },
+    "menuItem": {
+      "size": 15,
+      "weight": 700
+    },
     "textButton": {
       "size": 15,
       "weight": 800
@@ -236,6 +240,7 @@ export const tokens = {
     "badge": 10,
     "sheet": 24,
     "snackbar": 16,
+    "menu": 16,
     "spotlight": 18,
     "switchTrack": 15,
     "navPill": 12,
@@ -276,6 +281,9 @@ export const tokens = {
     "progressDotCurrent": 22,
     "swatch": 12,
     "dialOption": 56,
+    "menuMinWidth": 180,
+    "menuMaxWidth": 280,
+    "menuMaxHeight": 360,
     "iconNav": 22,
     "iconChip": 16,
     "iconTile": 26,

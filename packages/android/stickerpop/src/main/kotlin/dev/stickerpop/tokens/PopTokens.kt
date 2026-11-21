@@ -113,6 +113,8 @@ object PopTextSpecs {
     val inputHint = PopTextSpec(size = 16.sp, weight = FontWeight(600), color = PopColors.inkMuted)
     val body = PopTextSpec(size = 15.sp, weight = FontWeight(600), lineHeight = 1.3f)
     val tileLabel = PopTextSpec(size = 15.sp, weight = FontWeight(800))
+    /** Menu rows; 800 (tileLabel) for the selected or destructive row */
+    val menuItem = PopTextSpec(size = 15.sp, weight = FontWeight(700))
     val textButton = PopTextSpec(size = 15.sp, weight = FontWeight(800))
     val chip = PopTextSpec(size = 14.sp, weight = FontWeight(700))
     val chipSelected = PopTextSpec(size = 14.sp, weight = FontWeight(800))
@@ -170,6 +172,8 @@ object PopRadius {
     val badge: Dp = 10.dp
     val sheet: Dp = 24.dp
     val snackbar: Dp = 16.dp
+    /** Menus and select popovers */
+    val menu: Dp = 16.dp
     val spotlight: Dp = 18.dp
     val switchTrack: Dp = 15.dp
     val navPill: Dp = 12.dp
@@ -216,6 +220,9 @@ object PopSize {
     val progressDotCurrent: Dp = 22.dp
     val swatch: Dp = 12.dp
     val dialOption: Dp = 56.dp
+    val menuMinWidth: Dp = 180.dp
+    val menuMaxWidth: Dp = 280.dp
+    val menuMaxHeight: Dp = 360.dp
     val iconNav: Dp = 22.dp
     val iconChip: Dp = 16.dp
     val iconTile: Dp = 26.dp

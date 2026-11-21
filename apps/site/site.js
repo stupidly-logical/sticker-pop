@@ -6,7 +6,7 @@ import { guidePages } from './content/guides.js';
 import { foundationPages } from './content/foundations.js';
 import { otherPages } from './content/pages.js';
 import { esc, kebab, store, contrast } from './content/util.js';
-import { stabilizePopChips, wirePopDials, layoutPopDial } from './sp/behaviors.mjs';
+import { stabilizePopChips, wirePopDials, layoutPopDial, wirePopMenus, wirePopSelects } from './sp/behaviors.mjs';
 
 const VERSION = '0.1.0';
 const main = document.getElementById('main');
@@ -86,6 +86,8 @@ function wireDialLab(root) {
 /** Makes the demos interactive: chips, segments, switches, nav, snackbars, dialogs. */
 function wireDemos(root) {
   stabilizePopChips(root);
+  wirePopMenus(root);
+  wirePopSelects(root);
   root.querySelectorAll('.sp-chip[aria-pressed]:not(:disabled)').forEach((b) =>
     b.addEventListener('click', () => b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') !== 'true')));
   root.querySelectorAll('.sp-segmented:not([aria-disabled]) > button').forEach((b) =>

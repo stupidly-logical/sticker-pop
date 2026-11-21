@@ -46,6 +46,7 @@
   --sp-radius-badge: 10px;
   --sp-radius-sheet: 24px;
   --sp-radius-snackbar: 16px;
+  --sp-radius-menu: 16px;
   --sp-radius-spotlight: 18px;
   --sp-radius-switch-track: 15px;
   --sp-radius-nav-pill: 12px;
@@ -80,6 +81,9 @@
   --sp-size-progress-dot-current: 22px;
   --sp-size-swatch: 12px;
   --sp-size-dial-option: 56px;
+  --sp-size-menu-min-width: 180px;
+  --sp-size-menu-max-width: 280px;
+  --sp-size-menu-max-height: 360px;
   --sp-size-icon-nav: 22px;
   --sp-size-icon-chip: 16px;
   --sp-size-icon-tile: 26px;
@@ -215,6 +219,13 @@
   font-size: 15px;
   font-weight: 800;
   font-variation-settings: 'wght' 800;
+  color: var(--sp-color-ink);
+}
+.sp-text-menu-item {
+  font-family: var(--sp-font-family);
+  font-size: 15px;
+  font-weight: 700;
+  font-variation-settings: 'wght' 700;
   color: var(--sp-color-ink);
 }
 .sp-text-text-button {

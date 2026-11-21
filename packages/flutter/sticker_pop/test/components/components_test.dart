@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:sticker_pop/sticker_pop.dart';
@@ -192,6 +193,118 @@ void main() {
       for (final f in <Finder>[find.text('Insights'), find.byIcon(Icons.insights_rounded)]) {
         expect(tester.getRect(f).left - add.right, greaterThanOrEqualTo(clearance + PopShadow.regular.dx), reason: 'right neighbour');
       }
+    });
+  });
+
+  group('PopSelect', () {
+    const accounts = <PopSelectOption<String>>[
+      PopSelectOption(value: 'hdfc', label: 'HDFC Savings', icon: Icons.account_balance_rounded),
+      PopSelectOption(value: 'icici', label: 'ICICI Credit', caption: 'Card ending 4411'),
+      PopSelectOption(value: 'cash', label: 'Cash'),
+    ];
+
+    testWidgets('shows the hint, opens a sheet and returns the picked option', (tester) async {
+      String? picked;
+      await pumpPop(tester, onPaper(StatefulBuilder(
+        builder: (context, setState) => PopSelect<String>(
+          label: 'Account',
+          options: accounts,
+          value: picked,
+          onChanged: (v) => setState(() => picked = v),
+        ),
+      )));
+      expect(find.text('Choose'), findsOneWidget);
+      await tester.tap(find.byType(PopSelect<String>));
+      await tester.pumpAndSettle();
+      expect(find.text('ICICI Credit'), findsOneWidget);
+      await tester.tap(find.text('ICICI Credit'));
+      await tester.pumpAndSettle();
+      expect(picked, 'icici');
+      expect(find.text('ICICI Credit'), findsOneWidget); // now shown in the field
+      expect(find.byType(PopSheet), findsNothing);
+    });
+
+    testWidgets('the chosen row is marked selected and ticked', (tester) async {
+      final handle = tester.ensureSemantics();
+      await pumpPop(tester, onPaper(PopSelect<String>(label: 'Account', options: accounts, value: 'cash', onChanged: (_) {})));
+      await tester.tap(find.byType(PopSelect<String>));
+      await tester.pumpAndSettle();
+      expect(find.byIcon(Icons.check_rounded), findsOneWidget);
+      expect(tester.getSemantics(find.widgetWithText(PopOptionRow, 'Cash')), isSemantics(isButton: true, isSelected: true, label: 'Cash', hasTapAction: true));
+      handle.dispose();
+    });
+
+    testWidgets('disabled when onChanged is null', (tester) async {
+      await pumpPop(tester, onPaper(PopSelect<String>(options: accounts, value: null, onChanged: null)));
+      await tester.tap(find.byType(PopSelect<String>));
+      await tester.pumpAndSettle();
+      expect(find.byType(PopSheet), findsNothing);
+    });
+  });
+
+  group('PopMenu', () {
+    Widget menu({required void Function(String) onPick, Alignment at = Alignment.topRight}) => Scaffold(
+      body: Align(
+        alignment: at,
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: PopMenu(
+            items: <PopMenuEntry>[
+              PopMenuItem(label: 'Edit', icon: Icons.edit_rounded, onTap: () => onPick('edit')),
+              PopMenuItem(label: 'Duplicate', icon: Icons.content_copy_rounded, onTap: () => onPick('dup')),
+              const PopMenuDivider(),
+              PopMenuItem(label: 'Delete', icon: Icons.delete_rounded, destructive: true, onTap: () => onPick('delete')),
+            ],
+            builder: (context, toggle, open) => PopIconButton(icon: Icons.more_horiz_rounded, label: 'More', onTap: toggle),
+          ),
+        ),
+      ),
+    );
+
+    testWidgets('opens below the trigger, picks an item and closes', (tester) async {
+      String? picked;
+      await pumpPop(tester, menu(onPick: (v) => picked = v));
+      await tester.tap(find.bySemanticsLabel('More'));
+      await tester.pumpAndSettle();
+      final trigger = tester.getRect(find.byType(PopIconButton));
+      final panel = tester.getRect(find.byType(PopMenuPanel));
+      expect(panel.top, greaterThan(trigger.bottom));
+      expect(panel.right, closeTo(trigger.right, 1));
+      expect(panel.width, greaterThanOrEqualTo(PopSize.menuMinWidth));
+      await tester.tap(find.text('Duplicate'));
+      await tester.pumpAndSettle();
+      expect(picked, 'dup');
+      expect(find.byType(PopMenuPanel), findsNothing);
+    });
+
+    testWidgets('flips above the trigger near the bottom of the screen', (tester) async {
+      await pumpPop(tester, menu(onPick: (_) {}, at: Alignment.bottomRight));
+      await tester.tap(find.bySemanticsLabel('More'));
+      await tester.pumpAndSettle();
+      expect(tester.getRect(find.byType(PopMenuPanel)).bottom, lessThan(tester.getRect(find.byType(PopIconButton)).top));
+    });
+
+    testWidgets('Escape and a tap outside close it', (tester) async {
+      await pumpPop(tester, menu(onPick: (_) {}));
+      await tester.tap(find.bySemanticsLabel('More'));
+      await tester.pumpAndSettle();
+      await tester.sendKeyEvent(LogicalKeyboardKey.escape);
+      await tester.pumpAndSettle();
+      expect(find.byType(PopMenuPanel), findsNothing);
+      await tester.tap(find.bySemanticsLabel('More'));
+      await tester.pumpAndSettle();
+      await tester.tapAt(const Offset(10, 400));
+      await tester.pumpAndSettle();
+      expect(find.byType(PopMenuPanel), findsNothing);
+    });
+
+    testWidgets('fits a 320 wide phone', (tester) async {
+      await pumpPop(tester, menu(onPick: (_) {}, at: Alignment.topLeft), size: const Size(320, 640));
+      await tester.tap(find.bySemanticsLabel('More'));
+      await tester.pumpAndSettle();
+      final panel = tester.getRect(find.byType(PopMenuPanel));
+      expect(panel.left, greaterThanOrEqualTo(PopSpace.sm));
+      expect(panel.right, lessThanOrEqualTo(320 - PopSpace.sm));
     });
   });
 

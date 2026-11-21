@@ -21,6 +21,9 @@ class _PopGalleryState extends State<PopGallery> {
   int _nav = 0;
   final Set<String> _tags = <String>{'Office', 'Trip'};
   String? _account = 'hdfc';
+  bool _transfers = true;
+  bool _hideSmall = false;
+  String _period = 'Month';
 
   static const List<PopSelectOption<String>> _accounts = <PopSelectOption<String>>[
     PopSelectOption(value: 'hdfc', label: 'HDFC', icon: Icons.account_balance_rounded, caption: 'Savings ·· 4821'),
@@ -421,6 +424,31 @@ class _PopGalleryState extends State<PopGallery> {
                           onTap: toggle,
                         ),
                       ),
+                    ],
+                  ),
+                ],
+              ),
+
+              _Section(
+                'Checkbox and radio',
+                children: <Widget>[
+                  StickerList(
+                    children: <Widget>[
+                      PopCheckboxRow(
+                        label: 'Include transfers',
+                        caption: 'Moving money between your own accounts',
+                        value: _transfers,
+                        onChanged: (v) => setState(() => _transfers = v),
+                      ),
+                      PopCheckboxRow(label: 'Hide small amounts', value: _hideSmall, onChanged: (v) => setState(() => _hideSmall = v)),
+                      const PopCheckboxRow(label: 'Sync', value: true, onChanged: null),
+                    ],
+                  ),
+                  const SizedBox(height: PopSpace.lg),
+                  StickerList(
+                    children: <Widget>[
+                      for (final p in const <String>['Week', 'Month', 'Year'])
+                        PopRadioRow<String>(label: p, value: p, groupValue: _period, onChanged: (v) => setState(() => _period = v)),
                     ],
                   ),
                 ],

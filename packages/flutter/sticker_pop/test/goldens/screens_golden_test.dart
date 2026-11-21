@@ -20,8 +20,12 @@ void main() {
   }, tags: <String>['golden']);
 
   testWidgets('Gallery', (tester) async {
-    await pumpPop(tester, const PopGallery(), size: const Size(390, 5200));
+    const size = Size(390, 7200);
+    await pumpPop(tester, const PopGallery(), size: size);
     await tester.pumpAndSettle();
+    // The gallery grows with every component: if the last section no longer
+    // fits, raise the height above rather than losing it from the golden.
+    expect(tester.getRect(find.byType(PopNavBar).last).bottom, lessThan(size.height - 40), reason: 'gallery taller than the golden');
     await expectLater(find.byType(PopGallery), matchesGoldenFile('gallery.png'));
   }, tags: <String>['golden']);
 

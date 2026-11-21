@@ -177,6 +177,7 @@ abstract final class PopRadius {
   static const double snackbar = 16.0;
   /// Menus and select popovers
   static const double menu = 16.0;
+  static const double checkbox = 7.0;
   static const double spotlight = 18.0;
   static const double switchTrack = 15.0;
   static const double navPill = 12.0;
@@ -224,6 +225,9 @@ abstract final class PopSize {
   static const double swatch = 12.0;
   /// Add menu option sticker (square, radius tile)
   static const double dialOption = 56.0;
+  /// Checkbox and radio (padded to the 48 tap target)
+  static const double checkbox = 24.0;
+  static const double radioDot = 10.0;
   static const double menuMinWidth = 180.0;
   static const double menuMaxWidth = 280.0;
   /// Taller menus and select lists scroll

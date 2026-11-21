@@ -174,6 +174,7 @@ object PopRadius {
     val snackbar: Dp = 16.dp
     /** Menus and select popovers */
     val menu: Dp = 16.dp
+    val checkbox: Dp = 7.dp
     val spotlight: Dp = 18.dp
     val switchTrack: Dp = 15.dp
     val navPill: Dp = 12.dp
@@ -220,6 +221,8 @@ object PopSize {
     val progressDotCurrent: Dp = 22.dp
     val swatch: Dp = 12.dp
     val dialOption: Dp = 56.dp
+    val checkbox: Dp = 24.dp
+    val radioDot: Dp = 10.dp
     val menuMinWidth: Dp = 180.dp
     val menuMaxWidth: Dp = 280.dp
     val menuMaxHeight: Dp = 360.dp

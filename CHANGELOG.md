@@ -12,6 +12,8 @@ All four libraries share one version.
   list on phones and a popover list on the web (built on a native
   `<select>`, so forms keep working); Menu is a sticker popover of actions.
   SwiftUI adds `.popOverlayHost()` so sheets and menus draw above the screen.
+- Checkbox and radio (with tappable rows) on all four platforms; on the web
+  they are styled native inputs.
 - Fill and gradient classes on the web (`.sp-fill-*`) live in a generated
   `fills.css` loaded after the components, so they always win.
 - Add menu (design preview, web first): the nav add button can open a

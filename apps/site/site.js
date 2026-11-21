@@ -88,6 +88,7 @@ function wireDemos(root) {
   stabilizePopChips(root);
   wirePopMenus(root);
   wirePopSelects(root);
+  root.querySelectorAll('input[data-indeterminate]').forEach((i) => { i.indeterminate = true; });
   root.querySelectorAll('.sp-chip[aria-pressed]:not(:disabled)').forEach((b) =>
     b.addEventListener('click', () => b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') !== 'true')));
   root.querySelectorAll('.sp-segmented:not([aria-disabled]) > button').forEach((b) =>

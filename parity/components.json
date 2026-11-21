@@ -184,6 +184,51 @@
       ]
     },
     {
+      "id": "checkbox",
+      "flutter": [
+        "PopCheckbox",
+        "PopCheckboxMark",
+        "PopCheckboxRow"
+      ],
+      "compose": [
+        "PopCheckbox",
+        "PopCheckboxMark",
+        "PopCheckboxRow"
+      ],
+      "swiftui": [
+        "PopCheckbox",
+        "PopCheckboxMark",
+        "PopCheckboxRow",
+        "PopCheckState"
+      ],
+      "web": [
+        ".sp-checkbox",
+        ".sp-check-row"
+      ]
+    },
+    {
+      "id": "radio",
+      "flutter": [
+        "PopRadio",
+        "PopRadioMark",
+        "PopRadioRow"
+      ],
+      "compose": [
+        "PopRadio",
+        "PopRadioMark",
+        "PopRadioRow"
+      ],
+      "swiftui": [
+        "PopRadio",
+        "PopRadioMark",
+        "PopRadioRow"
+      ],
+      "web": [
+        ".sp-radio",
+        ".sp-check-row"
+      ]
+    },
+    {
       "id": "text-field",
       "flutter": [
         "PopTextField",

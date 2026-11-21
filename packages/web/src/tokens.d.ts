@@ -241,6 +241,7 @@ export declare const tokens: {
     readonly sheet: 24;
     readonly snackbar: 16;
     readonly menu: 16;
+    readonly checkbox: 7;
     readonly spotlight: 18;
     readonly switchTrack: 15;
     readonly navPill: 12;
@@ -281,6 +282,8 @@ export declare const tokens: {
     readonly progressDotCurrent: 22;
     readonly swatch: 12;
     readonly dialOption: 56;
+    readonly checkbox: 24;
+    readonly radioDot: 10;
     readonly menuMinWidth: 180;
     readonly menuMaxWidth: 280;
     readonly menuMaxHeight: 360;

@@ -43,6 +43,9 @@ public struct PopGallery: View {
     @State private var amount = "1250.50"
     @State private var account: String? = "hdfc"
     @State private var paidFrom: String? = nil
+    @State private var transfers = true
+    @State private var hideSmall = false
+    @State private var period = "Month"
     @State private var name = ""
     @State private var showSheet = false
     @State private var showDialog = false
@@ -188,6 +191,26 @@ public struct PopGallery: View {
                             .item("Delete", systemImage: "trash", destructive: true) { snack.show("Deleted", actionLabel: "Undo") },
                         ]) { toggle in
                             PopIconButton(systemImage: "ellipsis", label: "More for Chai Point", action: toggle)
+                        }
+                    }
+                }
+
+                GallerySection(title: "Checkbox and radio") {
+                    StickerCard(padding: 0) {
+                        VStack(spacing: 0) {
+                            PopCheckboxRow("Include transfers", caption: "Moving money between your own accounts", isOn: $transfers)
+                            Rectangle().fill(PopColors.divider).frame(height: PopBorder.divider)
+                            PopCheckboxRow("Hide small amounts", isOn: $hideSmall)
+                            Rectangle().fill(PopColors.divider).frame(height: PopBorder.divider)
+                            PopCheckboxRow("Sync", state: .on) {}.disabled(true)
+                        }
+                    }
+                    StickerCard(padding: 0) {
+                        VStack(spacing: 0) {
+                            ForEach(["Week", "Month", "Year"], id: \.self) { p in
+                                if p != "Week" { Rectangle().fill(PopColors.divider).frame(height: PopBorder.divider) }
+                                PopRadioRow(p, value: p, selection: $period)
+                            }
                         }
                     }
                 }

@@ -308,6 +308,55 @@ void main() {
     });
   });
 
+  group('PopCheckbox and PopRadio', () {
+    testWidgets('checkbox row toggles, fills mint and is announced as checked', (tester) async {
+      final handle = tester.ensureSemantics();
+      var on = false;
+      await pumpPop(tester, onPaper(StatefulBuilder(
+        builder: (context, setState) => PopCheckboxRow(label: 'Include transfers', value: on, onChanged: (v) => setState(() => on = v)),
+      )));
+      await tester.tap(find.text('Include transfers'));
+      await tester.pumpAndSettle();
+      expect(on, isTrue);
+      final box = tester.widget<AnimatedContainer>(find.descendant(of: find.byType(PopCheckboxMark), matching: find.byType(AnimatedContainer)));
+      expect((box.decoration! as BoxDecoration).color, PopColors.mint);
+      expect(tester.getSemantics(find.byType(PopCheckboxRow)), isSemantics(isChecked: true, label: 'Include transfers', hasTapAction: true));
+      handle.dispose();
+    });
+
+    testWidgets('tristate shows mixed; tapping checks it', (tester) async {
+      bool? v;
+      await pumpPop(tester, onPaper(StatefulBuilder(
+        builder: (context, setState) => PopCheckbox(value: v, tristate: true, semanticLabel: 'All', onChanged: (x) => setState(() => v = x)),
+      )));
+      await tester.tap(find.byType(PopCheckbox));
+      await tester.pump();
+      expect(v, isTrue);
+    });
+
+    testWidgets('radios pick one of a group; the box is a 48 tap target', (tester) async {
+      String group = 'month';
+      await pumpPop(tester, onPaper(StatefulBuilder(
+        builder: (context, setState) => Column(children: <Widget>[
+          for (final p in <String>['week', 'month', 'year'])
+            PopRadioRow<String>(label: p, value: p, groupValue: group, onChanged: (x) => setState(() => group = x)),
+          PopRadio<String>(value: 'x', groupValue: group, onChanged: (_) {}, semanticLabel: 'X'),
+        ]),
+      )));
+      await tester.tap(find.text('year'));
+      await tester.pumpAndSettle();
+      expect(group, 'year');
+      expect(tester.getSize(find.byType(PopRadio<String>)), const Size(PopSize.tapTarget, PopSize.tapTarget));
+    });
+
+    testWidgets('disabled rows ignore taps', (tester) async {
+      await pumpPop(tester, onPaper(const PopCheckboxRow(label: 'Sync', value: false, onChanged: null)));
+      await tester.tap(find.text('Sync'));
+      await tester.pump();
+      expect(tester.takeException(), isNull);
+    });
+  });
+
   group('Tilt guard', () {
     test('cards reject tilt beyond ±3°', () {
       expect(() => StickerCard(tiltDegrees: 4, child: const SizedBox()), throwsAssertionError);

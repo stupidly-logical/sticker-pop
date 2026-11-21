@@ -101,6 +101,40 @@ export const controls = [
     a11y: 'Announced as a switch with its label and on/off state; padded to a 48 tap target.',
   },
   {
+    id: 'checkbox', name: 'Checkbox', group: 'Selection', platforms: ALL,
+    summary: 'For choosing any number of things, or agreeing to one. A 24 rounded square: white with a 2 ink outline, then mint with a 2.5 outline and an ink tick when checked. A dash means some but not all. Usually as a row, where the whole row toggles.',
+    states: [
+      { label: 'In a list (tap the rows)', html: '<div class="sp-card sp-list full"><label class="sp-check-row"><input type="checkbox" class="sp-checkbox"  checked><span class="sp-check-row__text"><span class="sp-check-row__label">Include transfers</span><span class="sp-check-row__caption">Moving money between your own accounts</span></span></label><label class="sp-check-row"><input type="checkbox" class="sp-checkbox" ><span class="sp-check-row__text"><span class="sp-check-row__label">Hide small amounts</span></span></label><label class="sp-check-row"><input type="checkbox" class="sp-checkbox"  checked disabled><span class="sp-check-row__text"><span class="sp-check-row__label">Sync</span></span></label></div>' },
+      { label: 'Off, on, some, disabled', html: '<input type="checkbox" class="sp-checkbox" aria-label="Off"><input type="checkbox" class="sp-checkbox" aria-label="On" checked><input type="checkbox" class="sp-checkbox" aria-label="Some" data-indeterminate><input type="checkbox" class="sp-checkbox" aria-label="Disabled" disabled><input type="checkbox" class="sp-checkbox" aria-label="Disabled on" checked disabled>' },
+    ],
+    code: {
+      flutter: "PopCheckboxRow(\n  label: 'Include transfers',\n  caption: 'Moving money between your own accounts',\n  value: transfers,\n  onChanged: (v) => setState(() => transfers = v),\n)\n\nPopCheckbox(value: null, tristate: true, semanticLabel: 'All categories', onChanged: selectAll)",
+      compose: 'PopCheckboxRow("Include transfers", transfers, { transfers = it }, caption = "Moving money between your own accounts")\n\nPopCheckbox(ToggleableState.Indeterminate, onClick = ::selectAll, label = "All categories")',
+      swift: 'PopCheckboxRow("Include transfers", caption: "Moving money between your own accounts", isOn: $transfers)\n\nPopCheckbox("All categories", state: .mixed) { selectAll() }',
+      html: '<label class="sp-check-row">\n  <input type="checkbox" class="sp-checkbox" checked>\n  <span class="sp-check-row__text">\n    <span class="sp-check-row__label">Include transfers</span>\n    <span class="sp-check-row__caption">Moving money between your own accounts</span>\n  </span>\n</label>\n\n<!-- "some": set input.indeterminate = true in script -->',
+    },
+    spec: [['Box', '24, radius 7, padded to 48'], ['Off', 'white, 2 ink outline'], ['On', 'mint, 2.5 outline, ink tick (2.6 stroke)'], ['Some', 'mint, 2.5 outline, ink dash'], ['Disabled', 'paper (divider when on), muted tick'], ['Row', '52 min height, 16 side padding, 12 gap, 16/700 label, 13/600 caption']],
+    rules: ['Use a switch for settings that take effect at once; a checkbox for choices confirmed with a button, or picking several things.', 'Labels say what checking it does: "Include transfers", not "Transfers".'],
+    a11y: 'Announced as a checkbox with its label and checked, not checked or partly checked. The whole row is the tap target.',
+  },
+  {
+    id: 'radio', name: 'Radio', group: 'Selection', platforms: ALL,
+    summary: 'For choosing exactly one of a short list that should all stay visible. A 24 circle: white with a 2 ink outline, then yellow with a 2.5 outline and a 10 ink dot when chosen. Usually as rows in a sticker list.',
+    states: [
+      { label: 'In a list (tap the rows)', html: '<div class="sp-card sp-list full" role="radiogroup" aria-label="Period"><label class="sp-check-row"><input type="radio" class="sp-radio" name="per"><span class="sp-check-row__text"><span class="sp-check-row__label">Week</span></span></label><label class="sp-check-row"><input type="radio" class="sp-radio" name="per" checked><span class="sp-check-row__text"><span class="sp-check-row__label">Month</span></span></label><label class="sp-check-row"><input type="radio" class="sp-radio" name="per"><span class="sp-check-row__text"><span class="sp-check-row__label">Year</span></span></label></div>' },
+      { label: 'Off, on, disabled', html: '<input type="radio" class="sp-radio" name="r-demo" aria-label="Off"><input type="radio" class="sp-radio" name="r-demo" aria-label="On" checked><input type="radio" class="sp-radio" name="r-demo-2" aria-label="Disabled" disabled><input type="radio" class="sp-radio" name="r-demo-3" aria-label="Disabled on" checked disabled>' },
+    ],
+    code: {
+      flutter: "for (final p in ['Week', 'Month', 'Year'])\n  PopRadioRow<String>(label: p, value: p, groupValue: period, onChanged: (v) => setState(() => period = v))",
+      compose: 'listOf("Week", "Month", "Year").forEach { p ->\n    PopRadioRow(p, selected = period == p, onClick = { period = p })\n}',
+      swift: 'ForEach(["Week", "Month", "Year"], id: \\.self) { p in\n    PopRadioRow(p, value: p, selection: $period)\n}',
+      html: '<div class="sp-card sp-list" role="radiogroup" aria-label="Period">\n  <label class="sp-check-row"><input type="radio" class="sp-radio" name="period" checked>\n    <span class="sp-check-row__text"><span class="sp-check-row__label">Month</span></span></label>\n  …\n</div>',
+    },
+    spec: [['Circle', '24, padded to 48'], ['Off', 'white, 2 ink outline'], ['On', 'yellow, 2.5 outline, 10 ink dot'], ['Disabled', 'paper (divider when on), muted dot'], ['Row', 'as the checkbox row']],
+    rules: ['For two to five short options in a compact space, a segmented control is often better; for many options, a select.', 'One option is always chosen; start with a sensible default.'],
+    a11y: 'Announced as a radio button, "1 of 3", with its label and whether it is selected. The rows form one group.',
+  },
+  {
     id: 'text-field', name: 'Text field', group: 'Inputs', platforms: ALL,
     summary: 'White, a 2 ink outline, radius 14, with a borderless input inside. Errors thicken the outline and add an ink message with ⚠, never red alone.',
     states: [

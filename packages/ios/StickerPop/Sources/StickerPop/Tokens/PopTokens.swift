@@ -165,6 +165,7 @@ public enum PopRadius {
     public static let snackbar: CGFloat = 16.0
     /// Menus and select popovers
     public static let menu: CGFloat = 16.0
+    public static let checkbox: CGFloat = 7.0
     public static let spotlight: CGFloat = 18.0
     public static let switchTrack: CGFloat = 15.0
     public static let navPill: CGFloat = 12.0
@@ -212,6 +213,9 @@ public enum PopSize {
     public static let swatch: CGFloat = 12.0
     /// Add menu option sticker (square, radius tile)
     public static let dialOption: CGFloat = 56.0
+    /// Checkbox and radio (padded to the 48 tap target)
+    public static let checkbox: CGFloat = 24.0
+    public static let radioDot: CGFloat = 10.0
     public static let menuMinWidth: CGFloat = 180.0
     public static let menuMaxWidth: CGFloat = 280.0
     /// Taller menus and select lists scroll

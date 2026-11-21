@@ -47,6 +47,7 @@
   --sp-radius-sheet: 24px;
   --sp-radius-snackbar: 16px;
   --sp-radius-menu: 16px;
+  --sp-radius-checkbox: 7px;
   --sp-radius-spotlight: 18px;
   --sp-radius-switch-track: 15px;
   --sp-radius-nav-pill: 12px;
@@ -81,6 +82,8 @@
   --sp-size-progress-dot-current: 22px;
   --sp-size-swatch: 12px;
   --sp-size-dial-option: 56px;
+  --sp-size-checkbox: 24px;
+  --sp-size-radio-dot: 10px;
   --sp-size-menu-min-width: 180px;
   --sp-size-menu-max-width: 280px;
   --sp-size-menu-max-height: 360px;

@@ -100,6 +100,8 @@ fun PopGallery(onOpenHome: () -> Unit = {}) {
     var payee by remember { mutableStateOf("") }
     var amount by remember { mutableStateOf("1250.50") }
     var account by remember { mutableStateOf<String?>("hdfc") }
+    var transfers by remember { mutableStateOf(true) }
+    var period by remember { mutableStateOf("Month") }
     var showSheet by remember { mutableStateOf(false) }
     var showDialog by remember { mutableStateOf(false) }
     val snack = rememberPopSnackbarState()
@@ -245,6 +247,15 @@ fun PopGallery(onOpenHome: () -> Unit = {}) {
                             ),
                         ) { toggle, _ -> PopIconButton(Icons.Rounded.MoreHoriz, "More for Chai Point", onClick = toggle) }
                     }
+                }
+
+                Section("Checkbox and radio") {
+                    StickerList(rows = listOf(
+                        { PopCheckboxRow("Include transfers", transfers, { transfers = it }, caption = "Moving money between your own accounts") },
+                        { PopCheckboxRow("Hide small amounts", false, { }) },
+                        { PopCheckboxRow("Sync", true, null) },
+                    ))
+                    StickerList(rows = listOf("Week", "Month", "Year").map { p -> @Composable { PopRadioRow(p, period == p, { period = p }) } })
                 }
 
                 Section("Badges and category dots") {

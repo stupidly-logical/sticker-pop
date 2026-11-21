@@ -25,8 +25,8 @@ final class ScreensTests: XCTestCase {
     }
 
     func testGallery() {
-        let view = PopGallery().frame(width: 390, height: 5200)
-        assertSnapshot(of: UIHostingController(rootView: view), as: .image(size: CGSize(width: 390, height: 5200)))
+        let view = PopGallery().frame(width: 390, height: 7200)
+        assertSnapshot(of: UIHostingController(rootView: view), as: .image(size: CGSize(width: 390, height: 7200)))
     }
 }
 #endif

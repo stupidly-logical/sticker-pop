@@ -121,6 +121,10 @@ Type scale (size / weight / letter spacing):
 
 **PopIconButton.** 46 circle, white (or a bright) fill, 2.5 ink outline, 3/3 ink shadow, 22 icon in ink. Used for back, settings and close.
 
+**Checkbox.** A 24 rounded square, radius 7, padded to a 48 tap target. Off: white with a 2 ink outline. On: mint with a 2.5 outline and an ink tick (2.6 stroke, round ends). Some but not all: mint with an ink dash. Disabled: `paper` (or `divider` when on) with an `inkMuted` mark. Usually a row: the box, then a 16/700 label and an optional 13/600 caption, 52 min height, the whole row tappable. Use a switch for settings that apply at once.
+
+**Radio.** A 24 circle padded to 48. Off: white, 2 ink outline. Chosen: yellow, 2.5 outline, a 10 ink dot. Rows as for the checkbox. For a short list that should all stay visible; a segmented control for two to five short options, a select for many.
+
 **PopChip (selectable pill).**
 - min height 40, padding 14 horizontal by 6 vertical, radius 19
 - at rest: white with a 2 outline, 14/700 text

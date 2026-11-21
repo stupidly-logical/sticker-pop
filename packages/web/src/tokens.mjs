@@ -282,6 +282,7 @@ export const tokens = {
     "progressDotCurrent": 22,
     "swatch": 12,
     "dialOption": 56,
+    "topBar": 64,
     "checkbox": 24,
     "radioDot": 10,
     "menuMinWidth": 180,

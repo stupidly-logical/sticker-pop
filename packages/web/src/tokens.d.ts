@@ -282,6 +282,7 @@ export declare const tokens: {
     readonly progressDotCurrent: 22;
     readonly swatch: 12;
     readonly dialOption: 56;
+    readonly topBar: 64;
     readonly checkbox: 24;
     readonly radioDot: 10;
     readonly menuMinWidth: 180;

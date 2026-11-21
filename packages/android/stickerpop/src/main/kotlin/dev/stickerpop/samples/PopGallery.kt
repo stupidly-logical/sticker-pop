@@ -23,6 +23,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.AccountBalance
 import androidx.compose.material.icons.rounded.Bolt
+import androidx.compose.ui.draw.clip
+import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material.icons.rounded.CalendarMonth
 import androidx.compose.material.icons.rounded.ContentCopy
 import androidx.compose.material.icons.rounded.CreditCard
 import androidx.compose.material.icons.rounded.Delete
@@ -256,6 +259,25 @@ fun PopGallery(onOpenHome: () -> Unit = {}) {
                         { PopCheckboxRow("Sync", true, null) },
                     ))
                     StickerList(rows = listOf("Week", "Month", "Year").map { p -> @Composable { PopRadioRow(p, period == p, { period = p }) } })
+                }
+
+                Section("Top app bar") {
+                    // In an app the compact bar tops a sub-screen and the large one tops the content.
+                    val frame = RoundedCornerShape(18.dp)
+                    Box(Modifier.fillMaxWidth().clip(frame).border(2.dp, PopColors.divider, frame)) {
+                        PopTopBar("Insights", large = true) {
+                            PopIconButton(Icons.Rounded.CalendarMonth, "Pick month", onClick = {})
+                            PopIconButton(Icons.Rounded.Settings, "Settings", onClick = {})
+                        }
+                    }
+                    Box(Modifier.fillMaxWidth().clip(frame).border(2.dp, PopColors.divider, frame)) {
+                        PopTopBar("Food budget", onBack = {}, statusBarPadding = false) {
+                            PopIconButton(Icons.Rounded.Edit, "Edit", onClick = {})
+                        }
+                    }
+                    Box(Modifier.fillMaxWidth().clip(frame).border(2.dp, PopColors.divider, frame)) {
+                        PopTopBar("Scrolled under", onBack = {}, scrolled = true, statusBarPadding = false)
+                    }
                 }
 
                 Section("Badges and category dots") {

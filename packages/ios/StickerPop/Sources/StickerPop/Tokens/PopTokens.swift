@@ -213,6 +213,8 @@ public enum PopSize {
     public static let swatch: CGFloat = 12.0
     /// Add menu option sticker (square, radius tile)
     public static let dialOption: CGFloat = 56.0
+    /// Top app bar height (compact); the large bar grows with its title
+    public static let topBar: CGFloat = 64.0
     /// Checkbox and radio (padded to the 48 tap target)
     public static let checkbox: CGFloat = 24.0
     public static let radioDot: CGFloat = 10.0

@@ -455,6 +455,31 @@ class _PopGalleryState extends State<PopGallery> {
               ),
 
               _Section(
+                'Top app bar',
+                children: <Widget>[
+                  // Shown inside bordered frames here; in an app the compact bar
+                  // is the Scaffold appBar and the large one tops the content.
+                  _Frame(child: PopTopBar.large(
+                    title: 'Insights',
+                    scrolled: false,
+                    actions: <Widget>[
+                      PopIconButton(icon: Icons.calendar_month_rounded, label: 'Pick month', onTap: () {}),
+                      PopIconButton(icon: Icons.settings_rounded, label: 'Settings', onTap: () {}),
+                    ],
+                  )),
+                  const SizedBox(height: PopSpace.md),
+                  _Frame(child: PopTopBar(
+                    title: 'Food budget',
+                    scrolled: false,
+                    onBack: () {},
+                    actions: <Widget>[PopIconButton(icon: Icons.edit_rounded, label: 'Edit', onTap: () {})],
+                  )),
+                  const SizedBox(height: PopSpace.md),
+                  _Frame(child: PopTopBar(title: 'Scrolled under', scrolled: true, onBack: () {})),
+                ],
+              ),
+
+              _Section(
                 'Badges and category dots',
                 children: <Widget>[
                   const Wrap(
@@ -738,6 +763,28 @@ class _PopGalleryState extends State<PopGallery> {
     PopDatum(label: 'Bills', value: 16, color: PopColors.lilac),
     PopDatum(label: 'Shopping', value: 10, color: PopColors.pink),
   ];
+}
+
+/// A rounded, outlined frame for showing a bar out of context.
+class _Frame extends StatelessWidget {
+  const _Frame({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(PopRadius.tile),
+      child: DecoratedBox(
+        position: DecorationPosition.foreground,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(PopRadius.tile),
+          border: Border.all(color: PopColors.divider, width: PopBorder.divider),
+        ),
+        child: MediaQuery.removePadding(context: context, removeTop: true, child: child),
+      ),
+    );
+  }
 }
 
 class _Section extends StatelessWidget {

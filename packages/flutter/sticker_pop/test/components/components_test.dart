@@ -357,6 +357,40 @@ void main() {
     });
   });
 
+  group('PopTopBar', () {
+    Border borderOf(WidgetTester tester) {
+      final box = tester.widget<AnimatedContainer>(find.descendant(of: find.byType(PopTopBar), matching: find.byType(AnimatedContainer)).first);
+      return (box.decoration! as BoxDecoration).border! as Border;
+    }
+
+    testWidgets('compact app bar: back button, title, ink line once scrolled', (tester) async {
+      var back = 0;
+      await pumpPop(tester, Scaffold(
+        appBar: PopTopBar(title: 'Food budget', onBack: () => back++, actions: <Widget>[PopIconButton(icon: Icons.edit_rounded, label: 'Edit', onTap: () {})]),
+        body: ListView(children: <Widget>[for (var i = 0; i < 40; i++) SizedBox(height: 60, child: Text('Row $i'))]),
+      ));
+      expect(find.text('Food budget'), findsOneWidget);
+      await tester.tap(find.bySemanticsLabel('Back'));
+      expect(back, 1);
+      expect(borderOf(tester).bottom.color.a, 0);
+      await tester.drag(find.byType(ListView), const Offset(0, -300));
+      await tester.pumpAndSettle();
+      expect(borderOf(tester).bottom.color, PopColors.ink);
+      expect(tester.getSize(find.byType(PopTopBar)).height, PopSize.topBar);
+    });
+
+    testWidgets('large title wraps to two lines at 200% text without overflowing', (tester) async {
+      await pumpPop(tester, MediaQuery(
+        data: const MediaQueryData(textScaler: TextScaler.linear(2)),
+        child: Scaffold(body: Column(children: <Widget>[
+          PopTopBar.large(title: 'Spending this month', actions: <Widget>[PopIconButton(icon: Icons.settings_rounded, label: 'Settings', onTap: () {})]),
+        ])),
+      ), size: const Size(320, 640));
+      expect(tester.takeException(), isNull);
+      expect(tester.getSize(find.byType(PopTopBar)).height, greaterThan(PopSize.topBar));
+    });
+  });
+
   group('Tilt guard', () {
     test('cards reject tilt beyond ±3°', () {
       expect(() => StickerCard(tiltDegrees: 4, child: const SizedBox()), throwsAssertionError);

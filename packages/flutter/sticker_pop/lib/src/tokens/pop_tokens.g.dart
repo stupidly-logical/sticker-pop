@@ -225,6 +225,8 @@ abstract final class PopSize {
   static const double swatch = 12.0;
   /// Add menu option sticker (square, radius tile)
   static const double dialOption = 56.0;
+  /// Top app bar height (compact); the large bar grows with its title
+  static const double topBar = 64.0;
   /// Checkbox and radio (padded to the 48 tap target)
   static const double checkbox = 24.0;
   static const double radioDot = 10.0;

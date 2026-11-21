@@ -361,6 +361,24 @@
       ]
     },
     {
+      "id": "top-bar",
+      "flutter": [
+        "PopTopBar"
+      ],
+      "compose": [
+        "PopTopBar"
+      ],
+      "swiftui": [
+        "PopTopBar"
+      ],
+      "web": [
+        ".sp-top-bar",
+        ".sp-top-bar--large",
+        ".sp-top-bar__title",
+        "wirePopTopBars()"
+      ]
+    },
+    {
       "id": "nav-bar",
       "flutter": [
         "PopNavBar",

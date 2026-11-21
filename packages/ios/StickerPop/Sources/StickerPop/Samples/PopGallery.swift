@@ -14,6 +14,14 @@ private let accounts = [
     PopSelectOption("Cash", value: "cash", systemImage: "banknote"),
 ]
 
+private extension View {
+    /// A rounded, outlined frame for showing a bar out of context.
+    func galleryFrame() -> some View {
+        clipShape(RoundedRectangle(cornerRadius: PopRadius.tile, style: .continuous))
+            .overlay(RoundedRectangle(cornerRadius: PopRadius.tile, style: .continuous).strokeBorder(PopColors.divider, lineWidth: PopBorder.divider))
+    }
+}
+
 private struct GallerySection<Content: View>: View {
     let title: String
     @ViewBuilder let content: Content
@@ -213,6 +221,20 @@ public struct PopGallery: View {
                             }
                         }
                     }
+                }
+
+                GallerySection(title: "Top app bar") {
+                    // In an app the compact bar tops a sub-screen and the large one tops the content.
+                    PopTopBar("Insights", large: true) {
+                        PopIconButton(systemImage: "calendar", label: "Pick month") {}
+                        PopIconButton(systemImage: "gearshape", label: "Settings") {}
+                    }
+                    .galleryFrame()
+                    PopTopBar("Food budget", onBack: {}) {
+                        PopIconButton(systemImage: "pencil", label: "Edit") {}
+                    }
+                    .galleryFrame()
+                    PopTopBar("Scrolled under", scrolled: true, onBack: {}).galleryFrame()
                 }
 
                 GallerySection(title: "Badges and category dots") {

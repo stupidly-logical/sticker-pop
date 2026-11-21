@@ -14,6 +14,7 @@ export function wirePopControls(root = document) {
   wirePopDials(root);
   wirePopMenus(root);
   wirePopSelects(root);
+  wirePopTopBars(root);
   root.querySelectorAll('.sp-chip[aria-pressed]:not(:disabled)').forEach((b) =>
     b.addEventListener('click', () => b.setAttribute('aria-pressed', String(b.getAttribute('aria-pressed') !== 'true'))));
   root.querySelectorAll('.sp-segmented:not([aria-disabled]) > button').forEach((b) =>
@@ -457,5 +458,35 @@ export function wirePopSelects(root = document) {
     select.addEventListener('change', render);
     new MutationObserver(() => { build(); render(); }).observe(select, { childList: true, subtree: true, attributes: true, attributeFilter: ['disabled', 'aria-invalid'] });
     select.popSelect = { refresh: () => { build(); render(); } };
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Top app bar
+
+function scrollParent(el) {
+  for (let p = el.parentElement; p; p = p.parentElement) {
+    const o = getComputedStyle(p).overflowY;
+    if ((o === 'auto' || o === 'scroll') && p.scrollHeight > p.clientHeight) return p;
+  }
+  return window;
+}
+
+/**
+ * Gives every `.sp-top-bar` in `root` its scrolled look (paper fill, ink line
+ * along the bottom) while content is scrolled under it. Watches the bar's
+ * nearest scrolling ancestor, or the window.
+ */
+export function wirePopTopBars(root = document) {
+  root.querySelectorAll('.sp-top-bar').forEach((bar) => {
+    if (bar.dataset.popWired) return;
+    bar.dataset.popWired = '1';
+    const scroller = scrollParent(bar);
+    const update = () => {
+      const y = scroller === window ? window.scrollY : scroller.scrollTop;
+      bar.classList.toggle('is-scrolled', y > 0);
+    };
+    scroller.addEventListener('scroll', update, { passive: true });
+    update();
   });
 }

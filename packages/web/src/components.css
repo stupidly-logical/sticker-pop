@@ -295,6 +295,29 @@ select.sp-select:disabled { background-color: var(--sp-color-paper); color: var(
 .sp-check-row__label { font-size: 16px; font-weight: 700; font-variation-settings: 'wght' 700; }
 .sp-check-row__caption { font-size: 13px; font-weight: 600; font-variation-settings: 'wght' 600; color: var(--sp-color-ink-muted); }
 
+/* Top app bar: <header class="sp-top-bar"> (compact) or .sp-top-bar--large.
+   Sticky; wirePopTopBars() adds .is-scrolled once content scrolls under it. */
+.sp-top-bar {
+  position: sticky; top: 0; z-index: 4;
+  display: flex; align-items: center; gap: var(--sp-space-sm);
+  min-height: var(--sp-size-top-bar); padding: 0 var(--sp-space-screen);
+  background: transparent; border-bottom: var(--sp-border-regular) solid transparent;
+  transition: background-color var(--sp-motion-fade) ease-out, border-color var(--sp-motion-fade) ease-out;
+}
+.sp-top-bar.is-scrolled { background: var(--sp-color-paper); border-bottom-color: var(--sp-color-ink); }
+.sp-top-bar > .sp-icon-button:first-child { margin-right: var(--sp-space-xs); }
+.sp-top-bar__title {
+  flex: 1; min-width: 0; margin: 0;
+  font-size: 22px; font-weight: 800; font-variation-settings: 'wght' 800; line-height: 1.2;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.sp-top-bar--large { position: static; padding-block: var(--sp-space-sm); }
+.sp-top-bar--large .sp-top-bar__title {
+  font-size: 34px; letter-spacing: -1px; line-height: 1.1; white-space: normal;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+}
+.sp-top-bar__actions { display: flex; gap: var(--sp-space-sm); margin-left: var(--sp-space-xs); }
+
 /* Field row */
 .sp-field-row { display: flex; align-items: center; min-height: var(--sp-size-row-min); padding: 6px 14px; border-bottom: var(--sp-border-divider) solid var(--sp-color-divider); }
 .sp-field-row:last-child { border-bottom: 0; }

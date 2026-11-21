@@ -66,6 +66,24 @@ export const overlays = [
     rules: ['Never for form errors: a floating snackbar covers the Save button.'],
   },
   {
+    id: 'loading', name: 'Loading states', group: 'Overlays and feedback', platforms: ALL,
+    summary: 'Show the shape of what is coming. Skeletons are divider-coloured lines, circles and blocks with no outline, gently pulsing, laid out like the content that will replace them. A small spinner is for short waits with no layout to hint at. Under reduced motion both stand still.',
+    states: [
+      { label: 'Skeleton list', html: '<div class="sp-card sp-list full" role="status" aria-label="Loading"><div class="sp-skeleton-row"><span class="sp-skeleton sp-skeleton--circle"></span><span class="sp-skeleton-row__text"><span class="sp-skeleton" style="width:60%"></span><span class="sp-skeleton" style="width:80%;height:10px"></span></span><span class="sp-skeleton" style="width:56px"></span></div><div class="sp-skeleton-row"><span class="sp-skeleton sp-skeleton--circle"></span><span class="sp-skeleton-row__text"><span class="sp-skeleton" style="width:45%"></span><span class="sp-skeleton" style="width:80%;height:10px"></span></span><span class="sp-skeleton" style="width:56px"></span></div><div class="sp-skeleton-row"><span class="sp-skeleton sp-skeleton--circle"></span><span class="sp-skeleton-row__text"><span class="sp-skeleton" style="width:60%"></span><span class="sp-skeleton" style="width:80%;height:10px"></span></span><span class="sp-skeleton" style="width:56px"></span></div></div>' },
+      { label: 'Spinner', html: '<div class="row" role="status"><span class="sp-spinner" aria-hidden="true"></span><span class="sp-text-body">Fetching prices…</span></div>' },
+      { label: 'Block (a card or chart)', html: '<span class="sp-skeleton sp-skeleton--block full" style="height:120px" role="status" aria-label="Loading"></span>' },
+    ],
+    code: {
+      flutter: "isLoading ? const PopSkeletonList(rows: 3) : TransactionList(items)\n\nconst PopSkeleton.line(width: 120)\nconst PopSkeleton.block(height: 120)\nconst PopSpinner()",
+      compose: 'if (loading) PopSkeletonList(rows = 3) else TransactionList(items)\n\nPopSkeletonLine(width = 120.dp)\nPopSkeletonBlock(height = 120.dp)\nPopSpinner()',
+      swift: 'if loading { PopSkeletonList(rows: 3) } else { TransactionList(items) }\n\nPopSkeleton.line(width: 120)\nPopSkeleton.block(height: 120)\nPopSpinner()',
+      html: '<div class="sp-card sp-list" role="status" aria-label="Loading">\n  <div class="sp-skeleton-row">\n    <span class="sp-skeleton sp-skeleton--circle"></span>\n    <span class="sp-skeleton-row__text">\n      <span class="sp-skeleton" style="width:60%"></span>\n      <span class="sp-skeleton" style="width:80%;height:10px"></span>\n    </span>\n  </div>\n</div>\n\n<span class="sp-spinner" role="status" aria-label="Loading"></span>',
+    },
+    spec: [['Skeleton', 'divider fill, no outline; lines 14 high radius 6, circles 42, blocks radius 22'], ['Pulse', 'full to 55% and back, 900 ms each way (pulse)'], ['Spinner', '24 ring, 3 divider track, ink quarter arc, one turn per 800 ms (spin)'], ['Reduced motion', 'both stand still']],
+    rules: ['Prefer skeletons shaped like the real content; use a spinner only for short waits.', 'Everything is on the phone, so most screens never need either: show one only past about 300 ms.', 'For a button that is working, use its busy label ("Saving…"), not a spinner.'],
+    a11y: 'A skeleton group is announced once as "Loading" (a status region), not shape by shape; the spinner is labelled "Loading".',
+  },
+  {
     id: 'tour', name: 'Tour (coach marks)', group: 'Overlays and feedback', platforms: ALL,
     summary: 'The screen dims under a 72% ink scrim with a rounded cut-out around the real control, outlined 3 in yellow. A yellow tour card sits on the roomier side.',
     states: [

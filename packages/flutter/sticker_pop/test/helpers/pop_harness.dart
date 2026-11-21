@@ -39,8 +39,10 @@ String? _flutterRoot() {
   return null;
 }
 
-/// Pumps [child] on a 390×844 phone in the Sticker Pop theme.
-Future<void> pumpPop(WidgetTester tester, Widget child, {Size size = const Size(390, 844)}) async {
+/// Pumps [child] on a 390×844 phone in the Sticker Pop theme. With
+/// [reduceMotion], looping animations (skeletons, spinners) stand still, so
+/// screenshots are stable and pumpAndSettle finishes.
+Future<void> pumpPop(WidgetTester tester, Widget child, {Size size = const Size(390, 844), bool reduceMotion = false}) async {
   tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
@@ -48,6 +50,7 @@ Future<void> pumpPop(WidgetTester tester, Widget child, {Size size = const Size(
     MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: buildPopTheme(),
+      builder: reduceMotion ? (context, c) => MediaQuery(data: MediaQuery.of(context).copyWith(disableAnimations: true), child: c!) : null,
       home: child,
     ),
   );

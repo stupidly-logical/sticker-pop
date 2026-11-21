@@ -12,6 +12,8 @@ All four libraries share one version.
   list on phones and a popover list on the web (built on a native
   `<select>`, so forms keep working); Menu is a sticker popover of actions.
   SwiftUI adds `.popOverlayHost()` so sheets and menus draw above the screen.
+- Loading states: skeleton lines, circles, blocks and lists, and a spinner,
+  on all four platforms; still under reduced motion.
 - Date tiles and a month-calendar date picker on all four platforms.
 - Search field (icon, clear ✕, optional Cancel) on all four platforms.
 - Top app bar (compact and large) on all four platforms, with a scrolled

@@ -242,6 +242,7 @@ export declare const tokens: {
     readonly snackbar: 16;
     readonly menu: 16;
     readonly checkbox: 7;
+    readonly skeletonLine: 6;
     readonly spotlight: 18;
     readonly switchTrack: 15;
     readonly navPill: 12;
@@ -286,6 +287,8 @@ export declare const tokens: {
     readonly dateTileWidth: 56;
     readonly dateTileHeight: 68;
     readonly calendarDay: 40;
+    readonly spinner: 24;
+    readonly skeletonLine: 14;
     readonly checkbox: 24;
     readonly radioDot: 10;
     readonly menuMinWidth: 180;
@@ -310,6 +313,8 @@ export declare const tokens: {
     readonly dialStagger: 40;
     readonly dialScrim: 200;
     readonly dialPress: 90;
+    readonly pulse: 900;
+    readonly spin: 800;
   };
   readonly opacity: {
     readonly scrim: 0.72;

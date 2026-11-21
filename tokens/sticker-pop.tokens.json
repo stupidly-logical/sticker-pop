@@ -111,6 +111,7 @@
     "snackbar": { "$value": 16 },
     "menu": { "$value": 16, "$description": "Menus and select popovers" },
     "checkbox": { "$value": 7 },
+    "skeletonLine": { "$value": 6 },
     "spotlight": { "$value": 18 },
     "switchTrack": { "$value": 15 },
     "navPill": { "$value": 12 },
@@ -163,6 +164,8 @@
     "dateTileWidth": { "$value": 56 },
     "dateTileHeight": { "$value": 68 },
     "calendarDay": { "$value": 40, "$description": "Day cell in the date picker (padded to 44)" },
+    "spinner": { "$value": 24 },
+    "skeletonLine": { "$value": 14, "$description": "Height of a skeleton text line" },
     "checkbox": { "$value": 24, "$description": "Checkbox and radio (padded to the 48 tap target)" },
     "radioDot": { "$value": 10 },
     "menuMinWidth": { "$value": 180 },
@@ -189,7 +192,9 @@
     "dialClose": { "$value": 180, "$description": "Add menu: options return behind the button (ease-in)" },
     "dialStagger": { "$value": 40, "$description": "Add menu: delay between options opening (halved, and reversed, when closing)" },
     "dialScrim": { "$value": 200, "$description": "Add menu: paper scrim fade" },
-    "dialPress": { "$value": 90, "$description": "Add menu: a chosen option presses into its shadow before the menu closes" }
+    "dialPress": { "$value": 90, "$description": "Add menu: a chosen option presses into its shadow before the menu closes" },
+    "pulse": { "$value": 900, "$description": "Skeleton placeholders: one fade from full to 55% (then back)" },
+    "spin": { "$value": 800, "$description": "Spinner: one full turn" }
   },
 
   "opacity": {

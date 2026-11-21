@@ -48,6 +48,7 @@
   --sp-radius-snackbar: 16px;
   --sp-radius-menu: 16px;
   --sp-radius-checkbox: 7px;
+  --sp-radius-skeleton-line: 6px;
   --sp-radius-spotlight: 18px;
   --sp-radius-switch-track: 15px;
   --sp-radius-nav-pill: 12px;
@@ -86,6 +87,8 @@
   --sp-size-date-tile-width: 56px;
   --sp-size-date-tile-height: 68px;
   --sp-size-calendar-day: 40px;
+  --sp-size-spinner: 24px;
+  --sp-size-skeleton-line: 14px;
   --sp-size-checkbox: 24px;
   --sp-size-radio-dot: 10px;
   --sp-size-menu-min-width: 180px;
@@ -108,6 +111,8 @@
   --sp-motion-dial-stagger: 40ms;
   --sp-motion-dial-scrim: 200ms;
   --sp-motion-dial-press: 90ms;
+  --sp-motion-pulse: 900ms;
+  --sp-motion-spin: 800ms;
   --sp-opacity-scrim: 0.72;
 }
 

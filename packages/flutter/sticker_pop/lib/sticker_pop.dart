@@ -10,6 +10,7 @@ export 'src/components/checks.dart';
 export 'src/components/data_viz.dart';
 export 'src/components/dates.dart';
 export 'src/components/inputs.dart';
+export 'src/components/loading.dart';
 export 'src/components/menus.dart';
 export 'src/components/navigation.dart';
 export 'src/components/overlays.dart';

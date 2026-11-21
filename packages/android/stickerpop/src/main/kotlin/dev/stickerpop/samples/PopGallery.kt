@@ -272,6 +272,14 @@ fun PopGallery(onOpenHome: () -> Unit = {}) {
                     if (pickDate) PopDatePickerSheet(today, date, { date = it; pickDate = false }, { pickDate = false }, lastDate = today)
                 }
 
+                Section("Loading") {
+                    PopSkeletonList(rows = 2)
+                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(PopSpace.md)) {
+                        PopSpinner()
+                        PopText("Fetching prices…", PopTextSpecs.body)
+                    }
+                }
+
                 Section("Top app bar") {
                     // In an app the compact bar tops a sub-screen and the large one tops the content.
                     val frame = RoundedCornerShape(18.dp)

@@ -235,6 +235,14 @@ public struct PopGallery: View {
                     StickerCard { PopCalendar(selection: $date, today: galleryToday, in: Date.distantPast...galleryToday) }
                 }
 
+                GallerySection(title: "Loading") {
+                    PopSkeletonList(rows: 2)
+                    HStack(spacing: PopSpace.md) {
+                        PopSpinner()
+                        PopText("Fetching prices…", PopTextSpecs.body)
+                    }
+                }
+
                 GallerySection(title: "Top app bar") {
                     // In an app the compact bar tops a sub-screen and the large one tops the content.
                     PopTopBar("Insights", large: true) {

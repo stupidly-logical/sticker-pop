@@ -42,7 +42,8 @@ Future<List<String>> pumpAndCollect(
         debugShowCheckedModeBanner: false,
         theme: buildPopTheme(),
         builder: (context, child) => MediaQuery(
-          data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(scale)),
+          // Reduced motion: pulsing skeletons would never settle.
+          data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(scale), disableAnimations: true),
           child: child!,
         ),
         home: home,

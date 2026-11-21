@@ -175,6 +175,7 @@ object PopRadius {
     /** Menus and select popovers */
     val menu: Dp = 16.dp
     val checkbox: Dp = 7.dp
+    val skeletonLine: Dp = 6.dp
     val spotlight: Dp = 18.dp
     val switchTrack: Dp = 15.dp
     val navPill: Dp = 12.dp
@@ -225,6 +226,8 @@ object PopSize {
     val dateTileWidth: Dp = 56.dp
     val dateTileHeight: Dp = 68.dp
     val calendarDay: Dp = 40.dp
+    val spinner: Dp = 24.dp
+    val skeletonLine: Dp = 14.dp
     val checkbox: Dp = 24.dp
     val radioDot: Dp = 10.dp
     val menuMinWidth: Dp = 180.dp
@@ -250,6 +253,8 @@ object PopMotion {
     const val dialStaggerMillis: Int = 40
     const val dialScrimMillis: Int = 200
     const val dialPressMillis: Int = 90
+    const val pulseMillis: Int = 900
+    const val spinMillis: Int = 800
 }
 
 object PopOpacity {

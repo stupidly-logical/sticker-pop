@@ -242,6 +242,7 @@ export const tokens = {
     "snackbar": 16,
     "menu": 16,
     "checkbox": 7,
+    "skeletonLine": 6,
     "spotlight": 18,
     "switchTrack": 15,
     "navPill": 12,
@@ -286,6 +287,8 @@ export const tokens = {
     "dateTileWidth": 56,
     "dateTileHeight": 68,
     "calendarDay": 40,
+    "spinner": 24,
+    "skeletonLine": 14,
     "checkbox": 24,
     "radioDot": 10,
     "menuMinWidth": 180,
@@ -309,7 +312,9 @@ export const tokens = {
     "dialClose": 180,
     "dialStagger": 40,
     "dialScrim": 200,
-    "dialPress": 90
+    "dialPress": 90,
+    "pulse": 900,
+    "spin": 800
   },
   "opacity": {
     "scrim": 0.72

@@ -166,6 +166,7 @@ public enum PopRadius {
     /// Menus and select popovers
     public static let menu: CGFloat = 16.0
     public static let checkbox: CGFloat = 7.0
+    public static let skeletonLine: CGFloat = 6.0
     public static let spotlight: CGFloat = 18.0
     public static let switchTrack: CGFloat = 15.0
     public static let navPill: CGFloat = 12.0
@@ -219,6 +220,9 @@ public enum PopSize {
     public static let dateTileHeight: CGFloat = 68.0
     /// Day cell in the date picker (padded to 44)
     public static let calendarDay: CGFloat = 40.0
+    public static let spinner: CGFloat = 24.0
+    /// Height of a skeleton text line
+    public static let skeletonLine: CGFloat = 14.0
     /// Checkbox and radio (padded to the 48 tap target)
     public static let checkbox: CGFloat = 24.0
     public static let radioDot: CGFloat = 10.0
@@ -246,6 +250,8 @@ public enum PopMotion {
     public static let dialStagger: Double = 0.04
     public static let dialScrim: Double = 0.2
     public static let dialPress: Double = 0.09
+    public static let pulse: Double = 0.9
+    public static let spin: Double = 0.8
 }
 
 public enum PopOpacity {

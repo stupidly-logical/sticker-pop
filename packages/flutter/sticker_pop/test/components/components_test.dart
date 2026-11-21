@@ -451,6 +451,30 @@ void main() {
     });
   });
 
+  group('Loading', () {
+    testWidgets('skeleton list announces Loading once and pulses; spinner turns', (tester) async {
+      final handle = tester.ensureSemantics();
+      await pumpPop(tester, onPaper(const Column(children: <Widget>[PopSkeletonList(), PopSpinner()])));
+      expect(find.bySemanticsLabel('Loading'), findsNWidgets(2));
+      final fade = tester.widget<FadeTransition>(find.descendant(of: find.byType(PopSkeleton).first, matching: find.byType(FadeTransition)));
+      final before = fade.opacity.value;
+      await tester.pump(const Duration(milliseconds: 450));
+      expect(fade.opacity.value, lessThan(before));
+      handle.dispose();
+    });
+
+    testWidgets('reduced motion keeps skeletons and spinner still', (tester) async {
+      await pumpPop(tester, const MediaQuery(
+        data: MediaQueryData(disableAnimations: true),
+        child: Scaffold(body: Column(children: <Widget>[PopSkeleton.line(width: 100), PopSpinner()])),
+      ));
+      await tester.pump(const Duration(milliseconds: 450));
+      final fade = tester.widget<FadeTransition>(find.descendant(of: find.byType(PopSkeleton), matching: find.byType(FadeTransition)));
+      expect(fade.opacity.value, 1);
+      expect(tester.hasRunningAnimations, isFalse);
+    });
+  });
+
   group('Tilt guard', () {
     test('cards reject tilt beyond ±3°', () {
       expect(() => StickerCard(tiltDegrees: 4, child: const SizedBox()), throwsAssertionError);

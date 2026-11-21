@@ -479,6 +479,15 @@ class _PopGalleryState extends State<PopGallery> {
               ),
 
               _Section(
+                'Loading',
+                children: const <Widget>[
+                  PopSkeletonList(rows: 2),
+                  SizedBox(height: PopSpace.lg),
+                  Row(children: <Widget>[PopSpinner(), SizedBox(width: PopSpace.md), PopText('Fetching prices…', spec: PopTextSpecs.body)]),
+                ],
+              ),
+
+              _Section(
                 'Top app bar',
                 children: <Widget>[
                   // Shown inside bordered frames here; in an app the compact bar

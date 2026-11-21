@@ -540,6 +540,34 @@
       ]
     },
     {
+      "id": "loading",
+      "flutter": [
+        "PopSkeleton",
+        "PopSkeletonGroup",
+        "PopSkeletonList",
+        "PopSpinner"
+      ],
+      "compose": [
+        "PopSkeletonLine",
+        "PopSkeletonCircle",
+        "PopSkeletonBlock",
+        "PopSkeletonList",
+        "PopSpinner"
+      ],
+      "swiftui": [
+        "PopSkeleton",
+        "PopSkeletonList",
+        "PopSpinner"
+      ],
+      "web": [
+        ".sp-skeleton",
+        ".sp-skeleton--circle",
+        ".sp-skeleton--block",
+        ".sp-skeleton-row",
+        ".sp-spinner"
+      ]
+    },
+    {
       "id": "tour",
       "flutter": [
         "showPopTour",

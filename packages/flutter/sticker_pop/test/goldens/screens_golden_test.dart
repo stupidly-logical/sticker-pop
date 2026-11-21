@@ -21,7 +21,7 @@ void main() {
 
   testWidgets('Gallery', (tester) async {
     const size = Size(390, 7200);
-    await pumpPop(tester, const PopGallery(), size: size);
+    await pumpPop(tester, const PopGallery(), size: size, reduceMotion: true);
     await tester.pumpAndSettle();
     // The gallery grows with every component: if the last section no longer
     // fits, raise the height above rather than losing it from the golden.

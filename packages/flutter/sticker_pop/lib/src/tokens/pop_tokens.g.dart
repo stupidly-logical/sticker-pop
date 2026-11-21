@@ -178,6 +178,7 @@ abstract final class PopRadius {
   /// Menus and select popovers
   static const double menu = 16.0;
   static const double checkbox = 7.0;
+  static const double skeletonLine = 6.0;
   static const double spotlight = 18.0;
   static const double switchTrack = 15.0;
   static const double navPill = 12.0;
@@ -231,6 +232,9 @@ abstract final class PopSize {
   static const double dateTileHeight = 68.0;
   /// Day cell in the date picker (padded to 44)
   static const double calendarDay = 40.0;
+  static const double spinner = 24.0;
+  /// Height of a skeleton text line
+  static const double skeletonLine = 14.0;
   /// Checkbox and radio (padded to the 48 tap target)
   static const double checkbox = 24.0;
   static const double radioDot = 10.0;
@@ -258,6 +262,8 @@ abstract final class PopMotion {
   static const Duration dialStagger = Duration(milliseconds: 40);
   static const Duration dialScrim = Duration(milliseconds: 200);
   static const Duration dialPress = Duration(milliseconds: 90);
+  static const Duration pulse = Duration(milliseconds: 900);
+  static const Duration spin = Duration(milliseconds: 800);
 }
 
 abstract final class PopOpacity {

@@ -55,6 +55,7 @@ public struct PopGallery: View {
     @State private var paidFrom: String? = nil
     @State private var transfers = true
     @State private var query = ""
+    @State private var tab = 0
     @State private var date = galleryToday
     @State private var pickDate = false
     @State private var hideSmall = false
@@ -241,6 +242,10 @@ public struct PopGallery: View {
                         PopSpinner()
                         PopText("Fetching prices…", PopTextSpecs.body)
                     }
+                }
+
+                GallerySection(title: "Tabs") {
+                    PopTabs(["Spending", "Income", "Accounts", "Goals"], selection: $tab)
                 }
 
                 GallerySection(title: "Top app bar") {

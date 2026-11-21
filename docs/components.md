@@ -28,6 +28,7 @@ disappears.
 | PopAddButton | pink sticker, radius 20, −6° | — | — | — | moves 4/4 |
 | PopQuickAddRow | white −1.5°, pink +1.5°, mint −1° | — | — | — | moves 4/4 |
 | PopSheet | paper, 2.5 top line, radius 24 top | — | — | inline error above the button | — |
+| PopTabs | 15/700 muted label, no fill | yellow pill, 2 outline, 800 | — | — | — |
 | PopTopBar (compact, large) | transparent, 22/800 or 34/800 title, back + up to 2 icon buttons | scrolled: paper fill, 2.5 ink bottom line | — | — | — |
 | PopSearchField | white, 2 outline, search icon | focused: 2.5 outline; ✕ while there is text | — | — | — |
 | PopDateTiles | white tiles, 2 outline, 3/3 shadow | yellow, 2.5 outline | — | — | moves 3/3, shadow goes |

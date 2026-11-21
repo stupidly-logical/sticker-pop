@@ -475,6 +475,21 @@ void main() {
     });
   });
 
+  group('PopTabs', () {
+    testWidgets('tapping a tab selects it; the selected tab is yellow and announced', (tester) async {
+      final handle = tester.ensureSemantics();
+      var tab = 0;
+      await pumpPop(tester, onPaper(StatefulBuilder(
+        builder: (context, setState) => PopTabs(tabs: const <String>['Spending', 'Income', 'Accounts'], selected: tab, onSelected: (i) => setState(() => tab = i)),
+      )));
+      await tester.tap(find.text('Income'));
+      await tester.pumpAndSettle();
+      expect(tab, 1);
+      expect(tester.getSemantics(find.bySemanticsLabel('Income, tab 2 of 3')), isSemantics(isSelected: true, hasTapAction: true));
+      handle.dispose();
+    });
+  });
+
   group('Tilt guard', () {
     test('cards reject tilt beyond ±3°', () {
       expect(() => StickerCard(tiltDegrees: 4, child: const SizedBox()), throwsAssertionError);

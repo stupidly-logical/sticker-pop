@@ -17,6 +17,7 @@ export function wirePopControls(root = document) {
   wirePopTopBars(root);
   wirePopSearch(root);
   wirePopDateTiles(root);
+  wirePopTabs(root);
   root.querySelectorAll('.sp-chip[aria-pressed]:not(:disabled)').forEach((b) =>
     b.addEventListener('click', () => b.setAttribute('aria-pressed', String(b.getAttribute('aria-pressed') !== 'true'))));
   root.querySelectorAll('.sp-segmented:not([aria-disabled]) > button').forEach((b) =>
@@ -592,4 +593,41 @@ export function mountPopCalendar(el, { value = null, today = new Date(), min = n
   });
   render();
   return { get value() { return selected; }, set(d) { selected = d ? dayOnly(d) : null; if (d) month = new Date(d.getFullYear(), d.getMonth(), 1); render(); } };
+}
+
+// ---------------------------------------------------------------------------
+// Tabs
+
+/**
+ * Wires each `.sp-tabs[role=tablist]`: clicking or arrow keys select a tab
+ * (aria-selected, roving tabindex), and a tab's `aria-controls` panel is
+ * shown while the others are hidden.
+ */
+export function wirePopTabs(root = document) {
+  root.querySelectorAll('.sp-tabs[role="tablist"]').forEach((list) => {
+    if (list.dataset.popWired) return;
+    list.dataset.popWired = '1';
+    const tabs = () => [...list.querySelectorAll('[role="tab"]')];
+    const select = (tab, focus) => {
+      tabs().forEach((t) => {
+        const on = t === tab;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        const panel = t.getAttribute('aria-controls') && document.getElementById(t.getAttribute('aria-controls'));
+        if (panel) panel.hidden = !on;
+      });
+      if (focus) tab.focus();
+      list.dispatchEvent(new CustomEvent('pop-tab-change', { bubbles: true, detail: { index: tabs().indexOf(tab) } }));
+    };
+    list.addEventListener('click', (e) => { const t = e.target.closest('[role="tab"]'); if (t) select(t, false); });
+    list.addEventListener('keydown', (e) => {
+      const all = tabs();
+      const i = all.indexOf(document.activeElement);
+      const to = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: all.length - 1 }[e.key];
+      if (i < 0 || to === undefined) return;
+      e.preventDefault();
+      select(all[(to + all.length) % all.length], true);
+    });
+    select(tabs().find((t) => t.getAttribute('aria-selected') === 'true') ?? tabs()[0], false);
+  });
 }

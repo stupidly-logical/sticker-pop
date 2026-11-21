@@ -105,6 +105,7 @@ fun PopGallery(onOpenHome: () -> Unit = {}) {
     var account by remember { mutableStateOf<String?>("hdfc") }
     var transfers by remember { mutableStateOf(true) }
     var query by remember { mutableStateOf("") }
+    var tab by remember { mutableIntStateOf(0) }
     val today = java.time.LocalDate.of(2026, 11, 21)
     var date by remember { mutableStateOf(today) }
     var pickDate by remember { mutableStateOf(false) }
@@ -278,6 +279,10 @@ fun PopGallery(onOpenHome: () -> Unit = {}) {
                         PopSpinner()
                         PopText("Fetching prices…", PopTextSpecs.body)
                     }
+                }
+
+                Section("Tabs") {
+                    PopTabs(listOf("Spending", "Income", "Accounts", "Goals"), tab, { tab = it })
                 }
 
                 Section("Top app bar") {

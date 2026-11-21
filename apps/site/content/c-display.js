@@ -54,6 +54,20 @@ export const display = [
     spec: [['Text', '13/800, +0.6 tracking, caps'], ['Screen readers', 'read in sentence case, marked as a heading']],
   },
   {
+    id: 'tabs', name: 'Tabs', group: 'Navigation', platforms: ALL,
+    summary: 'Switch between views of one screen, like Spending | Income | Accounts on Insights. Plain muted labels; the selected tab sits in a yellow pill with an ink outline. The row scrolls sideways when it doesn\'t fit.',
+    states: [{ label: 'Tap a tab (or use the arrow keys)', html: '<div class="full"><div class="sp-tabs" role="tablist" aria-label="Insights"><button role="tab" aria-selected="true" id="demo-tabs-t0" aria-controls="demo-tabs-p0">Spending</button><button role="tab" aria-selected="false" id="demo-tabs-t1" aria-controls="demo-tabs-p1">Income</button><button role="tab" aria-selected="false" id="demo-tabs-t2" aria-controls="demo-tabs-p2">Accounts</button><button role="tab" aria-selected="false" id="demo-tabs-t3" aria-controls="demo-tabs-p3">Goals</button></div><div role="tabpanel" id="demo-tabs-p0" aria-labelledby="demo-tabs-t0" class="sp-text-body" style="padding-top:12px">Spending would show here.</div><div role="tabpanel" id="demo-tabs-p1" aria-labelledby="demo-tabs-t1" class="sp-text-body" style="padding-top:12px" hidden>Income would show here.</div><div role="tabpanel" id="demo-tabs-p2" aria-labelledby="demo-tabs-t2" class="sp-text-body" style="padding-top:12px" hidden>Accounts would show here.</div><div role="tabpanel" id="demo-tabs-p3" aria-labelledby="demo-tabs-t3" class="sp-text-body" style="padding-top:12px" hidden>Goals would show here.</div></div>' }],
+    code: {
+      flutter: "PopTabs(tabs: const ['Spending', 'Income', 'Accounts'], selected: tab, onSelected: (i) => setState(() => tab = i))",
+      compose: 'PopTabs(listOf("Spending", "Income", "Accounts"), tab, { tab = it })',
+      swift: 'PopTabs(["Spending", "Income", "Accounts"], selection: $tab)',
+      html: '<div class="sp-tabs" role="tablist" aria-label="Insights">\n  <button role="tab" aria-selected="true" aria-controls="p-spending">Spending</button>\n  <button role="tab" aria-selected="false" aria-controls="p-income">Income</button>\n</div>\n<div role="tabpanel" id="p-spending">…</div>\n<div role="tabpanel" id="p-income" hidden>…</div>\n\n<script type="module">\n  import { wirePopTabs } from \'@sticker-pop/web/behaviors.mjs\';\n  wirePopTabs();\n</script>',
+    },
+    spec: [['Tab', '40 high (48 wide at least), 16 side padding, 4 apart'], ['Unselected', '15/700 inkMuted, no fill or outline'], ['Selected', 'yellow pill (radius 19), 2 ink outline, 15/800 ink'], ['Overflow', 'the row scrolls sideways']],
+    rules: ['Tabs switch views of the same thing; use the bottom navigation to move between sections.', 'For two or three equal choices inside a form, use a segmented control.', 'Keep labels to one or two words.'],
+    a11y: 'Announced as tabs, "2 of 4", with the selected one marked. On the web the arrow keys, Home and End move between tabs and each tab shows its own panel.',
+  },
+  {
     id: 'top-bar', name: 'Top app bar', group: 'Navigation', platforms: ALL,
     summary: 'The bar at the top of a screen. Compact for sub-screens: a back sticker button, a one-line 22/800 title and up to two icon actions. Large for main screens: the 34/800 screen title at the top of the content. When content scrolls under it, the bar fills with paper and draws an ink line along its bottom.',
     states: [

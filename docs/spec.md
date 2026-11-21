@@ -150,6 +150,8 @@ Type scale (size / weight / letter spacing):
 
 **Category dot.** A 42 circle in a bright (chosen by the app, by meaning), 2 ink outline, icon at 48% of the size in ink, tilted −5°.
 
+**Tabs.** For switching between views of one screen. Labels in 15/700 `inkMuted` with no fill; the selected tab sits in a yellow pill (radius 19) with a 2 ink outline and 15/800 ink text. Tabs are 40 high (at least 48 wide), 16 side padding, 4 apart, and the row scrolls sideways when it doesn't fit. Bottom navigation moves between sections; a segmented control is for two or three equal choices in a form.
+
 **Top app bar.** Compact, for sub-screens: 64 high, 20 side padding, a back icon button (46) then 12 before a one-line 22/800 title, and up to two trailing icon buttons 8 apart (more go in a menu). Large, for main screens: the 34/800 screen title (up to two lines) at the top of the scrolling content, with the actions on the right. Transparent over the paper at rest; when content scrolls under it, it fills with `paper` and draws a 2.5 ink line along its bottom (150 ms fade). Never tilted.
 
 **Bottom navigation bar.**

@@ -404,6 +404,22 @@
       ]
     },
     {
+      "id": "tabs",
+      "flutter": [
+        "PopTabs"
+      ],
+      "compose": [
+        "PopTabs"
+      ],
+      "swiftui": [
+        "PopTabs"
+      ],
+      "web": [
+        ".sp-tabs",
+        "wirePopTabs()"
+      ]
+    },
+    {
       "id": "top-bar",
       "flutter": [
         "PopTopBar"

@@ -24,6 +24,7 @@ class _PopGalleryState extends State<PopGallery> {
   bool _transfers = true;
   bool _hideSmall = false;
   String _period = 'Month';
+  int _tab = 0;
   static final DateTime _today = DateTime(2026, 11, 21);
   DateTime _date = DateTime(2026, 11, 21);
 
@@ -484,6 +485,13 @@ class _PopGalleryState extends State<PopGallery> {
                   PopSkeletonList(rows: 2),
                   SizedBox(height: PopSpace.lg),
                   Row(children: <Widget>[PopSpinner(), SizedBox(width: PopSpace.md), PopText('Fetching prices…', spec: PopTextSpecs.body)]),
+                ],
+              ),
+
+              _Section(
+                'Tabs',
+                children: <Widget>[
+                  PopTabs(tabs: const <String>['Spending', 'Income', 'Accounts', 'Goals'], selected: _tab, onSelected: (i) => setState(() => _tab = i)),
                 ],
               ),
 

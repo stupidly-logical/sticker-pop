@@ -17,6 +17,7 @@ export 'src/components/overlays.dart';
 export 'src/components/search_field.dart';
 export 'src/components/selection.dart';
 export 'src/components/sticker_card.dart';
+export 'src/components/tabs.dart';
 export 'src/components/top_bar.dart';
 export 'src/components/tour.dart';
 export 'src/format/pop_format.dart';

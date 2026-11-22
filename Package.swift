@@ -9,7 +9,6 @@ let package = Package(
     platforms: [.iOS(.v16), .macOS(.v13)],
     products: [
         .library(name: "StickerPop", targets: ["StickerPop"]),
-        .executable(name: "StickerPopDemo", targets: ["StickerPopDemo"]),
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.17.0"),

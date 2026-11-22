@@ -13,7 +13,7 @@
 // heading for the new version: an "## Unreleased" section becomes it, or a
 // stub is added. `check --tag` refuses to release while that section still
 // says TODO.
-import { readFileSync, writeFileSync } from 'node:fs';
+import { copyFileSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -41,7 +41,7 @@ const PLACES = [
   // Install snippets in the README and on the docs Install page.
   ...['README.md', 'apps/site/content/pages.js'].map((file) => ({
     file,
-    re: new RegExp(`(sticker-pop@v|ref: v|checkout v|\\(\`v|sticker-pop\\.git", from: "|stickerpop:stickerpop:|Next Major: |from \`)${V}`, 'g'),
+    re: new RegExp(`(sticker-pop@v|@sticker-pop/web@|sticker_pop: \\^|ref: v|checkout v|\\(\`v|sticker-pop\\.git", from: "|stickerpop:stickerpop:|Next Major: |from \`)${V}`, 'g'),
     all: true,
   })),
 ];
@@ -67,8 +67,22 @@ function scan() {
   return found;
 }
 
+/** Registries want these inside each package; the root copies are the source. */
+const PACKAGE_COPIES = ['LICENSE', 'CHANGELOG.md'].flatMap((f) =>
+  ['packages/web', 'packages/flutter/sticker_pop'].map((dir) => ({ from: f, to: `${dir}/${f}` })));
+
+function copyPackageFiles() {
+  const changed = [];
+  for (const { from, to } of PACKAGE_COPIES) {
+    let old = null;
+    try { old = read(to); } catch {}
+    if (old !== read(from)) { copyFileSync(join(root, from), join(root, to)); changed.push(to); }
+  }
+  return changed;
+}
+
 function sync(version) {
-  const changed = new Set();
+  const changed = new Set(copyPackageFiles());
   for (const p of PLACES) {
     const before = read(p.file);
     const after = before.replace(p.re, (_, prefix) => `${prefix}${version}`);
@@ -109,6 +123,11 @@ function check({ tag } = {}) {
   const problems = [];
   if (!SEMVER.test(version)) problems.push(`VERSION: "${version}" is not X.Y.Z`);
   for (const { file, version: v } of scan()) if (v !== version) problems.push(`${file}: ${v}`);
+  for (const { from, to } of PACKAGE_COPIES) {
+    let copy = null;
+    try { copy = read(to); } catch {}
+    if (copy !== read(from)) problems.push(`${to}: out of date with ${from}`);
+  }
   if (tag !== undefined && tag.replace(/^v/, '') !== version) problems.push(`git tag: ${tag}`);
   if (tag !== undefined) {
     const section = read('CHANGELOG.md').split(/^## /m).find((s) => s.startsWith(version)) ?? '';
@@ -138,7 +157,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
     const version = current();
     if (!SEMVER.test(version)) { console.error(`VERSION: "${version}" is not X.Y.Z`); process.exit(1); }
     const changed = sync(version);
-    if (changelogFor(version)) changed.push('CHANGELOG.md');
+    if (changelogFor(version)) changed.push('CHANGELOG.md', ...copyPackageFiles());
     console.log(changed.length ? `synced ${version}:\n  ${changed.join('\n  ')}` : `everything already says ${version}`);
     check();
   } else {
@@ -150,6 +169,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
     const changed = sync(to);
     bumpBuildNumbers();
     changelogFor(to);
+    copyPackageFiles();
     console.log(`${from} → ${to}\n  VERSION\n  ${[...new Set([...changed, ...BUILD_NUMBERS.map((b) => b.file), 'CHANGELOG.md'])].join('\n  ')}`);
     console.log('Next: describe the release in CHANGELOG.md, run bash tools/check.sh, commit, then bash tools/publish.sh');
     check();

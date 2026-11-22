@@ -18,6 +18,7 @@ TAG="v$VERSION"
 DOCS="https://$OWNER.github.io/$REPO/"
 
 echo "== Sticker Pop $TAG"
+node tools/version.mjs sync >/dev/null   # package copies of LICENSE and CHANGELOG.md
 node tools/check-version.mjs --tag "$TAG"
 
 if git rev-parse -q --verify "refs/tags/$TAG" >/dev/null 2>&1; then

@@ -38,19 +38,15 @@ packages/                        the libraries
 
 Docs: **https://stupidly-logical.github.io/sticker-pop/**
 
-Sticker Pop is released from GitHub: each version is a tag (`v0.1.0`) with
-a GitHub Release, and every platform installs straight from the repo. Pin
-the tag so library changes never reach an app by surprise.
+Each version is a tag (`v0.1.0`) with a GitHub Release. The same tag
+publishes the web package to npm and the Flutter package to pub.dev, and
+Swift Package Manager installs straight from it. Pin the version so library
+changes never reach an app by surprise.
 
 **Flutter**
 
-```yaml
-dependencies:
-  sticker_pop:
-    git:
-      url: https://github.com/stupidly-logical/sticker-pop.git
-      path: packages/flutter/sticker_pop
-      ref: v0.1.0
+```sh
+flutter pub add sticker_pop     # or in pubspec.yaml: sticker_pop: ^0.1.0
 ```
 
 ```dart
@@ -88,19 +84,31 @@ includeBuild("third_party/sticker-pop/packages/android")
 dependencies { implementation("dev.stickerpop:stickerpop:0.1.0") }
 ```
 
-**Web**: no install step; jsDelivr serves the tagged files from GitHub.
+**Web**: from npm with a bundler, or from jsDelivr with no build step.
 
-```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/stupidly-logical/sticker-pop@v0.1.0/packages/web/src/sticker-pop.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,1,0">
-<body class="sp-root sp-paper">
-<script type="module">
-  import { wirePopControls } from 'https://cdn.jsdelivr.net/gh/stupidly-logical/sticker-pop@v0.1.0/packages/web/src/behaviors.mjs';
-  wirePopControls();
-</script>
+```sh
+npm install @sticker-pop/web
 ```
 
-Other modules: `tokens.mjs`, `format.mjs`, `charts.mjs` (same path).
+```js
+import '@sticker-pop/web/sticker-pop.css';
+import { wirePopControls } from '@sticker-pop/web/behaviors.mjs';
+wirePopControls();
+```
+
+```html
+<!-- no build step -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sticker-pop/web@0.1.0/src/sticker-pop.css">
+<script type="module">
+  import { wirePopControls } from 'https://cdn.jsdelivr.net/npm/@sticker-pop/web@0.1.0/src/behaviors.mjs';
+  wirePopControls();
+</script>
+<!-- either way: the icon font, and turn the styles on -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,1,0">
+<body class="sp-root sp-paper">
+```
+
+Other modules: `format.mjs`, `charts.mjs`, and the tokens as `@sticker-pop/web` (see `packages/web/README.md`).
 
 ### Releasing a new version
 
@@ -119,8 +127,35 @@ Edited `VERSION` by hand? `node tools/version.mjs sync` copies it everywhere.
 `node tools/version.mjs check` (run by CI) fails if any place disagrees, and a
 release is refused while the changelog section still says TODO.
 
-Registries (pub.dev, npm, Maven Central) can be added later without
-changing how apps already use it.
+The first npm and pub.dev release is published by hand once, so the
+package exists; after that, CI publishes every tag. See "First release on
+the registries" below.
+
+### First release on the registries
+
+npm and pub.dev only let CI publish a package that already exists, so the
+very first version goes up by hand, once. Do this before the first
+`bash tools/publish.sh`:
+
+1. **npm.** Create a free organisation named `sticker-pop` on npmjs.com (it
+   owns the `@sticker-pop` scope), then:
+   ```sh
+   npm login
+   cd packages/web && npm publish --access public
+   ```
+   On the package's page: Settings › Trusted publisher › GitHub Actions,
+   owner `stupidly-logical`, repository `sticker-pop`, workflow `release.yml`.
+2. **pub.dev.** Sign in with a Google account when asked:
+   ```sh
+   cd packages/flutter/sticker_pop && flutter pub publish
+   ```
+   On pub.dev: sticker_pop › Admin › Automated publishing › enable GitHub
+   Actions, repository `stupidly-logical/sticker-pop`, tag pattern `v{{version}}`.
+3. **Swift Package Index** (optional, after the repo is public): add the repo
+   at https://swiftpackageindex.com/add-a-package.
+
+From then on, every tag publishes both packages from CI with no tokens. A
+version that's already on a registry is skipped, so the first tag is fine.
 
 ## What belongs in the library, and what belongs in an app
 

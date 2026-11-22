@@ -49,7 +49,7 @@ export const otherPages = [
     title: 'Install',
     render: ({ codeBlock }) => `
       <h1>Install</h1>
-      <p class="lede">Every version is a tagged GitHub release, and each platform installs straight from <a href="https://github.com/stupidly-logical/sticker-pop">the repo</a>. Pin the tag so library changes never reach your app by surprise.</p>
+      <p class="lede">Every version is a tagged <a href="https://github.com/stupidly-logical/sticker-pop/releases">GitHub release</a>, published to npm and pub.dev at the same time; Swift Package Manager installs straight from the tag. Pin the version so library changes never reach your app by surprise.</p>
       ${codeBlock({
         compose: `# Add the repo as a submodule (JDK 21, AGP 8.11+)
 git submodule add https://github.com/stupidly-logical/sticker-pop.git third_party/sticker-pop
@@ -60,13 +60,11 @@ includeBuild("third_party/sticker-pop/packages/android")
 
 // app/build.gradle.kts
 dependencies { implementation("dev.stickerpop:stickerpop:0.1.0") }`,
-        flutter: `# pubspec.yaml
+        flutter: `flutter pub add sticker_pop
+
+# or in pubspec.yaml
 dependencies:
-  sticker_pop:
-    git:
-      url: https://github.com/stupidly-logical/sticker-pop.git
-      path: packages/flutter/sticker_pop
-      ref: v0.1.0
+  sticker_pop: ^0.1.0
 
 // main.dart
 import 'package:sticker_pop/sticker_pop.dart';
@@ -83,17 +81,26 @@ import StickerPop
     init() { StickerPopFonts.register() }
     var body: some Scene { WindowGroup { ContentView() } }
 }`,
-        html: `<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/stupidly-logical/sticker-pop@v0.1.0/packages/web/src/sticker-pop.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,1,0">
+        html: `# With a bundler (Vite, webpack, Next…)
+npm install @sticker-pop/web
 
+// main.js
+import '@sticker-pop/web/sticker-pop.css';
+import { wirePopControls } from '@sticker-pop/web/behaviors.mjs';
+wirePopControls();
+
+<!-- Or no build step, from jsDelivr -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sticker-pop/web@0.1.0/src/sticker-pop.css">
+<script type="module">
+  import { wirePopControls } from 'https://cdn.jsdelivr.net/npm/@sticker-pop/web@0.1.0/src/behaviors.mjs';
+  wirePopControls();
+</script>
+
+<!-- Either way: the icon font, and turn the styles on -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,1,0">
 <body class="sp-root sp-paper">
   <button class="sp-button">Save</button>
-</body>
-
-<script type="module">
-  import { wirePopControls } from 'https://cdn.jsdelivr.net/gh/stupidly-logical/sticker-pop@v0.1.0/packages/web/src/behaviors.mjs';
-  wirePopControls();
-</script>`,
+</body>`,
       })}
       <p class="sp-text-caption">Pick a platform once; every code sample on the site follows it.</p>
       <h2>Changing a token</h2>

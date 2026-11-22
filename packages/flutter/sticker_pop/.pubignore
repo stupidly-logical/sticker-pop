@@ -1,0 +1,3 @@
+# Kept out of the pub.dev package: screenshot test images.
+test/goldens/*.png
+test/goldens/failures/

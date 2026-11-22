@@ -4,8 +4,11 @@ version: 0.1.0
 homepage: https://stupidly-logical.github.io/sticker-pop/
 repository: https://github.com/stupidly-logical/sticker-pop/tree/main/packages/flutter/sticker_pop
 issue_tracker: https://github.com/stupidly-logical/sticker-pop/issues
-# Installed from GitHub (see README); not on pub.dev yet.
-publish_to: none
+topics:
+  - design-system
+  - ui
+  - widget
+  - theme
 
 environment:
   sdk: ^3.13.0

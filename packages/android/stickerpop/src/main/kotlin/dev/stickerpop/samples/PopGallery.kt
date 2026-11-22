@@ -247,6 +247,10 @@ fun PopGallery(onOpenHome: () -> Unit = {}) {
                     }
                 }
 
+                Section("Pagination") {
+                    PopPagination(3, 12, {})
+                }
+
                 Section("Pull to refresh") {
                     Row(horizontalArrangement = Arrangement.spacedBy(PopSpace.lg)) {
                         PopRefreshIndicator(0.6f)

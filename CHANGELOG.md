@@ -15,6 +15,8 @@ All four libraries share one version.
 - Loading states: skeleton lines, circles, blocks and lists, and a spinner,
   on all four platforms; still under reduced motion.
 - Date tiles and a month-calendar date picker on all four platforms.
+- Pagination (page numbers with a 7-slot rule, or "Page n of m" where narrow)
+  on all four platforms.
 - Pull to refresh (sticker indicator with a filling ring, then a spinner) on
   all four platforms; SwiftUI uses the system gesture tinted ink.
 - Date range picker (start and end joined by a mint band, inline or in a

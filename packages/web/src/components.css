@@ -560,6 +560,24 @@ button.sp-settings-row:hover, label.sp-settings-row:hover { background: var(--sp
 .sp-pin__box.is-dot::after { content: ''; width: 14px; height: 14px; border-radius: 50%; background: var(--sp-color-ink); }
 .sp-pin.is-error .sp-pin__box { background: var(--sp-color-orange); border-width: var(--sp-border-thin); }
 
+/* Pagination: renderPopPagination(el, { page, count, onChange }). Numbers need 404; narrower shows "Page n of m". */
+.sp-pagination-host { container-type: inline-size; }
+.sp-pagination { display: flex; align-items: center; gap: var(--sp-space-xs); }
+.sp-pagination__pages { display: flex; gap: var(--sp-space-xs); }
+.sp-pagination__page, .sp-pagination__gap {
+  width: 40px; height: 40px; display: grid; place-items: center; box-sizing: border-box;
+  font-size: 15px; font-weight: 700; font-variation-settings: 'wght' 700; color: var(--sp-color-ink);
+}
+.sp-pagination__page { padding: 0; background: none; border: var(--sp-border-regular) solid transparent; border-radius: 12px; cursor: pointer; font-family: inherit; transition: background var(--sp-motion-toggle) ease-out; }
+.sp-pagination__page:hover:not([aria-current]) { background: var(--sp-color-white); }
+.sp-pagination__page[aria-current] { background: var(--sp-color-yellow); border-color: var(--sp-color-ink); font-weight: 800; font-variation-settings: 'wght' 800; cursor: default; }
+.sp-pagination__page:focus-visible { outline: 3px solid var(--sp-color-ink); outline-offset: 2px; }
+.sp-pagination__label { display: none; flex: 1; text-align: center; font-size: 16px; font-weight: 800; font-variation-settings: 'wght' 800; }
+@container (max-width: 403.98px) {
+  .sp-pagination__pages { display: none; }
+  .sp-pagination__label { display: block; }
+}
+
 /* Pull to refresh: wirePopPullToRefresh(scroller, onRefresh) adds a .sp-refresh sticker at the top.
    --sp-refresh-progress (0 to 1) fills the ring while pulling; .is-refreshing spins it. */
 .sp-refresh-host { position: relative; overflow-y: auto; overscroll-behavior-y: contain; }

@@ -800,6 +800,36 @@ void main() {
     });
   });
 
+  group('PopPagination', () {
+    test('popPageItems keeps 7 slots', () {
+      expect(popPageItems(1, 5), <int?>[1, 2, 3, 4, 5]);
+      expect(popPageItems(3, 12), <int?>[1, 2, 3, 4, 5, null, 12]);
+      expect(popPageItems(6, 12), <int?>[1, null, 5, 6, 7, null, 12]);
+      expect(popPageItems(11, 12), <int?>[1, null, 8, 9, 10, 11, 12]);
+    });
+
+    testWidgets('wide shows numbers; narrow shows Page n of m; arrows stop at the ends', (tester) async {
+      var page = 1;
+      Widget build(double width) => onPaper(Center(
+            child: SizedBox(
+              width: width,
+              child: StatefulBuilder(builder: (context, setState) => PopPagination(page: page, count: 12, onChanged: (p) => setState(() => page = p))),
+            ),
+          ));
+      await pumpPop(tester, build(420), size: const Size(600, 844));
+      await tester.tap(find.bySemanticsLabel('Page 5 of 12'));
+      await tester.pump();
+      expect(page, 5);
+      expect(find.text('4'), findsOneWidget);
+      await pumpPop(tester, build(300));
+      expect(find.text('Page 5 of 12'), findsOneWidget);
+      await tester.tap(find.bySemanticsLabel('Next page'));
+      await tester.pump();
+      expect(page, 6);
+      expect(tester.takeException(), isNull);
+    });
+  });
+
   group('Tilt guard', () {
     test('cards reject tilt beyond ±3°', () {
       expect(() => StickerCard(tiltDegrees: 4, child: const SizedBox()), throwsAssertionError);

@@ -1,7 +1,7 @@
 // Sticker Pop behaviours for the web: the interactive parts that CSS alone
 // can't do. No dependencies; works with the markup in components.css.
 import tokens from './tokens.mjs';
-import { popInitials, popAvatarColor } from './format.mjs';
+import { popInitials, popAvatarColor, popPageItems } from './format.mjs';
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
@@ -980,4 +980,32 @@ export function wirePopPullToRefresh(host, onRefresh) {
   host.addEventListener('pointercancel', end);
   host.addEventListener('touchmove', (e) => { if (pull > 0) e.preventDefault(); }, { passive: false });
   return { refresh };
+}
+
+/**
+ * Renders page navigation into `el`: previous / next sticker icon buttons
+ * around the page numbers (current page yellow, aria-current="page"), or
+ * "Page 3 of 12" between the arrows where the row doesn't fit (a container
+ * query at 404). Calls `onChange(page)`; returns `{ get page, set(page) }`.
+ */
+export function renderPopPagination(el, { page = 1, count = 1, onChange = () => {} } = {}) {
+  el.classList.add('sp-pagination-host');
+  let current = page;
+  const render = () => {
+    const nums = popPageItems(current, count).map((p) => p === null
+      ? '<span class="sp-pagination__gap" aria-hidden="true">…</span>'
+      : `<button type="button" class="sp-pagination__page" data-page="${p}" aria-label="Page ${p} of ${count}"${p === current ? ' aria-current="page"' : ''}>${p}</button>`).join('');
+    el.innerHTML = `<nav class="sp-pagination" aria-label="Pages"><button type="button" class="sp-icon-button" data-page="${current - 1}" aria-label="Previous page"${current <= 1 ? ' disabled' : ''}><span class="sp-icon">chevron_left</span></button><span class="sp-pagination__pages">${nums}</span><span class="sp-pagination__label" aria-live="polite">Page ${current} of ${count}</span><button type="button" class="sp-icon-button" data-page="${current + 1}" aria-label="Next page"${current >= count ? ' disabled' : ''}><span class="sp-icon">chevron_right</span></button></nav>`;
+  };
+  el.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-page]');
+    if (!b || b.disabled || b.getAttribute('aria-current')) return;
+    const label = b.getAttribute('aria-label');
+    current = Math.min(Math.max(Number(b.dataset.page), 1), count);
+    render();
+    el.querySelector(`[aria-label="${label}"]:not(:disabled)`)?.focus() ?? el.querySelector('[aria-current]')?.focus();
+    onChange(current);
+  });
+  render();
+  return { get page() { return current; }, set(p) { current = p; render(); } };
 }

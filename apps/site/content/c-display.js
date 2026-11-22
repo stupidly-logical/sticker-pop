@@ -68,6 +68,20 @@ export const display = [
     spec: [['Text', '13/800, +0.6 tracking, caps'], ['Screen readers', 'read in sentence case, marked as a heading']],
   },
   {
+    id: 'pagination', name: 'Pagination', group: 'Navigation', platforms: ALL,
+    summary: 'Moves through pages of a long list, like a year of transactions on the web. Previous and next sticker buttons sit around the page numbers; the current page is yellow. Where the row doesn\'t fit, it shows "Page 3 of 12" between the arrows.',
+    states: [{ label: 'Wide (numbers)', wide: true, html: '<div class="full" data-pagination data-page="3" data-count="12"></div>' }, { label: 'Narrow (Page n of m)', html: '<div style="width:300px;max-width:100%" data-pagination data-page="6" data-count="12"></div>' }],
+    code: {
+      flutter: 'PopPagination(page: page, count: 12, onChanged: (p) => setState(() => page = p))',
+      compose: 'PopPagination(page, count = 12, onChange = { page = it })',
+      swift: 'PopPagination(page: $page, count: 12)',
+      html: '<div id="pages"></div>\n\n<script type="module">\n  import { renderPopPagination } from \'@sticker-pop/web/behaviors.mjs\';\n  renderPopPagination(document.getElementById(\'pages\'), { page: 3, count: 12, onChange: (p) => load(p) });\n</script>',
+    },
+    spec: [['Arrows', 'PopIconButton (46), disabled at the first and last page'], ['Pages', '40 × 40, radius 12, 15/700; current: yellow, 2.5 outline, 15/800'], ['Slots', 'always 7 once there are more than 7 pages: 1 … 4 5 6 … 12 (popPageItems)'], ['Narrow', 'under 404, or text above 130%: "Page 3 of 12" in 16/800 between the arrows']],
+    rules: ['On phones, prefer one long list that loads more as you scroll; pages suit the web and tablets.', 'Keep the scroll position at the top of the list after changing page.'],
+    a11y: 'The web wraps it in a nav labelled "Pages" and marks the current page with aria-current; each number reads "Page 4 of 12"; the narrow label is announced when it changes.',
+  },
+  {
     id: 'tabs', name: 'Tabs', group: 'Navigation', platforms: ALL,
     summary: 'Switch between views of one screen, like Spending | Income | Accounts on Insights. Plain muted labels; the selected tab sits in a yellow pill with an ink outline. The row scrolls sideways when it doesn\'t fit.',
     states: [{ label: 'Tap a tab (or use the arrow keys)', html: '<div class="full"><div class="sp-tabs" role="tablist" aria-label="Insights"><button role="tab" aria-selected="true" id="demo-tabs-t0" aria-controls="demo-tabs-p0">Spending</button><button role="tab" aria-selected="false" id="demo-tabs-t1" aria-controls="demo-tabs-p1">Income</button><button role="tab" aria-selected="false" id="demo-tabs-t2" aria-controls="demo-tabs-p2">Accounts</button><button role="tab" aria-selected="false" id="demo-tabs-t3" aria-controls="demo-tabs-p3">Goals</button></div><div role="tabpanel" id="demo-tabs-p0" aria-labelledby="demo-tabs-t0" class="sp-text-body" style="padding-top:12px">Spending would show here.</div><div role="tabpanel" id="demo-tabs-p1" aria-labelledby="demo-tabs-t1" class="sp-text-body" style="padding-top:12px" hidden>Income would show here.</div><div role="tabpanel" id="demo-tabs-p2" aria-labelledby="demo-tabs-t2" class="sp-text-body" style="padding-top:12px" hidden>Accounts would show here.</div><div role="tabpanel" id="demo-tabs-p3" aria-labelledby="demo-tabs-t3" class="sp-text-body" style="padding-top:12px" hidden>Goals would show here.</div></div>' }],

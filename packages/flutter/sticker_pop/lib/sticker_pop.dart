@@ -22,6 +22,7 @@ export 'src/components/navigation.dart';
 export 'src/components/overlays.dart';
 export 'src/components/refresh.dart';
 export 'src/components/search_field.dart';
+export 'src/components/pagination.dart';
 export 'src/components/pin_field.dart';
 export 'src/components/selection.dart';
 export 'src/components/settings_row.dart';

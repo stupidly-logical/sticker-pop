@@ -198,6 +198,10 @@ public struct PopGallery: View {
                     }
                 }
 
+                GallerySection(title: "Pagination") {
+                    PopPagination(page: .constant(3), count: 12)
+                }
+
                 GallerySection(title: "Pull to refresh") {
                     HStack(spacing: PopSpace.lg) {
                         PopRefreshIndicator(progress: 0.6)

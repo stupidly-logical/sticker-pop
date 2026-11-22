@@ -105,3 +105,15 @@ export function formatPopTime(date) {
   const h = date.getHours() % 12 === 0 ? 12 : date.getHours() % 12;
   return `${h}:${String(date.getMinutes()).padStart(2, '0')} ${date.getHours() < 12 ? 'am' : 'pm'}`;
 }
+
+/**
+ * The page slots to show for `page` of `count` (both from 1): every page
+ * when there are 7 or fewer, otherwise always 7 slots with null for "…",
+ * e.g. 1 … 4 5 6 … 12. The same rule runs on every platform.
+ */
+export function popPageItems(page, count) {
+  if (count <= 7) return Array.from({ length: Math.max(count, 0) }, (_, i) => i + 1);
+  if (page <= 4) return [1, 2, 3, 4, 5, null, count];
+  if (page >= count - 3) return [1, null, count - 4, count - 3, count - 2, count - 1, count];
+  return [1, null, page - 1, page, page + 1, null, count];
+}

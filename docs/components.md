@@ -39,6 +39,7 @@ disappears.
 | PopMenu | white sticker, radius 16, 4/4 shadow, rows 15/700 | — | row inkMuted, no taps | — | row (hover, focus, press): yellow |
 | PopSlider | white track, mint fill, white knob with 3/3 shadow | focus: 3 knob outline | paper track, divider fill, no shadow | — | — |
 | PopKeypad | white keys, 2 outline, 3/3 shadow, 26/800 digits | — | — | — | moves 3/3, shadow goes, paper fill |
+| PopPagination | arrows around 40 page numbers, 15/700 | current: yellow, 2.5 outline, 15/800 | arrows at the ends | — | — |
 | PopRefreshIndicator | 44 white sticker circle, ring fills with the pull | — | — | — | spins while refreshing (still under reduced motion) |
 | PopRangeCalendar | month grid like PopCalendar | ends: yellow circles, 2.5 outline; between: 40 mint band | days outside the limits muted | — | — |
 | PopAttachmentTile | dashed paper tile, icon, label, caption; filled: white sticker row | focused: 3 ink ring (web) | — | — | — |

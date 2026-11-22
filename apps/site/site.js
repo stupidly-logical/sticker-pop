@@ -6,7 +6,7 @@ import { guidePages } from './content/guides.js';
 import { foundationPages } from './content/foundations.js';
 import { otherPages } from './content/pages.js';
 import { esc, kebab, store, contrast } from './content/util.js';
-import { stabilizePopChips, wirePopDials, layoutPopDial, wirePopMenus, wirePopSelects, wirePopTopBars, wirePopSearch, wirePopDateTiles, mountPopCalendar, wirePopTabs, wirePopSliders, wirePopSteppers, wirePopKeypads, wirePopAvatars, wirePopTooltips, wirePopTagInputs, wirePopAttachments, wirePopPullToRefresh, renderPopPin } from './sp/behaviors.mjs';
+import { stabilizePopChips, wirePopDials, layoutPopDial, wirePopMenus, wirePopSelects, wirePopTopBars, wirePopSearch, wirePopDateTiles, mountPopCalendar, wirePopTabs, wirePopSliders, wirePopSteppers, wirePopKeypads, wirePopAvatars, wirePopTooltips, wirePopTagInputs, wirePopAttachments, wirePopPullToRefresh, renderPopPagination, renderPopPin } from './sp/behaviors.mjs';
 import { applyPopKey } from './sp/format.mjs';
 
 const VERSION = '0.1.0';
@@ -116,6 +116,7 @@ function wireDemos(root) {
   root.querySelectorAll('.sp-pin[data-value]').forEach((p) => renderPopPin(p, p.dataset.value, { error: p.dataset.error === 'true' }));
   root.querySelectorAll('[data-keypad-for]').forEach((pad) => { const out = document.getElementById(pad.dataset.keypadFor); let v = out.dataset.value ?? ''; pad.addEventListener('pop-key', (e) => { v = applyPopKey(v, e.detail.key); out.textContent = '₹' + (v || '0'); }); });
   root.querySelectorAll('[data-inr-for]').forEach((out) => { const i = document.getElementById(out.dataset.inrFor); const f = () => { out.textContent = '₹' + Number(i.value).toLocaleString('en-IN'); i.setAttribute('aria-valuetext', out.textContent); }; i.addEventListener('input', f); f(); });
+  root.querySelectorAll('[data-pagination]').forEach((el) => renderPopPagination(el, { page: Number(el.dataset.page), count: Number(el.dataset.count) }));
   root.querySelectorAll('[data-refresh-demo]').forEach((el) => {
     const r = wirePopPullToRefresh(el.querySelector('[data-refresh-list]'), () => new Promise((done) => setTimeout(() => { toast('Up to date'); done(); }, 1200)));
     el.querySelector('[data-refresh-button]')?.addEventListener('click', () => r.refresh());
@@ -186,7 +187,7 @@ function componentPage(c) {
     <h1>${esc(c.name)}</h1>
     <p class="lede">${c.summary}</p>
     <h2>States</h2>
-    <div class="state-grid">${c.states.map((s) => `<div class="state"><span class="state__label">${esc(s.label)}</span><div class="state__body">${s.html}</div></div>`).join('')}</div>
+    <div class="state-grid">${c.states.map((s) => `<div class="state${s.wide ? ' state--wide' : ''}"><span class="state__label">${esc(s.label)}</span><div class="state__body">${s.html}</div></div>`).join('')}</div>
     ${c.extra ?? ''}
     <h2>Usage</h2>
     ${codeBlock(c.code)}

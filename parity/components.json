@@ -460,6 +460,26 @@
       ]
     },
     {
+      "id": "pagination",
+      "flutter": [
+        "PopPagination",
+        "popPageItems"
+      ],
+      "compose": [
+        "PopPagination",
+        "popPageItems"
+      ],
+      "swiftui": [
+        "PopPagination",
+        "popPageItems"
+      ],
+      "web": [
+        ".sp-pagination",
+        "renderPopPagination()",
+        "popPageItems()"
+      ]
+    },
+    {
       "id": "pull-to-refresh",
       "flutter": [
         "PopPullToRefresh",

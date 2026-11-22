@@ -394,6 +394,11 @@ class _PopGalleryState extends State<PopGallery> {
                 ],
               ),
 
+              _Section(
+                'Pagination',
+                children: <Widget>[PopPagination(page: 3, count: 12, onChanged: (_) {})],
+              ),
+
               const _Section(
                 'Pull to refresh',
                 children: <Widget>[

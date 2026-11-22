@@ -719,6 +719,26 @@ void main() {
     });
   });
 
+  group('PopAttachmentTile', () {
+    testWidgets('empty tile asks to pick; filled shows the name and removes', (tester) async {
+      String? file;
+      await pumpPop(tester, onPaper(StatefulBuilder(
+        builder: (context, setState) => PopAttachmentTile(
+          fileName: file,
+          fileSize: '412 KB',
+          onPick: () => setState(() => file = 'chai-point-receipt.jpg'),
+          onRemove: () => setState(() => file = null),
+        ),
+      )));
+      await tester.tap(find.text('Add a receipt'));
+      await tester.pump();
+      expect(find.text('chai-point-receipt.jpg'), findsOneWidget);
+      await tester.tap(find.bySemanticsLabel('Remove chai-point-receipt.jpg'));
+      await tester.pump();
+      expect(find.text('Add a receipt'), findsOneWidget);
+    });
+  });
+
   group('Tilt guard', () {
     test('cards reject tilt beyond ±3°', () {
       expect(() => StickerCard(tiltDegrees: 4, child: const SizedBox()), throwsAssertionError);

@@ -460,6 +460,23 @@
       ]
     },
     {
+      "id": "attachment",
+      "flutter": [
+        "PopAttachmentTile"
+      ],
+      "compose": [
+        "PopAttachmentTile"
+      ],
+      "swiftui": [
+        "PopAttachmentTile"
+      ],
+      "web": [
+        ".sp-attach",
+        ".sp-attach-file",
+        "wirePopAttachments()"
+      ]
+    },
+    {
       "id": "pin",
       "flutter": [
         "PopPinField"

@@ -25,6 +25,7 @@ export function wirePopControls(root = document) {
   wirePopAvatars(root);
   wirePopTooltips(root);
   wirePopTagInputs(root);
+  wirePopAttachments(root);
   root.querySelectorAll('.sp-chip[aria-pressed]:not(:disabled)').forEach((b) =>
     b.addEventListener('click', () => b.setAttribute('aria-pressed', String(b.getAttribute('aria-pressed') !== 'true'))));
   root.querySelectorAll('.sp-segmented:not([aria-disabled]) > button').forEach((b) =>
@@ -818,4 +819,66 @@ export function renderPopPin(el, value, { length = Number(el.dataset.length ?? 4
     const cls = `sp-pin__box${filled && obscure ? ' is-dot' : ''}${!error && i === value.length ? ' is-next' : ''}`;
     return `<span class="${cls}" aria-hidden="true">${filled && !obscure ? esc(value[i]) : ''}</span>`;
   }).join('');
+}
+
+/**
+ * Wires each `.sp-attach` (a label around a file input): when a file is
+ * chosen the tile is hidden and a `.sp-attach-file` row shows its name, size
+ * and an image thumbnail; Remove clears the input and brings the tile back
+ * (focus returns to it). Fires a bubbling `pop-attach` event with `{ file }`
+ * (null when removed).
+ */
+export function wirePopAttachments(root = document) {
+  root.querySelectorAll('.sp-attach').forEach((tile) => {
+    if (tile.dataset.popWired) return;
+    tile.dataset.popWired = '1';
+    const input = tile.querySelector('input[type="file"]');
+    if (!input) return;
+    let row = null;
+    const clear = () => {
+      row?.remove();
+      row = null;
+      input.value = '';
+      tile.hidden = false;
+      input.focus();
+      tile.dispatchEvent(new CustomEvent('pop-attach', { bubbles: true, detail: { file: null } }));
+    };
+    input.addEventListener('change', () => {
+      const file = input.files?.[0];
+      if (!file) return;
+      row = document.createElement('div');
+      row.className = 'sp-attach-file';
+      const thumb = document.createElement('span');
+      thumb.className = 'sp-attach-file__thumb';
+      thumb.setAttribute('aria-hidden', 'true');
+      if (file.type.startsWith('image/')) {
+        const img = document.createElement('img');
+        img.alt = '';
+        img.src = URL.createObjectURL(file);
+        thumb.append(img);
+      } else {
+        thumb.innerHTML = '<span class="sp-icon">description</span>';
+      }
+      const text = document.createElement('span');
+      const name = document.createElement('span');
+      name.className = 'sp-attach-file__name';
+      name.textContent = file.name;
+      const size = document.createElement('span');
+      size.className = 'sp-attach-file__size';
+      size.textContent = file.size >= 1048576 ? `${(file.size / 1048576).toFixed(1)} MB` : `${Math.max(1, Math.round(file.size / 1024))} KB`;
+      size.style.display = 'block';
+      text.append(name, size);
+      const remove = document.createElement('button');
+      remove.type = 'button';
+      remove.className = 'sp-attach-file__remove';
+      remove.setAttribute('aria-label', `Remove ${file.name}`);
+      remove.innerHTML = '<span class="sp-icon">close</span>';
+      remove.addEventListener('click', clear);
+      row.append(thumb, text, remove);
+      tile.hidden = true;
+      tile.after(row);
+      remove.focus();
+      tile.dispatchEvent(new CustomEvent('pop-attach', { bubbles: true, detail: { file } }));
+    });
+  });
 }

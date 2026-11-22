@@ -197,6 +197,11 @@ public struct PopGallery: View {
                     }
                 }
 
+                GallerySection(title: "Attachment") {
+                    PopAttachmentTile(onPick: {})
+                    PopAttachmentTile(fileName: "chai-point-receipt.jpg", fileSize: "412 KB", onPick: {}, onRemove: {})
+                }
+
                 GallerySection(title: "Tag input") {
                     PopTagInput(tags: $tripTags, label: "Tags")
                 }

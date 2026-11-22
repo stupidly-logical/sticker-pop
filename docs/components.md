@@ -39,6 +39,7 @@ disappears.
 | PopMenu | white sticker, radius 16, 4/4 shadow, rows 15/700 | — | row inkMuted, no taps | — | row (hover, focus, press): yellow |
 | PopSlider | white track, mint fill, white knob with 3/3 shadow | focus: 3 knob outline | paper track, divider fill, no shadow | — | — |
 | PopKeypad | white keys, 2 outline, 3/3 shadow, 26/800 digits | — | — | — | moves 3/3, shadow goes, paper fill |
+| PopAttachmentTile | dashed paper tile, icon, label, caption; filled: white sticker row | focused: 3 ink ring (web) | — | — | — |
 | PopPinField | white boxes, 2 outline; dots or digits | next box: 2.5 outline | — | orange boxes + message | — |
 | PopStepper | − and + icon buttons, 20/800 value | — | a button at its limit: disabled | — | button moves by its shadow |
 | PopSettingsRow | icon, title/subtitle; value + chevron or switch | switch on | muted, no taps | — | — |

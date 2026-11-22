@@ -247,6 +247,11 @@ fun PopGallery(onOpenHome: () -> Unit = {}) {
                     }
                 }
 
+                Section("Attachment") {
+                    PopAttachmentTile(onPick = {})
+                    PopAttachmentTile(onPick = {}, fileName = "chai-point-receipt.jpg", fileSize = "412 KB", onRemove = {})
+                }
+
                 Section("Tag input") {
                     PopTagInput(tripTags, { tripTags = it }, label = "Tags")
                 }

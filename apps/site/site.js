@@ -6,7 +6,7 @@ import { guidePages } from './content/guides.js';
 import { foundationPages } from './content/foundations.js';
 import { otherPages } from './content/pages.js';
 import { esc, kebab, store, contrast } from './content/util.js';
-import { stabilizePopChips, wirePopDials, layoutPopDial, wirePopMenus, wirePopSelects, wirePopTopBars, wirePopSearch, wirePopDateTiles, mountPopCalendar, wirePopTabs, wirePopSliders, wirePopSteppers, wirePopKeypads, wirePopAvatars, wirePopTooltips, wirePopTagInputs, renderPopPin } from './sp/behaviors.mjs';
+import { stabilizePopChips, wirePopDials, layoutPopDial, wirePopMenus, wirePopSelects, wirePopTopBars, wirePopSearch, wirePopDateTiles, mountPopCalendar, wirePopTabs, wirePopSliders, wirePopSteppers, wirePopKeypads, wirePopAvatars, wirePopTooltips, wirePopTagInputs, wirePopAttachments, renderPopPin } from './sp/behaviors.mjs';
 import { applyPopKey } from './sp/format.mjs';
 
 const VERSION = '0.1.0';
@@ -99,6 +99,7 @@ function wireDemos(root) {
   wirePopAvatars(root);
   wirePopTooltips(root);
   wirePopTagInputs(root);
+  wirePopAttachments(root);
   root.querySelectorAll('[data-pin-demo]').forEach((wrap) => {
     const pin = wrap.querySelector('.sp-pin');
     const err = wrap.querySelector('.sp-form-error');

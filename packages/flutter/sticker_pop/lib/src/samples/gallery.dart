@@ -395,6 +395,15 @@ class _PopGalleryState extends State<PopGallery> {
               ),
 
               _Section(
+                'Attachment',
+                children: <Widget>[
+                  PopAttachmentTile(onPick: () {}),
+                  const SizedBox(height: PopSpace.md),
+                  PopAttachmentTile(onPick: () {}, fileName: 'chai-point-receipt.jpg', fileSize: '412 KB', onRemove: () {}),
+                ],
+              ),
+
+              _Section(
                 'Tag input',
                 children: <Widget>[
                   PopTagInput(label: 'Tags', tags: _tripTags, onChanged: (t) => setState(() => _tripTags = t)),

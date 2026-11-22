@@ -551,6 +551,31 @@ button.sp-settings-row:hover, label.sp-settings-row:hover { background: var(--sp
 .sp-pin__box.is-dot::after { content: ''; width: 14px; height: 14px; border-radius: 50%; background: var(--sp-color-ink); }
 .sp-pin.is-error .sp-pin__box { background: var(--sp-color-orange); border-width: var(--sp-border-thin); }
 
+/* Attachment: <label class="sp-attach"><input type="file" accept="image/*,.pdf"> icon, label, caption</label>
+   (the native picker opens on click); filled: .sp-attach-file. wirePopAttachments() swaps between them. */
+.sp-attach {
+  position: relative; display: grid; justify-items: center; align-content: center; gap: 2px;
+  min-height: 96px; padding: var(--sp-space-lg); box-sizing: border-box; text-align: center; cursor: pointer;
+  background: var(--sp-color-paper); border: var(--sp-border-thin) dashed var(--sp-color-ink); border-radius: var(--sp-radius-tile);
+}
+.sp-attach input[type="file"] { position: absolute; inset: 0; opacity: 0; width: 100%; cursor: pointer; }
+.sp-attach:focus-within { outline: 3px solid var(--sp-color-ink); outline-offset: 3px; }
+.sp-attach .sp-icon { font-size: var(--sp-size-icon-tile); margin-bottom: var(--sp-space-xs); }
+.sp-attach__label { font: 800 15px/1.3 var(--sp-font-family); color: var(--sp-color-ink); }
+.sp-attach__caption { font: 600 13px/1.35 var(--sp-font-family); color: var(--sp-color-ink-muted); }
+.sp-attach-file {
+  display: grid; grid-template-columns: 48px minmax(0,1fr) auto; align-items: center; gap: var(--sp-space-md);
+  padding: var(--sp-space-md) var(--sp-space-xs) var(--sp-space-md) var(--sp-space-md);
+  background: var(--sp-color-white); border: var(--sp-border-thin) solid var(--sp-color-ink);
+  border-radius: var(--sp-radius-tile); box-shadow: var(--sp-shadow-small) var(--sp-shadow-small) 0 var(--sp-color-ink);
+}
+.sp-attach-file__thumb { width: 48px; height: 48px; border-radius: var(--sp-radius-badge); background: var(--sp-color-paper); display: grid; place-items: center; overflow: hidden; }
+.sp-attach-file__thumb img { width: 100%; height: 100%; object-fit: cover; }
+.sp-attach-file__name { font: 800 16px/1.3 var(--sp-font-family); color: var(--sp-color-ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sp-attach-file__size { font: 600 13px/1.35 var(--sp-font-family); color: var(--sp-color-ink-muted); }
+.sp-attach-file__remove { width: 44px; height: 44px; display: grid; place-items: center; border: 0; background: none; color: var(--sp-color-ink); cursor: pointer; border-radius: 50%; }
+.sp-attach-file__remove:focus-visible { outline: 3px solid var(--sp-color-ink); }
+
 /* Field row */
 .sp-field-row { display: flex; align-items: center; min-height: var(--sp-size-row-min); padding: 6px 14px; border-bottom: var(--sp-border-divider) solid var(--sp-color-divider); }
 .sp-field-row:last-child { border-bottom: 0; }

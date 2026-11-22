@@ -460,6 +460,23 @@
       ]
     },
     {
+      "id": "pin",
+      "flutter": [
+        "PopPinField"
+      ],
+      "compose": [
+        "PopPinField"
+      ],
+      "swiftui": [
+        "PopPinField"
+      ],
+      "web": [
+        ".sp-pin",
+        ".sp-pin__box",
+        "renderPopPin()"
+      ]
+    },
+    {
       "id": "field-row",
       "flutter": [
         "PopFieldRow"

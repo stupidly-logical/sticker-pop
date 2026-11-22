@@ -524,6 +524,17 @@ class _PopGalleryState extends State<PopGallery> {
               ),
 
               _Section(
+                'PIN entry',
+                children: const <Widget>[
+                  Center(child: PopPinField(value: '12')),
+                  SizedBox(height: PopSpace.lg),
+                  Center(child: PopPinField(value: '4821', error: "That PIN doesn't match. 2 tries left.")),
+                  SizedBox(height: PopSpace.lg),
+                  Center(child: PopPinField(value: '583', length: 6, obscure: false, semanticLabel: 'Code')),
+                ],
+              ),
+
+              _Section(
                 'Stepper',
                 children: <Widget>[
                   Row(children: <Widget>[

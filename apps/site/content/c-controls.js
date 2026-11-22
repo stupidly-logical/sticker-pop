@@ -152,6 +152,20 @@ export const controls = [
     a11y: 'Announced as a slider with its label and value ("Monthly budget, ₹12,000"); swipe up or down, or the arrow keys, step it.',
   },
   {
+    id: 'pin', name: 'PIN entry', group: 'Inputs', platforms: ALL,
+    summary: 'For an app-lock PIN or a one-time code: a row of boxes that fill with dots (or digits, for codes) as the number keypad is tapped. The next box to fill is outlined; a wrong PIN turns the boxes orange with a message below.',
+    states: [{ label: 'Type the PIN (1234)', html: '<div class="full" data-pin-demo style="display:grid;gap:16px"><div class="sp-pin" data-length="4"></div><span class="sp-form-error" hidden>That PIN doesn&#39;t match. Try 1234.</span><div class="sp-keypad"><button data-key="1" aria-label="1">1</button><button data-key="2" aria-label="2">2</button><button data-key="3" aria-label="3">3</button><button data-key="4" aria-label="4">4</button><button data-key="5" aria-label="5">5</button><button data-key="6" aria-label="6">6</button><button data-key="7" aria-label="7">7</button><button data-key="8" aria-label="8">8</button><button data-key="9" aria-label="9">9</button><span></span><button data-key="0" aria-label="0">0</button><button data-key="⌫" aria-label="Delete"><span class="sp-icon">backspace</span></button></div></div>' }, { label: 'Error, and a 6-digit code', html: '<div class="full" style="display:grid;gap:16px"><div class="sp-pin" data-length="4" data-value="4821" data-error="true"></div><div class="sp-pin" data-length="6" data-value="583" data-obscure="false" data-label="Code"></div></div>' }],
+    code: {
+      flutter: "PopPinField(value: pin, error: wrong ? \"That PIN doesn't match.\" : null)\nPopKeypad(decimal: false, onKey: (k) => setState(() => pin = applyPopKey(pin, k, decimals: 0, maxDigits: 4)))",
+      compose: 'PopPinField(pin, error = if (wrong) "That PIN doesn\'t match." else null)\nPopKeypad({ pin = applyPopKey(pin, it, decimals = 0, maxDigits = 4) }, decimal = false)',
+      swift: 'PopPinField(pin, error: wrong ? "That PIN doesn\'t match." : nil)\nPopKeypad(decimal: false) { pin = applyPopKey(pin, $0, decimals: 0, maxDigits: 4) }',
+      html: '<div class="sp-pin" data-length="4"></div>\n\n<script type="module">\n  import { renderPopPin } from \'@sticker-pop/web/behaviors.mjs\';\n  renderPopPin(document.querySelector(\'.sp-pin\'), pin, { error: wrong });\n</script>',
+    },
+    spec: [['Boxes', '48 × 56 (shrink to fit), radius 14, 2 outline, 8 apart'], ['Filled', '14 ink dot, or the digit in 26/800 for codes'], ['Next', '2.5 outline'], ['Error', 'orange boxes and a 14/800 ink message below; never red']],
+    rules: ['Use the number keypad below it, without the decimal point.', 'Clear the boxes after a wrong PIN and say how many tries are left.'],
+    a11y: 'Read as "PIN, 2 of 4 entered" and updated as people type; digits are never read out for a PIN.',
+  },
+  {
     id: 'stepper', name: 'Stepper', group: 'Inputs', platforms: ALL,
     summary: 'A small counter, like how many people split a bill: − and + sticker buttons with the number between them. Each button disables at its limit.',
     states: [{ label: 'Tap − and + (1 to 20)', html: '<div class="row full" style="justify-content:space-between"><span class="sp-text-row-title" id="st-l">Split between</span><div class="sp-stepper" role="group" aria-labelledby="st-l" data-min="1" data-max="20"><button class="sp-icon-button" aria-label="Fewer people"><span class="sp-icon">remove</span></button><output class="sp-stepper__value" aria-live="polite">2</output><button class="sp-icon-button" aria-label="More people"><span class="sp-icon">add</span></button></div></div>' }],

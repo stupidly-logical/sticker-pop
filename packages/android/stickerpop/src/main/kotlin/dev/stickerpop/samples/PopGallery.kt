@@ -301,6 +301,12 @@ fun PopGallery(onOpenHome: () -> Unit = {}) {
                     PopKeypad({ typed = applyPopKey(typed, it) })
                 }
 
+                Section("PIN entry") {
+                    PopPinField("12", Modifier.fillMaxWidth())
+                    PopPinField("4821", Modifier.fillMaxWidth(), error = "That PIN doesn't match. 2 tries left.")
+                    PopPinField("583", Modifier.fillMaxWidth(), length = 6, obscure = false, label = "Code")
+                }
+
                 Section("Stepper") {
                     Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                         PopText("Split between", PopTextSpecs.input, Modifier.weight(1f))

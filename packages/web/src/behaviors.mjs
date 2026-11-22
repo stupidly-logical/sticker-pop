@@ -800,3 +800,22 @@ export function wirePopTagInputs(root = document) {
     render();
   });
 }
+
+// ---------------------------------------------------------------------------
+// PIN entry
+
+/**
+ * Draws a `.sp-pin` for `value` (digits typed so far): `length` boxes, dots
+ * when `obscure`, the next box outlined, orange when `error`. Labels it for
+ * screen readers ("PIN, 2 of 4 entered").
+ */
+export function renderPopPin(el, value, { length = Number(el.dataset.length ?? 4), obscure = el.dataset.obscure !== 'false', error = false, label = el.dataset.label ?? 'PIN' } = {}) {
+  el.classList.toggle('is-error', !!error);
+  el.setAttribute('role', 'status');
+  el.setAttribute('aria-label', `${label}, ${value.length} of ${length} entered`);
+  el.innerHTML = Array.from({ length }, (_, i) => {
+    const filled = i < value.length;
+    const cls = `sp-pin__box${filled && obscure ? ' is-dot' : ''}${!error && i === value.length ? ' is-next' : ''}`;
+    return `<span class="${cls}" aria-hidden="true">${filled && !obscure ? esc(value[i]) : ''}</span>`;
+  }).join('');
+}

@@ -692,6 +692,33 @@ void main() {
     });
   });
 
+  group('PopPinField', () {
+    testWidgets('keypad fills dots; error turns the boxes orange; fits 320 at 200%', (tester) async {
+      final handle = tester.ensureSemantics();
+      var pin = '';
+      await pumpPop(tester, MediaQuery(
+        data: const MediaQueryData(textScaler: TextScaler.linear(2)),
+        child: Scaffold(body: StatefulBuilder(builder: (context, setState) => Column(children: <Widget>[
+          PopPinField(value: pin, length: 6, error: pin.length == 6 ? 'That PIN doesn\'t match.' : null),
+          PopKeypad(decimal: false, onKey: (k) => setState(() => pin = applyPopKey(pin, k, decimals: 0, maxDigits: 6))),
+        ]))),
+      ), size: const Size(320, 900));
+      for (final k in <String>['1', '2', '3']) {
+        await tester.tap(find.bySemanticsLabel(k));
+      }
+      await tester.pump();
+      expect(find.bySemanticsLabel('PIN'), findsOneWidget);
+      expect(tester.getSemantics(find.bySemanticsLabel('PIN')), isSemantics(value: '3 of 6 entered'));
+      for (final k in <String>['4', '5', '6']) {
+        await tester.tap(find.bySemanticsLabel(k));
+      }
+      await tester.pumpAndSettle();
+      expect(find.text("That PIN doesn't match."), findsOneWidget);
+      expect(tester.takeException(), isNull);
+      handle.dispose();
+    });
+  });
+
   group('Tilt guard', () {
     test('cards reject tilt beyond ±3°', () {
       expect(() => StickerCard(tiltDegrees: 4, child: const SizedBox()), throwsAssertionError);

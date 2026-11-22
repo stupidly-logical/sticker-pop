@@ -260,6 +260,12 @@ public struct PopGallery: View {
                     PopKeypad { typed = applyPopKey(typed, $0) }
                 }
 
+                GallerySection(title: "PIN entry") {
+                    PopPinField("12").frame(maxWidth: .infinity)
+                    PopPinField("4821", error: "That PIN doesn't match. 2 tries left.").frame(maxWidth: .infinity)
+                    PopPinField("583", length: 6, obscure: false, label: "Code").frame(maxWidth: .infinity)
+                }
+
                 GallerySection(title: "Stepper") {
                     HStack {
                         PopText("Split between", PopTextSpecs.input)

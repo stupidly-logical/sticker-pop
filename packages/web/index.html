@@ -140,6 +140,11 @@
     <div class="sp-keypad"><button data-key="1" aria-label="1">1</button><button data-key="2" aria-label="2">2</button><button data-key="3" aria-label="3">3</button><button data-key="4" aria-label="4">4</button><button data-key="5" aria-label="5">5</button><button data-key="6" aria-label="6">6</button><button data-key="7" aria-label="7">7</button><button data-key="8" aria-label="8">8</button><button data-key="9" aria-label="9">9</button><button data-key="." aria-label="Decimal point">.</button><button data-key="0" aria-label="0">0</button><button data-key="⌫" aria-label="Delete"><span class="sp-icon">backspace</span></button></div>
   </section>
 
+  <section><h2 class="sp-text-section-heading">PIN entry</h2>
+    <div class="sp-pin" id="g-pin" data-length="4"></div>
+    <div class="sp-pin" id="g-pin-err" data-length="4"></div>
+  </section>
+
   <section><h2 class="sp-text-section-heading">Stepper</h2>
     <div class="row" style="justify-content:space-between"><span class="sp-text-row-title" id="g-st-l">Split between</span><div class="sp-stepper" role="group" aria-labelledby="g-st-l" data-min="1" data-max="20"><button class="sp-icon-button" aria-label="Fewer people"><span class="sp-icon">remove</span></button><output class="sp-stepper__value" aria-live="polite">2</output><button class="sp-icon-button" aria-label="More people"><span class="sp-icon">add</span></button></div></div>
   </section>
@@ -285,7 +290,9 @@
 </div>
 </div>
 <script type="module">
-  import { wirePopControls, showPopSnack, showPopTour, mountPopCalendar } from './src/behaviors.mjs';
+  import { wirePopControls, showPopSnack, showPopTour, mountPopCalendar, renderPopPin } from './src/behaviors.mjs';
+  renderPopPin(document.getElementById('g-pin'), '12');
+  renderPopPin(document.getElementById('g-pin-err'), '4821', { error: true });
   mountPopCalendar(document.getElementById('g-calendar'), { max: new Date() });
   import { popDonutSvg } from './src/charts.mjs';
 

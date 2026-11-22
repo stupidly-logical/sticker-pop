@@ -181,6 +181,8 @@ Type scale (size / weight / letter spacing):
 
 **Number keypad.** For typing amounts under the amount field, in place of the system keyboard: a 3 × 4 grid, 8 apart, of white keys (56 high, radius 18, 2 outline, 3/3 shadow) holding 1–9, ".", 0 and a backspace icon; digits 26/800 tabular. A key presses 3/3 into its shadow, with a light haptic tick on phones. A shared helper (`applyPopKey`) keeps one decimal point, at most two decimal places and no leading zeros.
 
+**PIN entry.** For an app-lock PIN or a one-time code: a row of 4 or 6 boxes (48 × 56, shrinking to fit, radius 14, 2 outline, 8 apart) above the number keypad without the decimal point. Filled boxes show a 14 ink dot, or the digit in 26/800 for codes; the next box has a 2.5 outline. A wrong PIN turns the boxes orange with a 14/800 ink message below, never red. Read as "PIN, 2 of 4 entered"; a PIN's digits are never read out.
+
 **Stepper.** A small counter: two PopIconButtons (− and +) with the value between them in 20/800 tabular figures, at least 48 wide. Each button disables at its limit. For small whole numbers only.
 
 **Settings row.** A row for settings lists, inside a StickerList: 52 min height, 16 left padding, an optional 22 ink icon, a 16/700 title with an optional 13/600 muted subtitle, then either a PopSwitch (tapping the row flips it), or the current value in 16/700 muted and a 26 chevron when the row opens something. The whole row is the tap target.

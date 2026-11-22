@@ -163,7 +163,8 @@ with a note instead of failing.
      `MAVEN_CENTRAL_USERNAME` and `MAVEN_CENTRAL_PASSWORD` (the token),
      `SIGNING_KEY` (the contents of `signing-key.asc`) and
      `SIGNING_KEY_PASSWORD` (its passphrase). Then delete `signing-key.asc`.
-   - Re-run the Release workflow for the current tag, or wait for the next one.
+   - Actions › Release › Run workflow (on `main`) publishes the current
+     version straight away; otherwise it goes out with the next tag.
 4. **Swift Package Index** (optional, after the repo is public): add the repo
    at https://swiftpackageindex.com/add-a-package.
 

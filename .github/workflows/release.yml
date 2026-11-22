@@ -1,18 +1,25 @@
 # Pushing a tag like v0.2.0 creates a GitHub Release whose notes are that
 # version's section of CHANGELOG.md, then publishes the web package to npm,
-# the Flutter package to pub.dev and the Compose library to Maven Central. CI (ci.yml) builds and tests the tag.
-# SwiftUI needs nothing more: Swift Package Manager installs from the tag.
+# the Flutter package to pub.dev and the Compose library to Maven Central.
+# CI (ci.yml) builds and tests the tag. SwiftUI needs nothing more: Swift
+# Package Manager installs from the tag.
+#
+# "Run workflow" (on main) publishes the version in VERSION to npm and Maven
+# Central without a new tag or release, for a registry that was set up after
+# that version was tagged. pub.dev only accepts tag pushes, so it's skipped.
 name: Release
 
 on:
   push:
     tags: ['v*']
+  workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
   release:
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -38,6 +45,7 @@ jobs:
   # repo stupidly-logical/sticker-pop, workflow release.yml.
   npm:
     needs: release
+    if: ${{ !cancelled() && (needs.release.result == 'success' || github.event_name == 'workflow_dispatch') }}
     runs-on: ubuntu-latest
     permissions: { contents: read, id-token: write }
     steps:
@@ -62,6 +70,7 @@ jobs:
   # repo stupidly-logical/sticker-pop, tag pattern v{{version}}.
   pubdev:
     needs: release
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     permissions: { contents: read, id-token: write }
     steps:
@@ -86,6 +95,7 @@ jobs:
   # the registries). Until they're set, this job leaves a note and skips.
   maven:
     needs: release
+    if: ${{ !cancelled() && (needs.release.result == 'success' || github.event_name == 'workflow_dispatch') }}
     runs-on: ubuntu-latest
     permissions: { contents: read }
     env:
@@ -104,7 +114,7 @@ jobs:
           if [ -z "$ORG_GRADLE_PROJECT_mavenCentralUsername" ] || [ -z "$ORG_GRADLE_PROJECT_signingInMemoryKey" ]; then
             echo "::notice::Maven Central secrets aren't set yet; skipping (README: First release on the registries)"; exit 0
           fi
-          version="${GITHUB_REF_NAME#v}"
+          version="$(tr -d '[:space:]' < ../../VERSION)"
           if curl -sf "https://repo1.maven.org/maven2/io/github/stupidly-logical/stickerpop/$version/stickerpop-$version.pom" >/dev/null; then
             echo "stickerpop $version is already on Maven Central"; exit 0
           fi

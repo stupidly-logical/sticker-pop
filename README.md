@@ -12,7 +12,7 @@ gallery and Home sample, and the same kinds of tests.
 | | Compose | Flutter | SwiftUI | Web |
 | --- | --- | --- | --- | --- |
 | Path | `packages/android` | `packages/flutter/sticker_pop` | `packages/ios/StickerPop` (manifest at repo root) | `packages/web` |
-| Package | `dev.stickerpop:stickerpop` | `sticker_pop` | `StickerPop` | `@sticker-pop/web` |
+| Package | `io.github.stupidly-logical:stickerpop` | `sticker_pop` | `StickerPop` | `@sticker-pop/web` |
 | Components | 23 | 23 | 23 | 23 (CSS + JS) |
 | Formatting helpers | `PopFormat` | `formatInr` … | `PopFormat` | `format.mjs` |
 | Gallery + Home sample | `PopGallery`, `PopHomeSample` | `PopGallery`, `PopHomeSample` | `PopGallery`, `PopHomeSample` | `index.html` |
@@ -39,7 +39,8 @@ packages/                        the libraries
 Docs: **https://stupidly-logical.github.io/sticker-pop/**
 
 Each version is a tag (`v0.1.0`) with a GitHub Release. The same tag
-publishes the web package to npm and the Flutter package to pub.dev, and
+publishes the web package to npm, the Flutter package to pub.dev and the
+Compose library to Maven Central, and
 Swift Package Manager installs straight from it. Pin the version so library
 changes never reach an app by surprise.
 
@@ -68,21 +69,15 @@ and pick *Up to Next Major* from `0.1.0`. Or in `Package.swift`:
 
 Call `StickerPopFonts.register()` once at launch.
 
-**Compose (Android)**: add the repo as a git submodule and include it as a
-source build (needs JDK 21, Gradle 9.1+ and AGP 8.13+):
-
-```sh
-git submodule add https://github.com/stupidly-logical/sticker-pop.git third_party/sticker-pop
-git -C third_party/sticker-pop checkout v0.1.0
-```
+**Compose (Android)**: from Maven Central (minSdk 26).
 
 ```kotlin
-// settings.gradle.kts
-includeBuild("third_party/sticker-pop/packages/android")
-
 // app/build.gradle.kts
-dependencies { implementation("dev.stickerpop:stickerpop:0.1.0") }
+dependencies { implementation("io.github.stupidly-logical:stickerpop:0.1.0") }
 ```
+
+The code lives in the `dev.stickerpop` package (`dev.stickerpop.components`,
+`dev.stickerpop.tokens`).
 
 **Web**: from npm with a bundler, or from jsDelivr with no build step.
 
@@ -153,7 +148,23 @@ with a note instead of failing.
    ```
    On pub.dev: sticker_pop › Admin › Automated publishing › enable GitHub
    Actions, repository `stupidly-logical/sticker-pop`, tag pattern `v{{version}}`.
-3. **Swift Package Index** (optional, after the repo is public): add the repo
+3. **Maven Central** (Compose). No hand-published first version is needed;
+   CI publishes once these are set up:
+   - Sign in at https://central.sonatype.com with your GitHub account. That
+     proves the `io.github.stupidly-logical` namespace for you.
+   - Account › Generate User Token. Save the username and password it shows.
+   - Make a signing key and publish its public half:
+     ```sh
+     gpg --quick-gen-key "stupidly-logical <stupidly-logical@users.noreply.github.com>" ed25519 sign 0
+     gpg --keyserver keys.openpgp.org --send-keys <KEY ID>
+     gpg --export-secret-keys --armor <KEY ID> > signing-key.asc
+     ```
+   - In the GitHub repo: Settings › Secrets and variables › Actions, add
+     `MAVEN_CENTRAL_USERNAME` and `MAVEN_CENTRAL_PASSWORD` (the token),
+     `SIGNING_KEY` (the contents of `signing-key.asc`) and
+     `SIGNING_KEY_PASSWORD` (its passphrase). Then delete `signing-key.asc`.
+   - Re-run the Release workflow for the current tag, or wait for the next one.
+4. **Swift Package Index** (optional, after the repo is public): add the repo
    at https://swiftpackageindex.com/add-a-package.
 
 From then on, every tag publishes both packages from CI with no tokens. A

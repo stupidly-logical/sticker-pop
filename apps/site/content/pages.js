@@ -49,17 +49,15 @@ export const otherPages = [
     title: 'Install',
     render: ({ codeBlock }) => `
       <h1>Install</h1>
-      <p class="lede">Every version is a tagged <a href="https://github.com/stupidly-logical/sticker-pop/releases">GitHub release</a>, published to npm and pub.dev at the same time; Swift Package Manager installs straight from the tag. Pin the version so library changes never reach your app by surprise.</p>
+      <p class="lede">Every version is a tagged <a href="https://github.com/stupidly-logical/sticker-pop/releases">GitHub release</a>, published to npm, pub.dev and Maven Central at the same time; Swift Package Manager installs straight from the tag. Pin the version so library changes never reach your app by surprise.</p>
       ${codeBlock({
-        compose: `# Add the repo as a submodule (JDK 21, Gradle 9.1+, AGP 8.13+)
-git submodule add https://github.com/stupidly-logical/sticker-pop.git third_party/sticker-pop
-git -C third_party/sticker-pop checkout v0.1.0
+        compose: `// app/build.gradle.kts (from Maven Central; minSdk 26)
+dependencies {
+    implementation("io.github.stupidly-logical:stickerpop:0.1.0")
+}
 
-// settings.gradle.kts
-includeBuild("third_party/sticker-pop/packages/android")
-
-// app/build.gradle.kts
-dependencies { implementation("dev.stickerpop:stickerpop:0.1.0") }`,
+// Code uses the dev.stickerpop package:
+import dev.stickerpop.components.StickerButton`,
         flutter: `flutter pub add sticker_pop
 
 # or in pubspec.yaml

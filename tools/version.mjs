@@ -32,7 +32,7 @@ const PLACES = [
   { file: 'packages/flutter/sticker_pop/example/pubspec.yaml', re: new RegExp(`^(version: )${V}(?=\\+)`, 'm') },
   { file: 'packages/web/package.json', re: new RegExp(`^(  "version": ")${V}`, 'm') },
   { file: 'packages/android/stickerpop/build.gradle.kts', re: new RegExp(`^(version = ")${V}`, 'm') },
-  { file: 'packages/android/stickerpop/build.gradle.kts', re: new RegExp(`("dev\\.stickerpop:stickerpop:)${V}`, 'g'), all: true },
+  { file: 'packages/android/stickerpop/build.gradle.kts', re: new RegExp(`("io\\.github\\.stupidly-logical:stickerpop:)${V}`, 'g'), all: true },
   { file: 'packages/android/sample/build.gradle.kts', re: new RegExp(`(versionName = ")${V}`) },
   { file: 'apps/site/site.js', re: new RegExp(`(const VERSION = ')${V}`) },
   { file: 'apps/site/index.html', re: new RegExp(`(topbar__version">v)${V}`) },
@@ -41,7 +41,7 @@ const PLACES = [
   // Install snippets in the README and on the docs Install page.
   ...['README.md', 'apps/site/content/pages.js'].map((file) => ({
     file,
-    re: new RegExp(`(sticker-pop@v|@sticker-pop/web@|sticker_pop: \\^|ref: v|checkout v|\\(\`v|sticker-pop\\.git", from: "|stickerpop:stickerpop:|Next Major: |from \`)${V}`, 'g'),
+    re: new RegExp(`(sticker-pop@v|@sticker-pop/web@|sticker_pop: \\^|ref: v|checkout v|\\(\`v|sticker-pop\\.git", from: "|stupidly-logical:stickerpop:|Next Major: |from \`)${V}`, 'g'),
     all: true,
   })),
 ];

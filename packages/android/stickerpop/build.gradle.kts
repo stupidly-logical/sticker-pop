@@ -2,11 +2,13 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose")
-    `maven-publish`
+    id("com.vanniktech.maven.publish")
     id("app.cash.paparazzi")
 }
 
-group = "dev.stickerpop"
+// Maven Central coordinates: io.github.stupidly-logical:stickerpop (the
+// namespace is proven by the GitHub account). The Kotlin package stays dev.stickerpop.
+group = "io.github.stupidly-logical"
 version = "0.1.0"
 
 android {
@@ -18,9 +20,6 @@ android {
     }
     buildFeatures { compose = true }
     testOptions { unitTests.isReturnDefaultValues = true }
-    publishing {
-        singleVariant("release") { withSourcesJar() }
-    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -42,21 +41,43 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
 }
 
+// Published to Maven Central by the release workflow (see the README's
+// "First release on the registries"). For a local try-out:
 // ./gradlew :stickerpop:publishToMavenLocal, then depend on
-// "dev.stickerpop:stickerpop:0.1.0" with mavenLocal() in your repositories.
-// Or use includeBuild("…/sticker-pop/packages/android") for a source dependency.
-publishing {
-    publications {
-        register<MavenPublication>("release") {
-            artifactId = "stickerpop"
-            afterEvaluate { from(components["release"]) }
-            pom {
-                name.set("Sticker Pop for Compose")
-                description.set("Sticker Pop design system: tokens and components for Jetpack Compose.")
-                url.set("https://stupidly-logical.github.io/sticker-pop/")
-                licenses { license { name.set("MIT"); url.set("https://github.com/stupidly-logical/sticker-pop/blob/main/LICENSE") } }
-                scm { url.set("https://github.com/stupidly-logical/sticker-pop") }
+// "io.github.stupidly-logical:stickerpop:0.1.0" with mavenLocal() in your repositories.
+mavenPublishing {
+    configure(
+        com.vanniktech.maven.publish.AndroidSingleVariantLibrary(
+            javadocJar = com.vanniktech.maven.publish.JavadocJar.Empty(),
+            sourcesJar = com.vanniktech.maven.publish.SourcesJar.Sources(),
+            variant = "release",
+        ),
+    )
+    publishToMavenCentral(automaticRelease = true)
+    if (providers.gradleProperty("signingInMemoryKey").isPresent) signAllPublications()
+    coordinates("io.github.stupidly-logical", "stickerpop", version.toString())
+    pom {
+        name.set("Sticker Pop for Compose")
+        description.set("Sticker Pop, a bold sticker-style design system: tokens and components for Jetpack Compose.")
+        url.set("https://stupidly-logical.github.io/sticker-pop/")
+        inceptionYear.set("2026")
+        licenses {
+            license {
+                name.set("MIT")
+                url.set("https://github.com/stupidly-logical/sticker-pop/blob/main/LICENSE")
             }
+        }
+        developers {
+            developer {
+                id.set("stupidly-logical")
+                name.set("stupidly-logical")
+                url.set("https://github.com/stupidly-logical")
+            }
+        }
+        scm {
+            url.set("https://github.com/stupidly-logical/sticker-pop")
+            connection.set("scm:git:https://github.com/stupidly-logical/sticker-pop.git")
+            developerConnection.set("scm:git:ssh://git@github.com/stupidly-logical/sticker-pop.git")
         }
     }
 }

@@ -1,6 +1,6 @@
 # Pushing a tag like v0.2.0 creates a GitHub Release whose notes are that
-# version's section of CHANGELOG.md, then publishes the web package to npm
-# and the Flutter package to pub.dev. CI (ci.yml) builds and tests the tag.
+# version's section of CHANGELOG.md, then publishes the web package to npm,
+# the Flutter package to pub.dev and the Compose library to Maven Central. CI (ci.yml) builds and tests the tag.
 # SwiftUI needs nothing more: Swift Package Manager installs from the tag.
 name: Release
 
@@ -81,3 +81,31 @@ jobs:
           fi
           flutter pub get
           flutter pub publish --force
+
+  # Maven Central: needs four repository secrets (README: First release on
+  # the registries). Until they're set, this job leaves a note and skips.
+  maven:
+    needs: release
+    runs-on: ubuntu-latest
+    permissions: { contents: read }
+    env:
+      ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+      ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+      ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_KEY }}
+      ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_KEY_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
+        with: { distribution: temurin, java-version: 21 }
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Publish io.github.stupidly-logical:stickerpop
+        working-directory: packages/android
+        run: |
+          if [ -z "$ORG_GRADLE_PROJECT_mavenCentralUsername" ] || [ -z "$ORG_GRADLE_PROJECT_signingInMemoryKey" ]; then
+            echo "::notice::Maven Central secrets aren't set yet; skipping (README: First release on the registries)"; exit 0
+          fi
+          version="${GITHUB_REF_NAME#v}"
+          if curl -sf "https://repo1.maven.org/maven2/io/github/stupidly-logical/stickerpop/$version/stickerpop-$version.pom" >/dev/null; then
+            echo "stickerpop $version is already on Maven Central"; exit 0
+          fi
+          ./gradlew :stickerpop:publishToMavenCentral --no-configuration-cache

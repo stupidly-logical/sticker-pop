@@ -78,7 +78,7 @@ jobs:
       - uses: android-actions/setup-android@v3
         # The default list asks for the retired 'tools' package, which no longer exists.
         with: { packages: 'platform-tools' }
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v5
       - name: Compile, unit tests (shared formatting cases)
         run: ./gradlew :stickerpop:compileDebugKotlin :stickerpop:testDebugUnitTest --tests 'dev.stickerpop.PopFormatTest'
       - name: Screenshot tests (record the first time, verify after)

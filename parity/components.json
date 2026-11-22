@@ -79,6 +79,22 @@
       ]
     },
     {
+      "id": "expandable",
+      "flutter": [
+        "PopExpandable"
+      ],
+      "compose": [
+        "PopExpandable"
+      ],
+      "swiftui": [
+        "PopExpandable"
+      ],
+      "web": [
+        ".sp-expandable",
+        ".sp-expandable__body"
+      ]
+    },
+    {
       "id": "sticker-badge",
       "flutter": [
         "StickerBadge"

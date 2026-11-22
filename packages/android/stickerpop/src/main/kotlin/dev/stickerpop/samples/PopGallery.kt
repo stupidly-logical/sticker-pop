@@ -322,6 +322,15 @@ fun PopGallery(onOpenHome: () -> Unit = {}) {
                     }
                 }
 
+                Section("Expandable cards") {
+                    PopExpandable("Where does my data go?", initiallyExpanded = true) {
+                        PopText("Nowhere. Everything stays on this phone unless you export it.", PopTextSpecs.body)
+                    }
+                    PopExpandable("Food, Nov 2026", subtitle = "₹3,240 across 14 transactions") {
+                        PopText("Chai Point ₹1,120 · Swiggy ₹980 · BigBasket ₹1,140", PopTextSpecs.body)
+                    }
+                }
+
                 Section("Banners") {
                     PopBanner("Your last backup was 30 days ago.", title = "Back up soon", tone = PopBannerTone.Warning, actionLabel = "Back up now", onDismiss = {})
                     PopBanner("Prices update every morning at 9.")

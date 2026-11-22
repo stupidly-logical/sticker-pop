@@ -12,6 +12,7 @@ export 'src/components/checks.dart';
 export 'src/components/data_viz.dart';
 export 'src/components/dates.dart';
 export 'src/components/empty_state.dart';
+export 'src/components/expandable.dart';
 export 'src/components/inputs.dart';
 export 'src/components/keypad.dart';
 export 'src/components/loading.dart';

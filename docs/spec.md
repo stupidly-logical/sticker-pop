@@ -183,6 +183,8 @@ Type scale (size / weight / letter spacing):
 
 **Settings row.** A row for settings lists, inside a StickerList: 52 min height, 16 left padding, an optional 22 ink icon, a 16/700 title with an optional 13/600 muted subtitle, then either a PopSwitch (tapping the row flips it), or the current value in 16/700 muted and a 26 chevron when the row opens something. The whole row is the tap target.
 
+**Expandable card.** A StickerCard with no padding: a header row (52 min height, 16/800 title, optional 13/600 subtitle, a 26 chevron that turns 180°) and a body with 16 padding under a 2 divider that slides open in 250 ms (instant with reduced motion). For FAQs, breakdowns and details most people won't need; stack them 12 apart.
+
 **Banner.** A message that stays in the page until it is dealt with: a StickerCard in blue (information), orange (needs attention) or mint (good news), never red. 16 left and 12 top and bottom padding; a 22 ink icon, 12 before an optional 16/800 title and the 15/600 message; an optional underlined text-button action; an optional 20 ✕ in a 40 target. One per screen, at the top of the content. A snackbar is for passing confirmations.
 
 **Empty and error screens.** For a whole screen with nothing to show yet, or one that couldn't load: a 96 tile (radius 22, 2.5 outline, 6/6 shadow, tilted −4°) with a 44 ink icon, lilac for empty and orange for errors or offline; then 24 below a 22/800 title, 8 below a 15/600 muted message, both centred; then a primary button and an optional text button. Up to 340 wide, centred. Say what will appear and how to start, or what went wrong and what to do.

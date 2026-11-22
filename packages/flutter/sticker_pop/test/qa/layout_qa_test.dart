@@ -75,7 +75,7 @@ void main() {
     'gallery_dialog': (
       const PopGallery(),
       (t) async {
-        await t.scrollUntilVisible(dialogChip, 300, scrollable: find.byType(Scrollable).first);
+        await t.scrollUntilVisible(dialogChip, 600, maxScrolls: 100, scrollable: find.byType(Scrollable).first);
         await t.pumpAndSettle();
         await t.tap(dialogChip);
       },

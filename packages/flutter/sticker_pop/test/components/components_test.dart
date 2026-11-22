@@ -644,6 +644,19 @@ void main() {
     });
   });
 
+  group('PopExpandable', () {
+    testWidgets('opens and closes; announced as expanded', (tester) async {
+      final handle = tester.ensureSemantics();
+      await pumpPop(tester, onPaper(const Align(alignment: Alignment.topCenter, child: PopExpandable(title: 'Where does my data go?', child: Text('Nowhere: it stays on this phone.')))));
+      expect(tester.getSize(find.byType(PopExpandable)).height, lessThan(80));
+      await tester.tap(find.text('Where does my data go?'));
+      await tester.pumpAndSettle();
+      expect(tester.getSize(find.byType(PopExpandable)).height, greaterThan(80));
+      expect(tester.getSemantics(find.bySemanticsLabel('Where does my data go?')), isSemantics(isExpanded: true, hasTapAction: true));
+      handle.dispose();
+    });
+  });
+
   group('Tilt guard', () {
     test('cards reject tilt beyond ±3°', () {
       expect(() => StickerCard(tiltDegrees: 4, child: const SizedBox()), throwsAssertionError);

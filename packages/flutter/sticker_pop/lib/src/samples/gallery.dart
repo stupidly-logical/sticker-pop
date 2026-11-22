@@ -568,6 +568,23 @@ class _PopGalleryState extends State<PopGallery> {
               ),
 
               _Section(
+                'Expandable cards',
+                children: const <Widget>[
+                  PopExpandable(
+                    title: 'Where does my data go?',
+                    initiallyExpanded: true,
+                    child: PopText('Nowhere. Everything stays on this phone unless you export it.', spec: PopTextSpecs.body),
+                  ),
+                  SizedBox(height: PopSpace.md),
+                  PopExpandable(
+                    title: 'Food, Nov 2026',
+                    subtitle: '₹3,240 across 14 transactions',
+                    child: PopText('Chai Point ₹1,120 · Swiggy ₹980 · BigBasket ₹1,140', spec: PopTextSpecs.body),
+                  ),
+                ],
+              ),
+
+              _Section(
                 'Banners',
                 children: <Widget>[
                   PopBanner(

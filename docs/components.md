@@ -40,6 +40,7 @@ disappears.
 | PopKeypad | white keys, 2 outline, 3/3 shadow, 26/800 digits | — | — | — | moves 3/3, shadow goes, paper fill |
 | PopStepper | − and + icon buttons, 20/800 value | — | a button at its limit: disabled | — | button moves by its shadow |
 | PopSettingsRow | icon, title/subtitle; value + chevron or switch | switch on | muted, no taps | — | — |
+| PopExpandable | card with header row and chevron | open: chevron turned, body shown | — | — | — |
 | PopBanner (info, warning, success) | blue, orange or mint StickerCard, icon, title, message | — | — | — | — |
 | PopEmptyState | tilted lilac tile, 22/800 title, muted message, actions | — | — | orange tile | — |
 | PopSkeleton (line, circle, block, list) | divider fill, no outline, pulsing | — | — | — | — |

@@ -111,4 +111,18 @@ export const surfaces = [
     rules: ['Not for categories: those use the category dot with an icon.', 'No photos of people in the illustrations; an app may show a user\'s own photo in place of initials.'],
     a11y: 'Announced as an image with the full name.',
   },
+  {
+    id: 'expandable', name: 'Expandable card', group: 'Surfaces', platforms: ALL,
+    summary: 'A card that opens to show more: a header row with a title, an optional subtitle and a chevron that flips, and a body that slides open. For FAQs, breakdowns and details most people won\'t need.',
+    states: [{ label: 'Tap the headers', html: '<div class="full" style="display:grid;gap:12px"><details class="sp-card sp-expandable" open><summary><span class="sp-expandable__title">Where does my data go?</span></summary><div class="sp-expandable__body sp-text-body">Nowhere. Everything stays on this phone unless you export it.</div></details><details class="sp-card sp-expandable"><summary><span class="sp-expandable__title">Food, Nov 2026<small>₹3,240 across 14 transactions</small></span></summary><div class="sp-expandable__body sp-text-body">Chai Point ₹1,120 · Swiggy ₹980 · BigBasket ₹1,140</div></details></div>' }],
+    code: {
+      flutter: "PopExpandable(\n  title: 'Food, Nov 2026',\n  subtitle: '₹3,240 across 14 transactions',\n  child: breakdown,\n)",
+      compose: 'PopExpandable("Food, Nov 2026", subtitle = "₹3,240 across 14 transactions") { Breakdown() }',
+      swift: 'PopExpandable("Food, Nov 2026", subtitle: "₹3,240 across 14 transactions") { breakdown }',
+      html: '<details class="sp-card sp-expandable">\n  <summary><span class="sp-expandable__title">Food, Nov 2026<small>₹3,240 across 14 transactions</small></span></summary>\n  <div class="sp-expandable__body">…</div>\n</details>',
+    },
+    spec: [['Card', 'StickerCard, no padding'], ['Header', '52 min height, 16/800 title, 13/600 subtitle, 26 chevron that turns 180°'], ['Body', '16 padding under a 2 divider'], ['Motion', '250 ms (sheet); instant with reduced motion']],
+    rules: ['Keep the important things outside; hide only details.', 'Stack expandable cards 12 apart.'],
+    a11y: 'The header is a button that says whether it is expanded. On the web it is a native details element.',
+  },
 ];

@@ -116,6 +116,7 @@ function wireDemos(root) {
   root.querySelectorAll('.sp-pin[data-value]').forEach((p) => renderPopPin(p, p.dataset.value, { error: p.dataset.error === 'true' }));
   root.querySelectorAll('[data-keypad-for]').forEach((pad) => { const out = document.getElementById(pad.dataset.keypadFor); let v = out.dataset.value ?? ''; pad.addEventListener('pop-key', (e) => { v = applyPopKey(v, e.detail.key); out.textContent = '₹' + (v || '0'); }); });
   root.querySelectorAll('[data-inr-for]').forEach((out) => { const i = document.getElementById(out.dataset.inrFor); const f = () => { out.textContent = '₹' + Number(i.value).toLocaleString('en-IN'); i.setAttribute('aria-valuetext', out.textContent); }; i.addEventListener('input', f); f(); });
+  root.querySelectorAll('[data-calendar-range]').forEach((el) => mountPopCalendar(el, { range: true, start: new Date(2026, 10, 12), end: new Date(2026, 10, 18), today: new Date(2026, 10, 21), onChange: (s, e) => { if (e) toast(`${s.getDate()}–${e.getDate()} ${e.toLocaleString('en-GB', { month: 'short' })}`); } }));
   root.querySelectorAll('[data-calendar]').forEach((el) => mountPopCalendar(el, { value: new Date(2026, 10, 21), today: new Date(2026, 10, 21), max: new Date(2026, 10, 21), onChange: (d) => toast(`Picked ${d.getDate()} ${d.toLocaleString('en-GB', { month: 'short' })}`) }));
   root.querySelectorAll('input[data-indeterminate]').forEach((i) => { i.indeterminate = true; });
   root.querySelectorAll('.sp-chip[aria-pressed]:not(:disabled)').forEach((b) =>

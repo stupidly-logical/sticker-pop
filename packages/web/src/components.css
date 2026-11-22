@@ -372,6 +372,15 @@ select.sp-select:disabled { background-color: var(--sp-color-paper); color: var(
 .sp-calendar__day:hover:not(:disabled):not([aria-pressed='true']) { background: var(--sp-color-paper); }
 .sp-calendar__day:focus-visible { outline: 3px solid var(--sp-color-ink); outline-offset: 1px; }
 .sp-calendar__day:disabled { color: var(--sp-color-ink-muted); cursor: default; }
+/* Range mode: each day sits in a cell; the mint band joins start and end. */
+.sp-calendar__cell { position: relative; display: grid; }
+.sp-calendar__cell .sp-calendar__day { position: relative; }
+.sp-calendar__cell:is(.is-in, .is-start, .is-end)::before {
+  content: ''; position: absolute; inset-inline: 0; top: 50%; height: min(var(--sp-size-calendar-day), 100%);
+  transform: translateY(-50%); background: var(--sp-color-mint);
+}
+.sp-calendar__cell.is-start::before { inset-inline-start: 50%; }
+.sp-calendar__cell.is-end::before { inset-inline-end: 50%; }
 
 /* Loading: skeleton shapes and a spinner. Still under reduced motion. */
 .sp-skeleton { display: block; background: var(--sp-color-divider); border-radius: var(--sp-radius-skeleton-line); height: var(--sp-size-skeleton-line); animation: sp-pulse var(--sp-motion-pulse) ease-in-out infinite alternate; }
@@ -558,11 +567,12 @@ button.sp-settings-row:hover, label.sp-settings-row:hover { background: var(--sp
   min-height: 96px; padding: var(--sp-space-lg); box-sizing: border-box; text-align: center; cursor: pointer;
   background: var(--sp-color-paper); border: var(--sp-border-thin) dashed var(--sp-color-ink); border-radius: var(--sp-radius-tile);
 }
+.sp-attach[hidden] { display: none; }
 .sp-attach input[type="file"] { position: absolute; inset: 0; opacity: 0; width: 100%; cursor: pointer; }
 .sp-attach:focus-within { outline: 3px solid var(--sp-color-ink); outline-offset: 3px; }
 .sp-attach .sp-icon { font-size: var(--sp-size-icon-tile); margin-bottom: var(--sp-space-xs); }
-.sp-attach__label { font: 800 15px/1.3 var(--sp-font-family); color: var(--sp-color-ink); }
-.sp-attach__caption { font: 600 13px/1.35 var(--sp-font-family); color: var(--sp-color-ink-muted); }
+.sp-attach__label { font: 800 15px/1.3 var(--sp-font-family); font-variation-settings: 'wght' 800; color: var(--sp-color-ink); }
+.sp-attach__caption { font: 600 13px/1.35 var(--sp-font-family); font-variation-settings: 'wght' 600; color: var(--sp-color-ink-muted); }
 .sp-attach-file {
   display: grid; grid-template-columns: 48px minmax(0,1fr) auto; align-items: center; gap: var(--sp-space-md);
   padding: var(--sp-space-md) var(--sp-space-xs) var(--sp-space-md) var(--sp-space-md);
@@ -571,8 +581,8 @@ button.sp-settings-row:hover, label.sp-settings-row:hover { background: var(--sp
 }
 .sp-attach-file__thumb { width: 48px; height: 48px; border-radius: var(--sp-radius-badge); background: var(--sp-color-paper); display: grid; place-items: center; overflow: hidden; }
 .sp-attach-file__thumb img { width: 100%; height: 100%; object-fit: cover; }
-.sp-attach-file__name { font: 800 16px/1.3 var(--sp-font-family); color: var(--sp-color-ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.sp-attach-file__size { font: 600 13px/1.35 var(--sp-font-family); color: var(--sp-color-ink-muted); }
+.sp-attach-file__name { font: 800 16px/1.3 var(--sp-font-family); font-variation-settings: 'wght' 800; color: var(--sp-color-ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sp-attach-file__size { font: 600 13px/1.35 var(--sp-font-family); font-variation-settings: 'wght' 600; color: var(--sp-color-ink-muted); }
 .sp-attach-file__remove { width: 44px; height: 44px; display: grid; place-items: center; border: 0; background: none; color: var(--sp-color-ink); cursor: pointer; border-radius: 50%; }
 .sp-attach-file__remove:focus-visible { outline: 3px solid var(--sp-color-ink); }
 

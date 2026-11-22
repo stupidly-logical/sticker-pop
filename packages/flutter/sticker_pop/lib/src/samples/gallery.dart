@@ -395,6 +395,20 @@ class _PopGalleryState extends State<PopGallery> {
               ),
 
               _Section(
+                'Date range',
+                children: <Widget>[
+                  StickerCard(
+                    child: PopRangeCalendar(
+                      start: DateTime(2026, 11, 12),
+                      end: DateTime(2026, 11, 18),
+                      today: DateTime(2026, 11, 21),
+                      onChanged: (_, _) {},
+                    ),
+                  ),
+                ],
+              ),
+
+              _Section(
                 'Attachment',
                 children: <Widget>[
                   PopAttachmentTile(onPick: () {}),

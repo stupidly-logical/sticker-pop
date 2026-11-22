@@ -8,6 +8,7 @@ private let slices = [
     PopDatum("Shopping", value: 10, color: PopColors.pink),
 ]
 
+private func galleryDay(_ d: Int) -> Date? { Calendar(identifier: .gregorian).date(from: DateComponents(year: 2026, month: 11, day: d)) }
 private let galleryToday = Calendar(identifier: .gregorian).date(from: DateComponents(year: 2026, month: 11, day: 21))!
 
 private let accounts = [
@@ -194,6 +195,12 @@ public struct PopGallery: View {
                             PopFieldRow("Paid to") { PopText("Chai Point", PopTextSpecs.rowTitle) }
                             PopFieldRow("Account", showChevron: true, divider: false, action: {}) { PopText("HDFC ·· 4821", PopTextSpecs.rowTitle) }
                         }
+                    }
+                }
+
+                GallerySection(title: "Date range") {
+                    StickerCard {
+                        PopRangeCalendar(start: .constant(galleryDay(12)), end: .constant(galleryDay(18)), today: galleryToday)
                     }
                 }
 

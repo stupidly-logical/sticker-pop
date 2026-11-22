@@ -15,6 +15,9 @@ All four libraries share one version.
 - Loading states: skeleton lines, circles, blocks and lists, and a spinner,
   on all four platforms; still under reduced motion.
 - Date tiles and a month-calendar date picker on all four platforms.
+- Date range picker (start and end joined by a mint band, inline or in a
+  sheet with Done) on all four platforms; on the web, `mountPopCalendar`
+  takes `range: true`.
 - Attachment tile (dashed pick tile, then a file row with remove) on all four
   platforms; the web one wraps a native file input.
 - PIN entry (with the keypad) on all four platforms.

@@ -247,6 +247,12 @@ fun PopGallery(onOpenHome: () -> Unit = {}) {
                     }
                 }
 
+                Section("Date range") {
+                    StickerCard {
+                        PopRangeCalendar(java.time.LocalDate.of(2026, 11, 12), java.time.LocalDate.of(2026, 11, 18), { _, _ -> }, java.time.LocalDate.of(2026, 11, 21))
+                    }
+                }
+
                 Section("Attachment") {
                     PopAttachmentTile(onPick = {})
                     PopAttachmentTile(onPick = {}, fileName = "chai-point-receipt.jpg", fileSize = "412 KB", onRemove = {})

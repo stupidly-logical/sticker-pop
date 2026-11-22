@@ -122,7 +122,24 @@ class PopCalendar extends StatefulWidget {
     this.firstDate,
     this.lastDate,
     this.firstWeekday = DateTime.monday,
-  });
+  })  : _start = null,
+        _end = null,
+        _range = false;
+
+  const PopCalendar._range(
+    this._start,
+    this._end, {
+    required this.onSelected,
+    required this.today,
+    this.firstDate,
+    this.lastDate,
+    this.firstWeekday = DateTime.monday,
+  })  : selected = null,
+        _range = true;
+
+  final DateTime? _start;
+  final DateTime? _end;
+  final bool _range;
 
   final DateTime? selected;
   final ValueChanged<DateTime> onSelected;
@@ -138,7 +155,8 @@ class PopCalendar extends StatefulWidget {
 }
 
 class _PopCalendarState extends State<PopCalendar> {
-  late DateTime _month = DateTime((widget.selected ?? widget.today).year, (widget.selected ?? widget.today).month);
+  late final DateTime _initial = widget.selected ?? widget._start ?? widget.today;
+  late DateTime _month = DateTime(_initial.year, _initial.month);
 
   bool _allowed(DateTime d) =>
       (widget.firstDate == null || !d.isBefore(_day(widget.firstDate!))) && (widget.lastDate == null || !d.isAfter(_day(widget.lastDate!)));
@@ -199,21 +217,54 @@ class _PopCalendarState extends State<PopCalendar> {
   }
 
   Widget _dayCell(DateTime d) {
-    final selected = _same(d, widget.selected);
+    final start = widget._start == null ? null : _day(widget._start!);
+    final end = widget._end == null ? null : _day(widget._end!);
+    final isStart = _same(d, start);
+    final isEnd = _same(d, end);
+    final inside = start != null && end != null && d.isAfter(start) && d.isBefore(end);
+    final selected = widget._range ? isStart || isEnd : _same(d, widget.selected);
+    final band = !widget._range || end == null || _same(start, end)
+        ? null
+        : inside
+            ? AlignmentDirectional.center
+            : isStart
+                ? AlignmentDirectional.centerEnd
+                : isEnd
+                    ? AlignmentDirectional.centerStart
+                    : null;
+    final role = isStart && isEnd
+        ? ', start and end'
+        : isStart
+            ? ', start'
+            : isEnd
+                ? ', end'
+                : inside
+                    ? ', in range'
+                    : '';
     final today = _same(d, widget.today);
     final allowed = _allowed(d);
     return Semantics(
       button: true,
-      selected: selected,
+      selected: selected || inside,
       enabled: allowed,
-      label: '${d.day} ${_months[d.month - 1]} ${d.year}${today ? ', today' : ''}',
+      label: '${d.day} ${_months[d.month - 1]} ${d.year}${today ? ', today' : ''}$role',
       onTap: allowed ? () => widget.onSelected(d) : null,
       excludeSemantics: true,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: allowed ? () => widget.onSelected(d) : null,
-        child: Center(
-          child: AnimatedContainer(
+        child: Stack(
+          alignment: Alignment.center,
+          children: <Widget>[
+            if (band != null)
+              Align(
+                alignment: band,
+                child: FractionallySizedBox(
+                  widthFactor: band == AlignmentDirectional.center ? 1 : 0.5,
+                  child: const SizedBox(height: PopSize.calendarDay, child: ColoredBox(color: PopColors.mint)),
+                ),
+              ),
+            AnimatedContainer(
             duration: PopMotion.toggle,
             width: PopSize.calendarDay,
             height: PopSize.calendarDay,
@@ -232,10 +283,98 @@ class _PopCalendarState extends State<PopCalendar> {
               ),
             ),
           ),
+          ],
         ),
       ),
     );
   }
+}
+
+/// A month calendar for choosing a span of days, like a trip. The first tap
+/// sets the start, the second the end (tapping earlier than the start moves
+/// the start instead); a third tap starts again. Start and end are yellow
+/// circles with a 2.5 outline joined by a 40 tall mint band.
+class PopRangeCalendar extends StatelessWidget {
+  const PopRangeCalendar({
+    super.key,
+    required this.start,
+    required this.end,
+    required this.onChanged,
+    required this.today,
+    this.firstDate,
+    this.lastDate,
+    this.firstWeekday = DateTime.monday,
+  });
+
+  final DateTime? start;
+  final DateTime? end;
+
+  /// Called with the new start and end (null until the second tap).
+  final void Function(DateTime start, DateTime? end) onChanged;
+  final DateTime today;
+  final DateTime? firstDate;
+  final DateTime? lastDate;
+  final int firstWeekday;
+
+  @override
+  Widget build(BuildContext context) => PopCalendar._range(
+        start,
+        end,
+        today: today,
+        firstDate: firstDate,
+        lastDate: lastDate,
+        firstWeekday: firstWeekday,
+        onSelected: (d) {
+          if (start == null || end != null || d.isBefore(_day(start!))) {
+            onChanged(d, null);
+          } else {
+            onChanged(_day(start!), d);
+          }
+        },
+      );
+}
+
+/// Opens a [PopRangeCalendar] in a bottom sheet with a Done button (enabled
+/// once both ends are chosen); returns the range, or null if dismissed.
+Future<DateTimeRange?> showPopDateRangePicker({
+  required BuildContext context,
+  required DateTime today,
+  DateTimeRange? initial,
+  DateTime? firstDate,
+  DateTime? lastDate,
+  String title = 'Pick dates',
+  String doneLabel = 'Done',
+  int firstWeekday = DateTime.monday,
+}) {
+  DateTime? start = initial?.start;
+  DateTime? end = initial?.end;
+  return showPopSheet<DateTimeRange>(
+    context: context,
+    builder: (sheetContext) => StatefulBuilder(
+      builder: (context, setState) => PopSheet(
+        title: title,
+        children: <Widget>[
+          PopRangeCalendar(
+            start: start,
+            end: end,
+            today: today,
+            firstDate: firstDate,
+            lastDate: lastDate,
+            firstWeekday: firstWeekday,
+            onChanged: (s, e) => setState(() {
+              start = s;
+              end = e;
+            }),
+          ),
+          const SizedBox(height: PopSpace.lg),
+          StickerButton(
+            label: doneLabel,
+            onPressed: start != null && end != null ? () => Navigator.of(sheetContext).pop(DateTimeRange(start: start!, end: end!)) : null,
+          ),
+        ],
+      ),
+    ),
+  );
 }
 
 /// Opens a [PopCalendar] in a bottom sheet; returns the picked day, or null.

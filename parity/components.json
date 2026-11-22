@@ -460,6 +460,25 @@
       ]
     },
     {
+      "id": "date-range",
+      "flutter": [
+        "PopRangeCalendar",
+        "showPopDateRangePicker"
+      ],
+      "compose": [
+        "PopRangeCalendar",
+        "PopDateRangePickerSheet"
+      ],
+      "swiftui": [
+        "PopRangeCalendar",
+        "PopDateRangePickerSheet"
+      ],
+      "web": [
+        ".sp-calendar__cell",
+        "mountPopCalendar()"
+      ]
+    },
+    {
       "id": "attachment",
       "flutter": [
         "PopAttachmentTile"

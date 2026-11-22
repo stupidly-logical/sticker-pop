@@ -152,6 +152,20 @@ export const controls = [
     a11y: 'Announced as a slider with its label and value ("Monthly budget, ₹12,000"); swipe up or down, or the arrow keys, step it.',
   },
   {
+    id: 'date-range', name: 'Date range', group: 'Inputs', platforms: ALL,
+    summary: 'For a span of days, like a trip or a statement period: the month calendar where the first tap sets the start and the second the end. Start and end are yellow circles joined by a mint band; a third tap starts again.',
+    states: [{ label: 'Tap a start, then an end', html: '<div class="sp-card full"><div data-calendar-range></div></div>' }],
+    code: {
+      flutter: "final range = await showPopDateRangePicker(context: context, today: DateTime.now(), initial: trip);\n// or inline:\nPopRangeCalendar(start: from, end: to, today: today, onChanged: (s, e) => setState(() { from = s; to = e; }))",
+      compose: 'PopRangeCalendar(from, to, { s, e -> from = s; to = e }, today)\n// in a sheet:\nPopDateRangePickerSheet(today, from, to, onPick = { s, e -> trip = s..e }, onDismiss = { open = false })',
+      swift: 'PopRangeCalendar(start: $from, end: $to, today: .now)\n// in a sheet:\nPopDateRangePickerSheet(start: $from, end: $to, today: .now) { showDates = false }',
+      html: '<div id="trip-dates"></div>\n\n<script type="module">\n  import { mountPopCalendar } from \'@sticker-pop/web/behaviors.mjs\';\n  mountPopCalendar(document.getElementById(\'trip-dates\'), {\n    range: true,\n    onChange: (start, end) => { /* end is null until the second pick */ },\n  });\n</script>',
+    },
+    spec: [['Ends', '40 yellow circles, 2.5 outline, 16/800'], ['Between', '40 tall mint band, edge to edge, running under the ends to their centres'], ['Sheet', 'calendar, then a full-width StickerButton "Done", enabled once both ends are chosen']],
+    rules: ['Use the single-date calendar when one day is enough.', 'Show the chosen span in words next to whatever opened the picker, like "12–18 Nov · 7 days".'],
+    a11y: 'Each day reads its role: "12 November 2026, start", "15 November 2026, in range", "18 November 2026, end"; the ends and the days between are marked selected.',
+  },
+  {
     id: 'attachment', name: 'Attachment', group: 'Inputs', platforms: ALL,
     summary: 'A place to attach a file, like a receipt photo. Empty, it is a dashed paper tile that opens the platform picker; once a file is chosen it becomes a white sticker row with a thumbnail, the name, the size and a remove button.',
     states: [{ label: 'Empty (pick a file to try it)', html: '<div class="full"><label class="sp-attach"><input type="file" accept="image/*,.pdf"><span class="sp-icon" aria-hidden="true">add_a_photo</span><span class="sp-attach__label">Add a receipt</span><span class="sp-attach__caption">Photo or PDF</span></label></div>' }, { label: 'Filled', html: '<div class="full"><div class="sp-attach-file"><span class="sp-attach-file__thumb" aria-hidden="true"><span class="sp-icon">description</span></span><span><span class="sp-attach-file__name">chai-point-receipt.jpg</span><span class="sp-attach-file__size" style="display:block">412 KB</span></span><button class="sp-attach-file__remove" type="button" aria-label="Remove chai-point-receipt.jpg"><span class="sp-icon">close</span></button></div></div>' }],

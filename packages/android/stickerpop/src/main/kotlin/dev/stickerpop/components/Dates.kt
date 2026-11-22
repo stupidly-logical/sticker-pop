@@ -10,7 +10,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -109,8 +111,43 @@ fun PopCalendar(
     firstDate: LocalDate? = null,
     lastDate: LocalDate? = null,
     firstDayOfWeek: DayOfWeek = DayOfWeek.MONDAY,
+) = CalendarImpl(selected, null, null, false, onSelect, today, modifier, firstDate, lastDate, firstDayOfWeek)
+
+/**
+ * A month calendar for choosing a span of days, like a trip. The first tap
+ * sets the start, the second the end (tapping earlier than the start moves
+ * the start instead); a third tap starts again. Start and end are yellow
+ * circles with a 2.5 outline joined by a 40 tall mint band. [onChange] gets
+ * the new start and end (null until the second tap).
+ */
+@Composable
+fun PopRangeCalendar(
+    start: LocalDate?,
+    end: LocalDate?,
+    onChange: (LocalDate, LocalDate?) -> Unit,
+    today: LocalDate,
+    modifier: Modifier = Modifier,
+    firstDate: LocalDate? = null,
+    lastDate: LocalDate? = null,
+    firstDayOfWeek: DayOfWeek = DayOfWeek.MONDAY,
+) = CalendarImpl(null, start, end, true, { d ->
+    if (start == null || end != null || d.isBefore(start)) onChange(d, null) else onChange(start, d)
+}, today, modifier, firstDate, lastDate, firstDayOfWeek)
+
+@Composable
+private fun CalendarImpl(
+    selected: LocalDate?,
+    start: LocalDate?,
+    end: LocalDate?,
+    range: Boolean,
+    onSelect: (LocalDate) -> Unit,
+    today: LocalDate,
+    modifier: Modifier,
+    firstDate: LocalDate?,
+    lastDate: LocalDate?,
+    firstDayOfWeek: DayOfWeek,
 ) {
-    var month by remember { mutableStateOf(YearMonth.from(selected ?: today)) }
+    var month by remember { mutableStateOf(YearMonth.from(selected ?: start ?: today)) }
     val allowed = { d: LocalDate -> (firstDate == null || !d.isBefore(firstDate)) && (lastDate == null || !d.isAfter(lastDate)) }
     Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(PopSpace.sm)) {
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(PopSpace.sm)) {
@@ -135,7 +172,22 @@ fun PopCalendar(
                     val d = week.getOrNull(i)
                     Box(Modifier.weight(1f).aspectRatio(1f), contentAlignment = Alignment.Center) {
                         if (d != null) {
-                            val isSel = d == selected
+                            val isStart = d == start
+                            val isEnd = d == end
+                            val inside = start != null && end != null && d.isAfter(start) && d.isBefore(end)
+                            val isSel = if (range) isStart || isEnd else d == selected
+                            val band = if (!range || end == null || start == end) null
+                                else if (inside) Alignment.Center else if (isStart) Alignment.CenterEnd else if (isEnd) Alignment.CenterStart else null
+                            if (band != null) {
+                                Box(Modifier.align(band).fillMaxWidth(if (band == Alignment.Center) 1f else 0.5f).height(PopSize.calendarDay).background(PopColors.mint))
+                            }
+                            val role = when {
+                                isStart && isEnd -> ", start and end"
+                                isStart -> ", start"
+                                isEnd -> ", end"
+                                inside -> ", in range"
+                                else -> ""
+                            }
                             val ok = allowed(d)
                             Box(
                                 Modifier
@@ -143,7 +195,7 @@ fun PopCalendar(
                                     .then(if (isSel) Modifier.background(PopColors.yellow, CircleShape).border(PopBorder.regular, PopColors.ink, CircleShape)
                                     else if (d == today) Modifier.border(PopBorder.thin, PopColors.ink, CircleShape) else Modifier)
                                     .clickable(remember { MutableInteractionSource() }, indication = null, enabled = ok, role = Role.Button) { onSelect(d) }
-                                    .semantics { contentDescription = "${d.dayOfMonth} ${months[d.monthValue - 1]} ${d.year}" + if (d == today) ", today" else ""; this.selected = isSel },
+                                    .semantics { contentDescription = "${d.dayOfMonth} ${months[d.monthValue - 1]} ${d.year}" + (if (d == today) ", today" else "") + role; this.selected = isSel || inside },
                                 contentAlignment = Alignment.Center,
                             ) {
                                 PopText("${d.dayOfMonth}", if (isSel) PopTextSpecs.rowTitle else PopTextSpecs.input, color = if (ok) PopColors.ink else PopColors.inkMuted)
@@ -169,5 +221,29 @@ fun PopDatePickerSheet(
 ) {
     PopBottomSheet(onDismiss = onDismiss) {
         PopSheet(title) { PopCalendar(selected, onPick, today, firstDate = firstDate, lastDate = lastDate) }
+    }
+}
+
+/** A [PopRangeCalendar] in a bottom sheet with a Done button, enabled once both ends are chosen. */
+@Composable
+fun PopDateRangePickerSheet(
+    today: LocalDate,
+    start: LocalDate?,
+    end: LocalDate?,
+    onPick: (LocalDate, LocalDate) -> Unit,
+    onDismiss: () -> Unit,
+    title: String = "Pick dates",
+    doneLabel: String = "Done",
+    firstDate: LocalDate? = null,
+    lastDate: LocalDate? = null,
+) {
+    var s by remember { mutableStateOf(start) }
+    var e by remember { mutableStateOf(end) }
+    PopBottomSheet(onDismiss = onDismiss) {
+        PopSheet(title) {
+            PopRangeCalendar(s, e, { a, b -> s = a; e = b }, today, firstDate = firstDate, lastDate = lastDate)
+            Spacer(Modifier.height(PopSpace.lg))
+            StickerButton(doneLabel, { val a = s; val b = e; if (a != null && b != null) onPick(a, b) }, Modifier.fillMaxWidth(), enabled = s != null && e != null)
+        }
     }
 }

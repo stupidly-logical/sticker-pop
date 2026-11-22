@@ -78,6 +78,9 @@ public struct PopCalendar: View {
     let today: Date
     var range: ClosedRange<Date>?
     var onPick: (Date) -> Void
+    var rangeStart: Date? = nil
+    var rangeEnd: Date? = nil
+    var isRange = false
     @State private var month: Date
 
     public init(selection: Binding<Date>, today: Date, in range: ClosedRange<Date>? = nil, onPick: @escaping (Date) -> Void = { _ in }) {
@@ -86,6 +89,17 @@ public struct PopCalendar: View {
         self.range = range
         self.onPick = onPick
         self._month = State(initialValue: popCal.date(from: popCal.dateComponents([.year, .month], from: selection.wrappedValue)) ?? today)
+    }
+
+    init(rangeStart: Date?, rangeEnd: Date?, today: Date, in range: ClosedRange<Date>?, onPick: @escaping (Date) -> Void) {
+        self._selection = .constant(rangeStart ?? today)
+        self.today = today
+        self.range = range
+        self.onPick = onPick
+        self.rangeStart = rangeStart.map { popCal.startOfDay(for: $0) }
+        self.rangeEnd = rangeEnd.map { popCal.startOfDay(for: $0) }
+        self.isRange = true
+        self._month = State(initialValue: popCal.date(from: popCal.dateComponents([.year, .month], from: rangeStart ?? today)) ?? today)
     }
 
     private func allowed(_ d: Date) -> Bool {
@@ -124,11 +138,17 @@ public struct PopCalendar: View {
     }
 
     private func dayCell(_ d: Date) -> some View {
-        let selected = popCal.isDate(d, inSameDayAs: selection)
+        let isStart = rangeStart.map { popCal.isDate(d, inSameDayAs: $0) } ?? false
+        let isEnd = rangeEnd.map { popCal.isDate(d, inSameDayAs: $0) } ?? false
+        let inside = rangeStart != nil && rangeEnd != nil && d > rangeStart! && d < rangeEnd! && !isEnd
+        let selected = isRange ? isStart || isEnd : popCal.isDate(d, inSameDayAs: selection)
+        let joined = isRange && rangeEnd != nil && !(isStart && isEnd)
+        let band: Alignment? = !joined ? nil : inside ? .center : isStart ? .trailing : isEnd ? .leading : nil
+        let role = isStart && isEnd ? ", start and end" : isStart ? ", start" : isEnd ? ", end" : inside ? ", in range" : ""
         let isToday = popCal.isDate(d, inSameDayAs: today)
         let ok = allowed(d)
         return Button {
-            selection = d
+            if !isRange { selection = d }
             onPick(d)
         } label: {
             PopText("\(popCal.component(.day, from: d))", selected ? PopTextSpecs.rowTitle : PopTextSpecs.input, color: ok ? PopColors.ink : PopColors.inkMuted)
@@ -137,12 +157,20 @@ public struct PopCalendar: View {
                 .background(Circle().fill(selected ? PopColors.yellow : Color.clear))
                 .overlay(Circle().strokeBorder(PopColors.ink, lineWidth: selected ? PopBorder.regular : isToday ? PopBorder.thin : 0))
                 .frame(maxWidth: .infinity)
+                .background(alignment: band ?? .center) {
+                    if band != nil {
+                        GeometryReader { g in
+                            PopColors.mint.frame(width: band == .center ? g.size.width : g.size.width / 2, height: PopSize.calendarDay)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: band!)
+                        }
+                    }
+                }
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
         .disabled(!ok)
-        .accessibilityLabel("\(popCal.component(.day, from: d)) \(popMonths[popCal.component(.month, from: d) - 1])\(isToday ? ", today" : "")")
-        .accessibilityAddTraits(selected ? [.isButton, .isSelected] : .isButton)
+        .accessibilityLabel("\(popCal.component(.day, from: d)) \(popMonths[popCal.component(.month, from: d) - 1])\(isToday ? ", today" : "")\(role)")
+        .accessibilityAddTraits(selected || inside ? [.isButton, .isSelected] : .isButton)
     }
 }
 
@@ -164,5 +192,66 @@ public struct PopDatePickerSheet: View {
 
     public var body: some View {
         PopSheet(title) { PopCalendar(selection: $selection, today: today, in: range) { _ in onDone() } }
+    }
+}
+
+/// A month calendar for choosing a span of days, like a trip. The first tap
+/// sets the start, the second the end (tapping earlier than the start moves
+/// the start instead); a third tap starts again. Start and end are yellow
+/// circles with a 2.5 outline joined by a 40 tall mint band.
+public struct PopRangeCalendar: View {
+    @Binding var start: Date?
+    @Binding var end: Date?
+    let today: Date
+    var range: ClosedRange<Date>?
+
+    public init(start: Binding<Date?>, end: Binding<Date?>, today: Date, in range: ClosedRange<Date>? = nil) {
+        self._start = start
+        self._end = end
+        self.today = today
+        self.range = range
+    }
+
+    public var body: some View {
+        PopCalendar(rangeStart: start, rangeEnd: end, today: today, in: range) { d in
+            if let s = start, end == nil, d >= popCal.startOfDay(for: s) {
+                end = d
+            } else {
+                start = d
+                end = nil
+            }
+        }
+    }
+}
+
+/// A `PopRangeCalendar` in a sheet with a Done button, enabled once both
+/// ends are chosen.
+public struct PopDateRangePickerSheet: View {
+    @Binding var start: Date?
+    @Binding var end: Date?
+    let today: Date
+    var range: ClosedRange<Date>?
+    var title: String
+    var doneLabel: String
+    let onDone: () -> Void
+
+    public init(start: Binding<Date?>, end: Binding<Date?>, today: Date, in range: ClosedRange<Date>? = nil,
+                title: String = "Pick dates", doneLabel: String = "Done", onDone: @escaping () -> Void) {
+        self._start = start
+        self._end = end
+        self.today = today
+        self.range = range
+        self.title = title
+        self.doneLabel = doneLabel
+        self.onDone = onDone
+    }
+
+    public var body: some View {
+        PopSheet(title) {
+            PopRangeCalendar(start: $start, end: $end, today: today, in: range)
+            StickerButton(doneLabel, action: onDone)
+                .disabled(start == nil || end == nil)
+                .padding(.top, PopSpace.lg)
+        }
     }
 }

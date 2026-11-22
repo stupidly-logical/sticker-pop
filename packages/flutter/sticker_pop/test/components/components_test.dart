@@ -739,6 +739,40 @@ void main() {
     });
   });
 
+  group('PopRangeCalendar', () {
+    testWidgets('first tap starts, second ends, earlier tap restarts', (tester) async {
+      DateTime? start;
+      DateTime? end;
+      await pumpPop(tester, onPaper(StatefulBuilder(
+        builder: (context, setState) => PopRangeCalendar(
+          start: start,
+          end: end,
+          today: DateTime(2026, 3, 10),
+          onChanged: (s, e) => setState(() {
+            start = s;
+            end = e;
+          }),
+        ),
+      )));
+      await tester.tap(find.text('12'));
+      await tester.pump();
+      expect(start, DateTime(2026, 3, 12));
+      expect(end, isNull);
+      await tester.tap(find.text('8'));
+      await tester.pump();
+      expect(start, DateTime(2026, 3, 8));
+      await tester.tap(find.text('14'));
+      await tester.pump();
+      expect(end, DateTime(2026, 3, 14));
+      expect(find.bySemanticsLabel('11 March 2026, in range'), findsOneWidget);
+      expect(find.bySemanticsLabel('14 March 2026, end'), findsOneWidget);
+      await tester.tap(find.text('20'));
+      await tester.pump();
+      expect(start, DateTime(2026, 3, 20));
+      expect(end, isNull);
+    });
+  });
+
   group('Tilt guard', () {
     test('cards reject tilt beyond ±3°', () {
       expect(() => StickerCard(tiltDegrees: 4, child: const SizedBox()), throwsAssertionError);

@@ -105,6 +105,10 @@
     </div>
   </section>
 
+  <section><h2 class="sp-text-section-heading">Date range</h2>
+    <div class="sp-card"><div id="g-range"></div></div>
+  </section>
+
   <section><h2 class="sp-text-section-heading">Attachment</h2>
     <label class="sp-attach"><input type="file" accept="image/*,.pdf"><span class="sp-icon" aria-hidden="true">add_a_photo</span><span class="sp-attach__label">Add a receipt</span><span class="sp-attach__caption">Photo or PDF</span></label>
     <div class="sp-attach-file"><span class="sp-attach-file__thumb" aria-hidden="true"><span class="sp-icon">description</span></span><span><span class="sp-attach-file__name">chai-point-receipt.jpg</span><span class="sp-attach-file__size" style="display:block">412 KB</span></span><button class="sp-attach-file__remove" type="button" aria-label="Remove chai-point-receipt.jpg"><span class="sp-icon">close</span></button></div>
@@ -296,6 +300,7 @@
 </div>
 <script type="module">
   import { wirePopControls, showPopSnack, showPopTour, mountPopCalendar, renderPopPin } from './src/behaviors.mjs';
+  mountPopCalendar(document.getElementById('g-range'), { range: true, start: new Date(2026, 10, 12), end: new Date(2026, 10, 18), today: new Date(2026, 10, 21) });
   renderPopPin(document.getElementById('g-pin'), '12');
   renderPopPin(document.getElementById('g-pin-err'), '4821', { error: true });
   mountPopCalendar(document.getElementById('g-calendar'), { max: new Date() });

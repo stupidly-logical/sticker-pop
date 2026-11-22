@@ -550,10 +550,19 @@ export function wirePopDateTiles(root = document) {
  * next month, a 7-column grid of day buttons (chosen: yellow; today: ink
  * ring), arrow keys to move by day or week, Enter to pick. Returns
  * `{ get value, set(date) }`.
+ *
+ * With `range: true` it picks a span of days instead: the first pick sets
+ * the start, the second the end (an earlier day moves the start), a third
+ * starts again; start and end are yellow, joined by a mint band.
+ * `onChange(start, end)` gets both (end null until the second pick); the
+ * result also has `get start` and `get end`.
  */
-export function mountPopCalendar(el, { value = null, today = new Date(), min = null, max = null, firstWeekday = 1, onChange = () => {} } = {}) {
+export function mountPopCalendar(el, { value = null, today = new Date(), min = null, max = null, firstWeekday = 1, onChange = () => {}, range = false, start = null, end = null } = {}) {
   let selected = value ? dayOnly(value) : null;
-  let month = new Date((selected ?? today).getFullYear(), (selected ?? today).getMonth(), 1);
+  let from = start ? dayOnly(start) : null;
+  let to = end ? dayOnly(end) : null;
+  const anchor = range ? from : selected;
+  let month = new Date((anchor ?? today).getFullYear(), (anchor ?? today).getMonth(), 1);
   let focusDay = null;
   const t = dayOnly(today);
   const lo = min ? dayOnly(min) : null;
@@ -568,8 +577,17 @@ export function mountPopCalendar(el, { value = null, today = new Date(), min = n
     const blanks = '<span></span>'.repeat(lead);
     const cells = Array.from({ length: days }, (_, i) => {
       const d = new Date(month.getFullYear(), month.getMonth(), i + 1);
-      const label = `${i + 1} ${MONTHS[d.getMonth()]} ${d.getFullYear()}${sameDay(d, t) ? ', today' : ''}`;
-      return `<button type="button" class="sp-calendar__day${sameDay(d, t) ? ' is-today' : ''}" data-day="${i + 1}" aria-pressed="${sameDay(d, selected)}" aria-label="${label}"${ok(d) ? '' : ' disabled'} tabindex="-1">${i + 1}</button>`;
+      const isStart = range && sameDay(d, from);
+      const isEnd = range && sameDay(d, to);
+      const inside = range && from && to && d > from && d < to;
+      const role = isStart && isEnd ? ', start and end' : isStart ? ', start' : isEnd ? ', end' : inside ? ', in range' : '';
+      const label = `${i + 1} ${MONTHS[d.getMonth()]} ${d.getFullYear()}${sameDay(d, t) ? ', today' : ''}${role}`;
+      const pressed = range ? isStart || isEnd : sameDay(d, selected);
+      const button = `<button type="button" class="sp-calendar__day${sameDay(d, t) ? ' is-today' : ''}" data-day="${i + 1}" aria-pressed="${pressed}" aria-label="${label}"${ok(d) ? '' : ' disabled'} tabindex="-1">${i + 1}</button>`;
+      if (!range) return button;
+      const joined = to && !sameDay(from, to);
+      const band = !joined ? '' : inside ? ' is-in' : isStart ? ' is-start' : isEnd ? ' is-end' : '';
+      return `<span class="sp-calendar__cell${band}">${button}</span>`;
     }).join('');
     el.innerHTML = `<div class="sp-calendar"><div class="sp-calendar__head"><h3 class="sp-calendar__title" aria-live="polite">${MONTHS[month.getMonth()]} ${month.getFullYear()}</h3><button type="button" class="sp-icon-button" data-nav="-1" aria-label="Previous month"${canPrev ? '' : ' disabled'}><span class="sp-icon">chevron_left</span></button><button type="button" class="sp-icon-button" data-nav="1" aria-label="Next month"${canNext ? '' : ' disabled'}><span class="sp-icon">chevron_right</span></button></div><div class="sp-calendar__grid">${heads}${blanks}${cells}</div></div>`;
     const buttons = [...el.querySelectorAll('.sp-calendar__day')];
@@ -583,8 +601,15 @@ export function mountPopCalendar(el, { value = null, today = new Date(), min = n
     if (nav) { month = new Date(month.getFullYear(), month.getMonth() + Number(nav.dataset.nav), 1); focusDay = null; render(); return; }
     const day = e.target.closest('.sp-calendar__day');
     if (!day || day.disabled) return;
-    selected = new Date(month.getFullYear(), month.getMonth(), Number(day.dataset.day));
-    focusDay = selected;
+    const picked = new Date(month.getFullYear(), month.getMonth(), Number(day.dataset.day));
+    focusDay = picked;
+    if (range) {
+      if (!from || to || picked < from) { from = picked; to = null; } else { to = picked; }
+      render();
+      onChange(from, to);
+      return;
+    }
+    selected = picked;
     render();
     onChange(selected);
   });
@@ -600,7 +625,7 @@ export function mountPopCalendar(el, { value = null, today = new Date(), min = n
     render();
   });
   render();
-  return { get value() { return selected; }, set(d) { selected = d ? dayOnly(d) : null; if (d) month = new Date(d.getFullYear(), d.getMonth(), 1); render(); } };
+  return { get value() { return selected; }, get start() { return from; }, get end() { return to; }, set(d) { selected = d ? dayOnly(d) : null; if (d) month = new Date(d.getFullYear(), d.getMonth(), 1); render(); } };
 }
 
 // ---------------------------------------------------------------------------

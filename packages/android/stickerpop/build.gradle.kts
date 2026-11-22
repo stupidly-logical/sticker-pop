@@ -9,7 +9,7 @@ plugins {
 // Maven Central coordinates: io.github.stupidly-logical:stickerpop (the
 // namespace is proven by the GitHub account). The Kotlin package stays dev.stickerpop.
 group = "io.github.stupidly-logical"
-version = "0.1.0"
+version = "0.1.1"
 
 android {
     namespace = "dev.stickerpop"
@@ -44,7 +44,7 @@ dependencies {
 // Published to Maven Central by the release workflow (see the README's
 // "First release on the registries"). For a local try-out:
 // ./gradlew :stickerpop:publishToMavenLocal, then depend on
-// "io.github.stupidly-logical:stickerpop:0.1.0" with mavenLocal() in your repositories.
+// "io.github.stupidly-logical:stickerpop:0.1.1" with mavenLocal() in your repositories.
 mavenPublishing {
     configure(
         com.vanniktech.maven.publish.AndroidSingleVariantLibrary(

@@ -2,6 +2,24 @@
 
 All four libraries share one version.
 
+## 0.1.1 (2026-11-22)
+
+- SwiftUI now builds: 0.1.0 didn't compile (a gallery property declared
+  twice, and a toggle accessibility trait that needs iOS 17 / macOS 14).
+  The switch adds that trait only where it exists, so iOS 16 and macOS 13
+  still work. If you added the package at 0.1.0, move to 0.1.1.
+- The SwiftUI demo app is no longer offered to apps as a library product
+  (`swift run StickerPopDemo` still works in the repo).
+- Compose is on Maven Central as `io.github.stupidly-logical:stickerpop`
+  (the Kotlin package is still `dev.stickerpop`). Building it from source
+  now needs Gradle 9.1+ and AGP 8.13+.
+- Web is on npm as `@sticker-pop/web`; its import paths now match the docs
+  (`@sticker-pop/web/behaviors.mjs` and friends) and the CDN snippets use
+  jsDelivr's npm mirror.
+- Flutter is on pub.dev as `sticker_pop`.
+- Every tag now publishes npm, pub.dev and Maven Central from CI, and the
+  Compose and SwiftUI screenshot tests compare against recorded images.
+
 ## 0.1.0 (2026-11-21)
 
 - First release: Compose, Flutter, SwiftUI and web libraries at parity: 23

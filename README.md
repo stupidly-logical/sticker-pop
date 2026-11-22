@@ -38,7 +38,7 @@ packages/                        the libraries
 
 Docs: **https://stupidly-logical.github.io/sticker-pop/**
 
-Each version is a tag (`v0.1.0`) with a GitHub Release. The same tag
+Each version is a tag (`v0.1.1`) with a GitHub Release. The same tag
 publishes the web package to npm, the Flutter package to pub.dev and the
 Compose library to Maven Central, and
 Swift Package Manager installs straight from it. Pin the version so library
@@ -47,7 +47,7 @@ changes never reach an app by surprise.
 **Flutter**
 
 ```sh
-flutter pub add sticker_pop     # or in pubspec.yaml: sticker_pop: ^0.1.0
+flutter pub add sticker_pop     # or in pubspec.yaml: sticker_pop: ^0.1.1
 ```
 
 ```dart
@@ -61,10 +61,10 @@ The package bundles the font. Flutter 3.50+ (it imports
 
 **SwiftUI (iOS 16+, macOS 13+)**: in Xcode, *File › Add Package
 Dependencies…*, paste `https://github.com/stupidly-logical/sticker-pop.git`
-and pick *Up to Next Major* from `0.1.0`. Or in `Package.swift`:
+and pick *Up to Next Major* from `0.1.1`. Or in `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/stupidly-logical/sticker-pop.git", from: "0.1.0")
+.package(url: "https://github.com/stupidly-logical/sticker-pop.git", from: "0.1.1")
 ```
 
 Call `StickerPopFonts.register()` once at launch.
@@ -73,7 +73,7 @@ Call `StickerPopFonts.register()` once at launch.
 
 ```kotlin
 // app/build.gradle.kts
-dependencies { implementation("io.github.stupidly-logical:stickerpop:0.1.0") }
+dependencies { implementation("io.github.stupidly-logical:stickerpop:0.1.1") }
 ```
 
 The code lives in the `dev.stickerpop` package (`dev.stickerpop.components`,
@@ -93,9 +93,9 @@ wirePopControls();
 
 ```html
 <!-- no build step -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sticker-pop/web@0.1.0/src/sticker-pop.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sticker-pop/web@0.1.1/src/sticker-pop.css">
 <script type="module">
-  import { wirePopControls } from 'https://cdn.jsdelivr.net/npm/@sticker-pop/web@0.1.0/src/behaviors.mjs';
+  import { wirePopControls } from 'https://cdn.jsdelivr.net/npm/@sticker-pop/web@0.1.1/src/behaviors.mjs';
   wirePopControls();
 </script>
 <!-- either way: the icon font, and turn the styles on -->

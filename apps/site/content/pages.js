@@ -53,7 +53,7 @@ export const otherPages = [
       ${codeBlock({
         compose: `// app/build.gradle.kts (from Maven Central; minSdk 26)
 dependencies {
-    implementation("io.github.stupidly-logical:stickerpop:0.1.0")
+    implementation("io.github.stupidly-logical:stickerpop:0.1.1")
 }
 
 // Code uses the dev.stickerpop package:
@@ -62,16 +62,16 @@ import dev.stickerpop.components.StickerButton`,
 
 # or in pubspec.yaml
 dependencies:
-  sticker_pop: ^0.1.0
+  sticker_pop: ^0.1.1
 
 // main.dart
 import 'package:sticker_pop/sticker_pop.dart';
 
 MaterialApp(theme: buildPopTheme(), home: const HomeScreen());`,
         swift: `// Xcode › File › Add Package Dependencies…
-//   https://github.com/stupidly-logical/sticker-pop.git  (Up to Next Major: 0.1.0)
+//   https://github.com/stupidly-logical/sticker-pop.git  (Up to Next Major: 0.1.1)
 // or Package.swift:
-.package(url: "https://github.com/stupidly-logical/sticker-pop.git", from: "0.1.0")
+.package(url: "https://github.com/stupidly-logical/sticker-pop.git", from: "0.1.1")
 
 import StickerPop
 
@@ -88,9 +88,9 @@ import { wirePopControls } from '@sticker-pop/web/behaviors.mjs';
 wirePopControls();
 
 <!-- Or no build step, from jsDelivr -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sticker-pop/web@0.1.0/src/sticker-pop.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sticker-pop/web@0.1.1/src/sticker-pop.css">
 <script type="module">
-  import { wirePopControls } from 'https://cdn.jsdelivr.net/npm/@sticker-pop/web@0.1.0/src/behaviors.mjs';
+  import { wirePopControls } from 'https://cdn.jsdelivr.net/npm/@sticker-pop/web@0.1.1/src/behaviors.mjs';
   wirePopControls();
 </script>
 

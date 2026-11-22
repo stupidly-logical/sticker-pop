@@ -1,7 +1,7 @@
 name: sticker_pop_example
 description: Runs the Sticker Pop gallery and the Home sample.
 publish_to: none
-version: 0.1.0+1
+version: 0.1.1+2
 
 environment:
   sdk: ^3.13.0

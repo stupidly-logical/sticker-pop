@@ -1,6 +1,6 @@
 {
   "name": "@sticker-pop/web",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Sticker Pop for the web: a bold, sticker-style design system. CSS tokens and components, small behaviour scripts, formatters and charts.",
   "keywords": [
     "design-system",

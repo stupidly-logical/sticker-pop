@@ -1,6 +1,6 @@
 // swift-tools-version: 5.9
 // Apps depend on this repository directly:
-//   .package(url: "https://github.com/stupidly-logical/sticker-pop.git", from: "0.1.0")
+//   .package(url: "https://github.com/stupidly-logical/sticker-pop.git", from: "0.1.1")
 // Sources live in packages/ios/StickerPop.
 import PackageDescription
 

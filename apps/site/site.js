@@ -9,7 +9,7 @@ import { esc, kebab, store, contrast } from './content/util.js';
 import { stabilizePopChips, wirePopDials, layoutPopDial, wirePopMenus, wirePopSelects, wirePopTopBars, wirePopSearch, wirePopDateTiles, mountPopCalendar, wirePopTabs, wirePopSliders, wirePopSteppers, wirePopKeypads, wirePopAvatars, wirePopTooltips, wirePopTagInputs, wirePopAttachments, wirePopPullToRefresh, renderPopPagination, renderPopPin } from './sp/behaviors.mjs';
 import { applyPopKey } from './sp/format.mjs';
 
-const VERSION = '0.1.0';
+const VERSION = '0.1.1';
 const main = document.getElementById('main');
 const nav = document.getElementById('nav');
 

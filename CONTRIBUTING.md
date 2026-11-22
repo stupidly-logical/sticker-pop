@@ -146,6 +146,44 @@ and you should check that the last section (Navigation) is still in them. If
 it isn't, the gallery outgrew its screen, so raise the height in the
 screenshot test.
 
+## Your first pull request
+
+Changes reach `main` only through pull requests. Unless you're a
+maintainer, you work in your own fork:
+
+1. Click **Fork** on [the repo's page](https://github.com/stupidly-logical/sticker-pop),
+   then clone your fork and add the original as `upstream`:
+   ```sh
+   git clone https://github.com/<you>/sticker-pop.git
+   cd sticker-pop
+   git remote add upstream https://github.com/stupidly-logical/sticker-pop.git
+   ```
+2. Start each change on a new branch from the latest `main`:
+   ```sh
+   git fetch upstream
+   git switch -c add-rating-stars upstream/main
+   ```
+3. Commit, run `bash tools/check.sh`, and push the branch to your fork:
+   ```sh
+   git push -u origin add-rating-stars
+   ```
+4. Open a pull request from your branch into `stupidly-logical/sticker-pop`
+   `main`. GitHub offers a button for it after the push.
+5. If `main` moves on while you work, bring your branch up to date:
+   ```sh
+   git fetch upstream
+   git rebase upstream/main
+   git push --force-with-lease
+   ```
+
+**Your first CI run waits for approval.** GitHub holds workflows from new
+contributors until a maintainer approves them, so don't worry if the checks
+show as waiting at first. After that, CI runs on every push to the branch,
+and its screenshot artifacts appear on the pull request's run.
+
+A pull request can't publish anything. Releases only run from the
+maintainer's tags, and forks never get the publishing secrets.
+
 ## Pull requests
 
 - Keep each pull request to one change, and describe what it changes for

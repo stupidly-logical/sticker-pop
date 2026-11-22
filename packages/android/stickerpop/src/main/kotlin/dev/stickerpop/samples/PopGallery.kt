@@ -247,6 +247,13 @@ fun PopGallery(onOpenHome: () -> Unit = {}) {
                     }
                 }
 
+                Section("Pull to refresh") {
+                    Row(horizontalArrangement = Arrangement.spacedBy(PopSpace.lg)) {
+                        PopRefreshIndicator(0.6f)
+                        PopRefreshIndicator(null)
+                    }
+                }
+
                 Section("Date range") {
                     StickerCard {
                         PopRangeCalendar(java.time.LocalDate.of(2026, 11, 12), java.time.LocalDate.of(2026, 11, 18), { _, _ -> }, java.time.LocalDate.of(2026, 11, 21))

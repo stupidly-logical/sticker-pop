@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
@@ -770,6 +772,31 @@ void main() {
       await tester.pump();
       expect(start, DateTime(2026, 3, 20));
       expect(end, isNull);
+    });
+  });
+
+  group('PopPullToRefresh', () {
+    testWidgets('pulling past the trigger refreshes and spins until done', (tester) async {
+      final done = Completer<void>();
+      var calls = 0;
+      await pumpPop(tester, PopPullToRefresh(
+        onRefresh: () {
+          calls++;
+          return done.future;
+        },
+        child: ListView(children: <Widget>[for (var i = 0; i < 30; i++) SizedBox(height: 60, child: Text('Row $i'))]),
+      ));
+      await tester.drag(find.text('Row 2'), const Offset(0, 60));
+      await tester.pumpAndSettle();
+      expect(calls, 0);
+      expect(find.byType(PopRefreshIndicator), findsNothing);
+      await tester.drag(find.text('Row 2'), const Offset(0, 300));
+      await tester.pump();
+      expect(calls, 1);
+      expect(find.bySemanticsLabel('Refreshing'), findsOneWidget);
+      done.complete();
+      await tester.pumpAndSettle();
+      expect(find.byType(PopRefreshIndicator), findsNothing);
     });
   });
 

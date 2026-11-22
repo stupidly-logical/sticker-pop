@@ -560,6 +560,24 @@ button.sp-settings-row:hover, label.sp-settings-row:hover { background: var(--sp
 .sp-pin__box.is-dot::after { content: ''; width: 14px; height: 14px; border-radius: 50%; background: var(--sp-color-ink); }
 .sp-pin.is-error .sp-pin__box { background: var(--sp-color-orange); border-width: var(--sp-border-thin); }
 
+/* Pull to refresh: wirePopPullToRefresh(scroller, onRefresh) adds a .sp-refresh sticker at the top.
+   --sp-refresh-progress (0 to 1) fills the ring while pulling; .is-refreshing spins it. */
+.sp-refresh-host { position: relative; overflow-y: auto; overscroll-behavior-y: contain; }
+.sp-refresh-host.is-pulling { user-select: none; -webkit-user-select: none; }
+.sp-refresh {
+  position: absolute; top: 0; left: 50%; z-index: 2; width: 44px; height: 44px; box-sizing: border-box;
+  display: grid; place-items: center; pointer-events: none;
+  background: var(--sp-color-white); border: var(--sp-border-thin) solid var(--sp-color-ink); border-radius: 50%;
+  box-shadow: var(--sp-shadow-small) var(--sp-shadow-small) 0 var(--sp-color-ink);
+  transform: translate(-50%, calc(var(--sp-refresh-pull, 0px) - 100%));
+}
+.sp-refresh:not(.is-pulling) { transition: transform var(--sp-motion-toggle) ease-out; }
+.sp-refresh__ring { width: 20px; height: 20px; transform: rotate(-90deg); fill: none; stroke-width: 2.5; }
+.sp-refresh__ring circle { stroke: var(--sp-color-divider); }
+.sp-refresh__ring circle + circle { stroke: var(--sp-color-ink); stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--sp-refresh-progress, 0)); }
+.sp-refresh.is-refreshing .sp-refresh__ring { display: none; }
+.sp-refresh:not(.is-refreshing) .sp-spinner { display: none; }
+
 /* Attachment: <label class="sp-attach"><input type="file" accept="image/*,.pdf"> icon, label, caption</label>
    (the native picker opens on click); filled: .sp-attach-file. wirePopAttachments() swaps between them. */
 .sp-attach {

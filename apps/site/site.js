@@ -6,7 +6,7 @@ import { guidePages } from './content/guides.js';
 import { foundationPages } from './content/foundations.js';
 import { otherPages } from './content/pages.js';
 import { esc, kebab, store, contrast } from './content/util.js';
-import { stabilizePopChips, wirePopDials, layoutPopDial, wirePopMenus, wirePopSelects, wirePopTopBars, wirePopSearch, wirePopDateTiles, mountPopCalendar, wirePopTabs, wirePopSliders, wirePopSteppers, wirePopKeypads, wirePopAvatars, wirePopTooltips, wirePopTagInputs, wirePopAttachments, renderPopPin } from './sp/behaviors.mjs';
+import { stabilizePopChips, wirePopDials, layoutPopDial, wirePopMenus, wirePopSelects, wirePopTopBars, wirePopSearch, wirePopDateTiles, mountPopCalendar, wirePopTabs, wirePopSliders, wirePopSteppers, wirePopKeypads, wirePopAvatars, wirePopTooltips, wirePopTagInputs, wirePopAttachments, wirePopPullToRefresh, renderPopPin } from './sp/behaviors.mjs';
 import { applyPopKey } from './sp/format.mjs';
 
 const VERSION = '0.1.0';
@@ -116,6 +116,10 @@ function wireDemos(root) {
   root.querySelectorAll('.sp-pin[data-value]').forEach((p) => renderPopPin(p, p.dataset.value, { error: p.dataset.error === 'true' }));
   root.querySelectorAll('[data-keypad-for]').forEach((pad) => { const out = document.getElementById(pad.dataset.keypadFor); let v = out.dataset.value ?? ''; pad.addEventListener('pop-key', (e) => { v = applyPopKey(v, e.detail.key); out.textContent = '₹' + (v || '0'); }); });
   root.querySelectorAll('[data-inr-for]').forEach((out) => { const i = document.getElementById(out.dataset.inrFor); const f = () => { out.textContent = '₹' + Number(i.value).toLocaleString('en-IN'); i.setAttribute('aria-valuetext', out.textContent); }; i.addEventListener('input', f); f(); });
+  root.querySelectorAll('[data-refresh-demo]').forEach((el) => {
+    const r = wirePopPullToRefresh(el.querySelector('[data-refresh-list]'), () => new Promise((done) => setTimeout(() => { toast('Up to date'); done(); }, 1200)));
+    el.querySelector('[data-refresh-button]')?.addEventListener('click', () => r.refresh());
+  });
   root.querySelectorAll('[data-calendar-range]').forEach((el) => mountPopCalendar(el, { range: true, start: new Date(2026, 10, 12), end: new Date(2026, 10, 18), today: new Date(2026, 10, 21), onChange: (s, e) => { if (e) toast(`${s.getDate()}–${e.getDate()} ${e.toLocaleString('en-GB', { month: 'short' })}`); } }));
   root.querySelectorAll('[data-calendar]').forEach((el) => mountPopCalendar(el, { value: new Date(2026, 10, 21), today: new Date(2026, 10, 21), max: new Date(2026, 10, 21), onChange: (d) => toast(`Picked ${d.getDate()} ${d.toLocaleString('en-GB', { month: 'short' })}`) }));
   root.querySelectorAll('input[data-indeterminate]').forEach((i) => { i.indeterminate = true; });

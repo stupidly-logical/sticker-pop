@@ -394,6 +394,19 @@ class _PopGalleryState extends State<PopGallery> {
                 ],
               ),
 
+              const _Section(
+                'Pull to refresh',
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      PopRefreshIndicator(progress: 0.6),
+                      SizedBox(width: PopSpace.lg),
+                      PopRefreshIndicator(),
+                    ],
+                  ),
+                ],
+              ),
+
               _Section(
                 'Date range',
                 children: <Widget>[

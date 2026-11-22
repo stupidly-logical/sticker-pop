@@ -907,3 +907,77 @@ export function wirePopAttachments(root = document) {
     });
   });
 }
+
+/**
+ * Pull to refresh for a scrolling element (`.sp-refresh-host`). Pulling down
+ * from the top (touch, pen or mouse) moves a `.sp-refresh` sticker down by
+ * half the pull, up to 96, filling its ring; letting go past 64 calls
+ * `onRefresh()` and spins until its promise settles. Add a visible Refresh
+ * button too: the gesture alone isn't reachable by keyboard or screen
+ * readers. Returns `{ refresh() }` to run the same flow from that button.
+ */
+export function wirePopPullToRefresh(host, onRefresh) {
+  const TRIGGER = 64;
+  const MAX = 96;
+  host.classList.add('sp-refresh-host');
+  const ind = document.createElement('div');
+  ind.className = 'sp-refresh';
+  ind.setAttribute('aria-hidden', 'true');
+  ind.innerHTML = '<svg class="sp-refresh__ring" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8.75" pathLength="1"/><circle cx="10" cy="10" r="8.75" pathLength="1"/></svg><span class="sp-spinner" style="width:20px;height:20px"></span>';
+  host.prepend(ind);
+  const live = document.createElement('span');
+  live.className = 'sp-visually-hidden';
+  live.setAttribute('role', 'status');
+  host.prepend(live);
+  let startY = null;
+  let pull = 0;
+  let busy = false;
+  const show = (px) => {
+    ind.style.setProperty('--sp-refresh-pull', `${px}px`);
+    ind.style.setProperty('--sp-refresh-progress', String(Math.min(px / TRIGGER, 1)));
+  };
+  const refresh = async () => {
+    if (busy) return;
+    busy = true;
+    ind.classList.remove('is-pulling');
+    ind.classList.add('is-refreshing');
+    show(TRIGGER);
+    live.textContent = 'Refreshing';
+    try { await onRefresh(); } finally {
+      busy = false;
+      ind.classList.remove('is-refreshing');
+      show(0);
+      live.textContent = 'Refreshed';
+    }
+  };
+  host.addEventListener('pointerdown', (e) => {
+    if (busy || host.scrollTop > 0 || (e.pointerType === 'mouse' && e.button !== 0)) return;
+    startY = e.clientY;
+    pull = 0;
+  });
+  host.addEventListener('pointermove', (e) => {
+    if (startY === null) return;
+    const dy = e.clientY - startY;
+    if (dy <= 0 || host.scrollTop > 0) { if (pull) { pull = 0; show(0); } return; }
+    if (!pull && dy > 8) {
+      host.setPointerCapture?.(e.pointerId);
+      host.classList.add('is-pulling');
+      window.getSelection()?.removeAllRanges();
+    }
+    pull = Math.min(dy / 2, MAX);
+    ind.classList.add('is-pulling');
+    show(pull);
+  });
+  const end = () => {
+    if (startY === null) return;
+    startY = null;
+    host.classList.remove('is-pulling');
+    ind.classList.remove('is-pulling');
+    if (pull >= TRIGGER) refresh(); else show(0);
+    pull = 0;
+  };
+  host.addEventListener('pointerup', end);
+  host.addEventListener('pointercancel', end);
+  host.addEventListener('touchmove', (e) => { if (pull > 0) e.preventDefault(); }, { passive: false });
+  return { refresh };
+}

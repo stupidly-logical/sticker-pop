@@ -198,6 +198,13 @@ public struct PopGallery: View {
                     }
                 }
 
+                GallerySection(title: "Pull to refresh") {
+                    HStack(spacing: PopSpace.lg) {
+                        PopRefreshIndicator(progress: 0.6)
+                        PopRefreshIndicator()
+                    }
+                }
+
                 GallerySection(title: "Date range") {
                     StickerCard {
                         PopRangeCalendar(start: .constant(galleryDay(12)), end: .constant(galleryDay(18)), today: galleryToday)

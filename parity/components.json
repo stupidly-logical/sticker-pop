@@ -460,6 +460,25 @@
       ]
     },
     {
+      "id": "pull-to-refresh",
+      "flutter": [
+        "PopPullToRefresh",
+        "PopRefreshIndicator"
+      ],
+      "compose": [
+        "PopPullToRefresh",
+        "PopRefreshIndicator"
+      ],
+      "swiftui": [
+        "popRefreshable",
+        "PopRefreshIndicator"
+      ],
+      "web": [
+        ".sp-refresh",
+        "wirePopPullToRefresh()"
+      ]
+    },
+    {
       "id": "date-range",
       "flutter": [
         "PopRangeCalendar",

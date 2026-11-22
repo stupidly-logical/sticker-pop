@@ -23,6 +23,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.AccountBalance
 import androidx.compose.material.icons.rounded.Bolt
+import androidx.compose.material.icons.rounded.CloudOff
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.IosShare
 import androidx.compose.material.icons.rounded.Notifications
@@ -309,6 +310,16 @@ fun PopGallery(onOpenHome: () -> Unit = {}) {
                         { PopSettingsRow("Export data", icon = Icons.Rounded.IosShare, onClick = {}) },
                         { PopSettingsRow("Version", icon = Icons.Rounded.Info, value = "0.1.0") },
                     ))
+                }
+
+                Section("Empty and error screens") {
+                    StickerCard(Modifier.fillMaxWidth()) {
+                        PopEmptyState(Icons.AutoMirrored.Rounded.ReceiptLong, "No transactions yet", "Add your first one with Type it, Say it or Scan it.", actionLabel = "Add a transaction")
+                    }
+                    StickerCard(Modifier.fillMaxWidth()) {
+                        PopEmptyState(Icons.Rounded.CloudOff, "Couldn't load prices", "Check your connection and try again. Your own data is safe on this phone.",
+                            fill = PopColors.orange, actionLabel = "Try again", secondaryLabel = "Not now")
+                    }
                 }
 
                 Section("Banners") {

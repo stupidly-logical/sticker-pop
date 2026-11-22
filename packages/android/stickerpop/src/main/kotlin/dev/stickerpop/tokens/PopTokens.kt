@@ -231,6 +231,7 @@ object PopSize {
     val spinner: Dp = 24.dp
     val sliderKnob: Dp = 28.dp
     val keypadKey: Dp = 56.dp
+    val stateTile: Dp = 96.dp
     val skeletonLine: Dp = 14.dp
     val checkbox: Dp = 24.dp
     val radioDot: Dp = 10.dp

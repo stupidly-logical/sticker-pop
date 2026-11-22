@@ -277,6 +277,18 @@ public struct PopGallery: View {
                     }
                 }
 
+                GallerySection(title: "Empty and error screens") {
+                    StickerCard {
+                        PopEmptyState(systemImage: "list.bullet.rectangle", title: "No transactions yet",
+                                      message: "Add your first one with Type it, Say it or Scan it.", actionLabel: "Add a transaction")
+                    }
+                    StickerCard {
+                        PopEmptyState(systemImage: "icloud.slash", title: "Couldn't load prices",
+                                      message: "Check your connection and try again. Your own data is safe on this phone.",
+                                      fill: PopColors.orange, actionLabel: "Try again", secondaryLabel: "Not now")
+                    }
+                }
+
                 GallerySection(title: "Banners") {
                     PopBanner("Your last backup was 30 days ago.", title: "Back up soon", tone: .warning, actionLabel: "Back up now", onDismiss: {})
                     PopBanner("Prices update every morning at 9.")

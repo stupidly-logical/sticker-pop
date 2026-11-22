@@ -227,6 +227,8 @@ public enum PopSize {
     public static let sliderKnob: CGFloat = 28.0
     /// Number keypad key height
     public static let keypadKey: CGFloat = 56.0
+    /// The big tilted icon tile on empty and error screens
+    public static let stateTile: CGFloat = 96.0
     /// Height of a skeleton text line
     public static let skeletonLine: CGFloat = 14.0
     /// Checkbox and radio (padded to the 48 tap target)

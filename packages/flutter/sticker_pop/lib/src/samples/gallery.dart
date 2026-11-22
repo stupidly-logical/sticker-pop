@@ -540,6 +540,34 @@ class _PopGalleryState extends State<PopGallery> {
               ),
 
               _Section(
+                'Empty and error screens',
+                children: <Widget>[
+                  StickerCard(
+                    child: PopEmptyState(
+                      icon: Icons.receipt_long_rounded,
+                      title: 'No transactions yet',
+                      message: 'Add your first one with Type it, Say it or Scan it.',
+                      actionLabel: 'Add a transaction',
+                      onAction: () {},
+                    ),
+                  ),
+                  const SizedBox(height: PopSpace.lg),
+                  StickerCard(
+                    child: PopEmptyState(
+                      icon: Icons.cloud_off_rounded,
+                      title: "Couldn't load prices",
+                      message: 'Check your connection and try again. Your own data is safe on this phone.',
+                      color: PopColors.orange,
+                      actionLabel: 'Try again',
+                      onAction: () {},
+                      secondaryLabel: 'Not now',
+                      onSecondary: () {},
+                    ),
+                  ),
+                ],
+              ),
+
+              _Section(
                 'Banners',
                 children: <Widget>[
                   PopBanner(

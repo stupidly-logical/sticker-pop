@@ -54,6 +54,7 @@ import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
@@ -87,8 +88,9 @@ fun PopText(
     modifier: Modifier = Modifier,
     color: Color = spec.color,
     maxLines: Int = Int.MAX_VALUE,
+    align: TextAlign? = null,
 ) {
-    val style = popTextStyle(spec, color)
+    val style = popTextStyle(spec, color).let { if (align != null) it.copy(textAlign = align) else it }
     BasicText(
         text = popCaps(spec, text),
         style = style,

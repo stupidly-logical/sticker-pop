@@ -670,6 +670,23 @@
       ]
     },
     {
+      "id": "empty-state",
+      "flutter": [
+        "PopEmptyState"
+      ],
+      "compose": [
+        "PopEmptyState"
+      ],
+      "swiftui": [
+        "PopEmptyState"
+      ],
+      "web": [
+        ".sp-empty",
+        ".sp-empty__tile",
+        ".sp-empty--error"
+      ]
+    },
+    {
       "id": "loading",
       "flutter": [
         "PopSkeleton",

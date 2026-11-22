@@ -612,6 +612,27 @@ void main() {
     });
   });
 
+  group('PopEmptyState', () {
+    testWidgets('error state fits a small phone at 200% text and its action works', (tester) async {
+      var retried = false;
+      await pumpPop(tester, MediaQuery(
+        data: const MediaQueryData(textScaler: TextScaler.linear(2)),
+        child: Scaffold(body: SingleChildScrollView(child: PopEmptyState(
+          icon: Icons.cloud_off_rounded,
+          title: "Couldn't load prices",
+          message: 'Check your connection and try again. Your own data is safe on this phone.',
+          color: PopColors.orange,
+          actionLabel: 'Try again',
+          onAction: () => retried = true,
+        ))),
+      ), size: const Size(320, 640));
+      expect(tester.takeException(), isNull);
+      await tester.ensureVisible(find.text('Try again'));
+      await tester.tap(find.text('Try again'));
+      expect(retried, isTrue);
+    });
+  });
+
   group('Tilt guard', () {
     test('cards reject tilt beyond ±3°', () {
       expect(() => StickerCard(tiltDegrees: 4, child: const SizedBox()), throwsAssertionError);

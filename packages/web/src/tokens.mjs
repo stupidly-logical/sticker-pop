@@ -295,6 +295,7 @@ export const tokens = {
     "spinner": 24,
     "sliderKnob": 28,
     "keypadKey": 56,
+    "stateTile": 96,
     "skeletonLine": 14,
     "checkbox": 24,
     "radioDot": 10,

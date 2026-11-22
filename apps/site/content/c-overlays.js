@@ -84,6 +84,20 @@ export const overlays = [
     a11y: 'A status region, so new banners are announced. The close button is labelled "Dismiss".',
   },
   {
+    id: 'empty-state', name: 'Empty and error screens', group: 'Overlays and feedback', platforms: ALL,
+    summary: 'For a whole screen with nothing to show yet, or one that couldn\'t load: a big tilted sticker tile with an icon, a title, a short message and up to two actions, centred. Lilac for empty, orange for errors and offline. For a hint inside a card, use the hint card instead.',
+    states: [{ label: 'Empty', html: '<div class="sp-card full"><div class="sp-empty"><div class="sp-empty__tile" aria-hidden="true"><span class="sp-icon">receipt_long</span></div><h3 class="sp-empty__title">No transactions yet</h3><p class="sp-empty__message">Add your first one with Type it, Say it or Scan it.</p><button class="sp-button" data-snack="Add opens here">Add a transaction</button></div></div>' }, { label: 'Error', html: '<div class="sp-card full"><div class="sp-empty sp-empty--error"><div class="sp-empty__tile" aria-hidden="true"><span class="sp-icon">cloud_off</span></div><h3 class="sp-empty__title">Couldn&#39;t load prices</h3><p class="sp-empty__message">Check your connection and try again. Your own data is safe on this phone.</p><button class="sp-button" data-snack="Trying again…">Try again</button><button class="sp-text-button">Not now</button></div></div>' }],
+    code: {
+      flutter: "PopEmptyState(\n  icon: Icons.receipt_long_rounded,\n  title: 'No transactions yet',\n  message: 'Add your first one with Type it, Say it or Scan it.',\n  actionLabel: 'Add a transaction',\n  onAction: openAdd,\n)",
+      compose: 'PopEmptyState(Icons.AutoMirrored.Rounded.ReceiptLong, "No transactions yet",\n    "Add your first one with Type it, Say it or Scan it.", actionLabel = "Add a transaction", onAction = ::openAdd)',
+      swift: 'PopEmptyState(systemImage: "list.bullet.rectangle", title: "No transactions yet",\n              message: "Add your first one with Type it, Say it or Scan it.",\n              actionLabel: "Add a transaction", onAction: openAdd)',
+      html: '<div class="sp-empty sp-empty--error">\n  <div class="sp-empty__tile" aria-hidden="true"><span class="sp-icon">cloud_off</span></div>\n  <h2 class="sp-empty__title">Couldn&#39;t load prices</h2>\n  <p class="sp-empty__message">Check your connection and try again.</p>\n  <button class="sp-button">Try again</button>\n  <button class="sp-text-button">Not now</button>\n</div>',
+    },
+    spec: [['Tile', '96, radius 22, 2.5 outline, 6/6 shadow, tilted −4°; lilac (empty) or orange (error)'], ['Icon', '44 ink'], ['Title', '22/800, 24 below the tile'], ['Message', '15/600 muted, centred, 8 below'], ['Actions', 'a primary button (20 below), then an optional text button'], ['Width', 'up to 340, centred']],
+    rules: ['Say what will appear and how to start, or what went wrong and what to do: never just "Error".', 'Errors are orange, never red. Reassure about the person\'s own data when it is safe.'],
+    a11y: 'The title is a heading; the tile is decorative and hidden from screen readers.',
+  },
+  {
     id: 'loading', name: 'Loading states', group: 'Overlays and feedback', platforms: ALL,
     summary: 'Show the shape of what is coming. Skeletons are divider-coloured lines, circles and blocks with no outline, gently pulsing, laid out like the content that will replace them. A small spinner is for short waits with no layout to hint at. Under reduced motion both stand still.',
     states: [

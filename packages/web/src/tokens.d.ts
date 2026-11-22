@@ -295,6 +295,7 @@ export declare const tokens: {
     readonly spinner: 24;
     readonly sliderKnob: 28;
     readonly keypadKey: 56;
+    readonly stateTile: 96;
     readonly skeletonLine: 14;
     readonly checkbox: 24;
     readonly radioDot: 10;

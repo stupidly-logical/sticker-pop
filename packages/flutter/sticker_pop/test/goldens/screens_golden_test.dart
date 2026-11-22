@@ -20,7 +20,7 @@ void main() {
   }, tags: <String>['golden']);
 
   testWidgets('Gallery', (tester) async {
-    const size = Size(390, 7200);
+    const size = Size(390, 9000);
     await pumpPop(tester, const PopGallery(), size: size, reduceMotion: true);
     await tester.pumpAndSettle();
     // The gallery grows with every component: if the last section no longer

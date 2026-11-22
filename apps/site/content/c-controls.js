@@ -152,6 +152,20 @@ export const controls = [
     a11y: 'Announced as a slider with its label and value ("Monthly budget, ₹12,000"); swipe up or down, or the arrow keys, step it.',
   },
   {
+    id: 'stepper', name: 'Stepper', group: 'Inputs', platforms: ALL,
+    summary: 'A small counter, like how many people split a bill: − and + sticker buttons with the number between them. Each button disables at its limit.',
+    states: [{ label: 'Tap − and + (1 to 20)', html: '<div class="row full" style="justify-content:space-between"><span class="sp-text-row-title" id="st-l">Split between</span><div class="sp-stepper" role="group" aria-labelledby="st-l" data-min="1" data-max="20"><button class="sp-icon-button" aria-label="Fewer people"><span class="sp-icon">remove</span></button><output class="sp-stepper__value" aria-live="polite">2</output><button class="sp-icon-button" aria-label="More people"><span class="sp-icon">add</span></button></div></div>' }],
+    code: {
+      flutter: "PopStepper(semanticLabel: 'People', value: people, min: 1, max: 20, onChanged: (v) => setState(() => people = v))",
+      compose: 'PopStepper(people, { people = it }, "People", range = 1..20)',
+      swift: 'PopStepper("People", value: $people, in: 1...20)',
+      html: '<div class="sp-stepper" role="group" aria-label="People" data-min="1" data-max="20">\n  <button class="sp-icon-button" aria-label="Fewer people"><span class="sp-icon">remove</span></button>\n  <output class="sp-stepper__value" aria-live="polite">2</output>\n  <button class="sp-icon-button" aria-label="More people"><span class="sp-icon">add</span></button>\n</div>\n\n<script type="module">\n  import { wirePopSteppers } from \'@sticker-pop/web/behaviors.mjs\';\n  wirePopSteppers(); // fires pop-step with { value }\n</script>',
+    },
+    spec: [['Buttons', 'PopIconButton (46) with − and +; disabled at the limits'], ['Value', '20/800 tabular, at least 48 wide, centred']],
+    rules: ['For small whole numbers only; use an amount field for money and a slider for wide ranges.'],
+    a11y: 'Native platforms announce one adjustable control ("People, 2") that swipes up and down; the web reads the buttons and announces the new value.',
+  },
+  {
     id: 'text-field', name: 'Text field', group: 'Inputs', platforms: ALL,
     summary: 'White, a 2 ink outline, radius 14, with a borderless input inside. Errors thicken the outline and add an ink message with ⚠, never red alone.',
     states: [

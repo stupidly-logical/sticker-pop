@@ -261,6 +261,23 @@
       ]
     },
     {
+      "id": "stepper",
+      "flutter": [
+        "PopStepper"
+      ],
+      "compose": [
+        "PopStepper"
+      ],
+      "swiftui": [
+        "PopStepper"
+      ],
+      "web": [
+        ".sp-stepper",
+        ".sp-stepper__value",
+        "wirePopSteppers()"
+      ]
+    },
+    {
       "id": "text-field",
       "flutter": [
         "PopTextField",

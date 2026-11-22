@@ -6,7 +6,7 @@ import { guidePages } from './content/guides.js';
 import { foundationPages } from './content/foundations.js';
 import { otherPages } from './content/pages.js';
 import { esc, kebab, store, contrast } from './content/util.js';
-import { stabilizePopChips, wirePopDials, layoutPopDial, wirePopMenus, wirePopSelects, wirePopTopBars, wirePopSearch, wirePopDateTiles, mountPopCalendar, wirePopTabs, wirePopSliders } from './sp/behaviors.mjs';
+import { stabilizePopChips, wirePopDials, layoutPopDial, wirePopMenus, wirePopSelects, wirePopTopBars, wirePopSearch, wirePopDateTiles, mountPopCalendar, wirePopTabs, wirePopSliders, wirePopSteppers } from './sp/behaviors.mjs';
 
 const VERSION = '0.1.0';
 const main = document.getElementById('main');
@@ -93,6 +93,7 @@ function wireDemos(root) {
   wirePopDateTiles(root);
   wirePopTabs(root);
   wirePopSliders(root);
+  wirePopSteppers(root);
   root.querySelectorAll('[data-inr-for]').forEach((out) => { const i = document.getElementById(out.dataset.inrFor); const f = () => { out.textContent = '₹' + Number(i.value).toLocaleString('en-IN'); i.setAttribute('aria-valuetext', out.textContent); }; i.addEventListener('input', f); f(); });
   root.querySelectorAll('[data-calendar]').forEach((el) => mountPopCalendar(el, { value: new Date(2026, 10, 21), today: new Date(2026, 10, 21), max: new Date(2026, 10, 21), onChange: (d) => toast(`Picked ${d.getDate()} ${d.toLocaleString('en-GB', { month: 'short' })}`) }));
   root.querySelectorAll('input[data-indeterminate]').forEach((i) => { i.indeterminate = true; });

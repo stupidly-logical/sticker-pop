@@ -112,6 +112,7 @@ fun PopGallery(onOpenHome: () -> Unit = {}) {
     var tab by remember { mutableIntStateOf(0) }
     var reminder by remember { mutableStateOf(true) }
     var budget by remember { mutableStateOf(12000f) }
+    var people by remember { mutableIntStateOf(2) }
     val today = java.time.LocalDate.of(2026, 11, 21)
     var date by remember { mutableStateOf(today) }
     var pickDate by remember { mutableStateOf(false) }
@@ -286,6 +287,13 @@ fun PopGallery(onOpenHome: () -> Unit = {}) {
                     }
                     PopSlider(budget, { budget = it }, "Monthly budget", range = 0f..20000f, step = 500f, valueLabel = { PopFormat.formatInr((it * 100).toLong()) })
                     PopSlider(0.3f, null, "Locked")
+                }
+
+                Section("Stepper") {
+                    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                        PopText("Split between", PopTextSpecs.input, Modifier.weight(1f))
+                        PopStepper(people, { people = it }, "People", range = 1..20)
+                    }
                 }
 
                 Section("Settings rows") {

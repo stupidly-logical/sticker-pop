@@ -19,6 +19,7 @@ export 'src/components/search_field.dart';
 export 'src/components/selection.dart';
 export 'src/components/settings_row.dart';
 export 'src/components/slider.dart';
+export 'src/components/stepper.dart';
 export 'src/components/sticker_card.dart';
 export 'src/components/tabs.dart';
 export 'src/components/top_bar.dart';

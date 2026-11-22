@@ -555,6 +555,27 @@ void main() {
     });
   });
 
+  group('PopStepper', () {
+    testWidgets('steps within its limits; the − button disables at the minimum', (tester) async {
+      var n = 2;
+      await pumpPop(tester, onPaper(StatefulBuilder(
+        builder: (context, setState) => PopStepper(semanticLabel: 'People', value: n, min: 1, max: 3, onChanged: (v) => setState(() => n = v)),
+      )));
+      await tester.tap(find.byIcon(Icons.add_rounded));
+      await tester.pump();
+      await tester.tap(find.byIcon(Icons.add_rounded));
+      await tester.pump();
+      expect(n, 3);
+      await tester.tap(find.byIcon(Icons.remove_rounded));
+      await tester.tap(find.byIcon(Icons.remove_rounded));
+      await tester.pump();
+      await tester.tap(find.byIcon(Icons.remove_rounded));
+      await tester.pump();
+      expect(n, 1);
+      expect(find.text('1'), findsOneWidget);
+    });
+  });
+
   group('Tilt guard', () {
     test('cards reject tilt beyond ±3°', () {
       expect(() => StickerCard(tiltDegrees: 4, child: const SizedBox()), throwsAssertionError);

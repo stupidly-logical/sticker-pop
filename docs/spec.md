@@ -175,6 +175,8 @@ Type scale (size / weight / letter spacing):
 
 **Slider.** For a number in a range, like a budget limit. The track is the progress bar (white, 18 high, radius 9, 2 ink outline) filled mint up to the knob's centre; the knob is a 28 white circle with a 2.5 outline (3 when focused) and a 3/3 shadow; 48 tall to touch. Always show the exact value in text next to the label, and step in sensible units (₹500).
 
+**Stepper.** A small counter: two PopIconButtons (− and +) with the value between them in 20/800 tabular figures, at least 48 wide. Each button disables at its limit. For small whole numbers only.
+
 **Settings row.** A row for settings lists, inside a StickerList: 52 min height, 16 left padding, an optional 22 ink icon, a 16/700 title with an optional 13/600 muted subtitle, then either a PopSwitch (tapping the row flips it), or the current value in 16/700 muted and a 26 chevron when the row opens something. The whole row is the tap target.
 
 **Banner.** A message that stays in the page until it is dealt with: a StickerCard in blue (information), orange (needs attention) or mint (good news), never red. 16 left and 12 top and bottom padding; a 22 ink icon, 12 before an optional 16/800 title and the 15/600 message; an optional underlined text-button action; an optional 20 ✕ in a 40 target. One per screen, at the top of the content. A snackbar is for passing confirmations.

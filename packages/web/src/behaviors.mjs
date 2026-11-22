@@ -19,6 +19,7 @@ export function wirePopControls(root = document) {
   wirePopDateTiles(root);
   wirePopTabs(root);
   wirePopSliders(root);
+  wirePopSteppers(root);
   root.querySelectorAll('.sp-chip[aria-pressed]:not(:disabled)').forEach((b) =>
     b.addEventListener('click', () => b.setAttribute('aria-pressed', String(b.getAttribute('aria-pressed') !== 'true'))));
   root.querySelectorAll('.sp-segmented:not([aria-disabled]) > button').forEach((b) =>
@@ -649,5 +650,35 @@ export function wirePopSliders(root = document) {
     };
     input.addEventListener('input', sync);
     sync();
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Stepper
+
+/**
+ * Wires each `.sp-stepper` (data-min, data-max, data-step, a value in
+ * `.sp-stepper__value`): the − and + buttons step it, disable at the limits,
+ * and fire a bubbling `pop-step` event with `{ value }`.
+ */
+export function wirePopSteppers(root = document) {
+  root.querySelectorAll('.sp-stepper').forEach((box) => {
+    if (box.dataset.popWired) return;
+    box.dataset.popWired = '1';
+    const out = box.querySelector('.sp-stepper__value');
+    const [down, up] = box.querySelectorAll('button');
+    const min = Number(box.dataset.min ?? 0);
+    const max = Number(box.dataset.max ?? 99);
+    const step = Number(box.dataset.step ?? 1);
+    let value = Number(out.textContent);
+    const render = () => {
+      out.textContent = String(value);
+      down.disabled = value - step < min;
+      up.disabled = value + step > max;
+    };
+    const set = (v) => { value = v; render(); box.dispatchEvent(new CustomEvent('pop-step', { bubbles: true, detail: { value } })); };
+    down.addEventListener('click', () => set(value - step));
+    up.addEventListener('click', () => set(value + step));
+    render();
   });
 }

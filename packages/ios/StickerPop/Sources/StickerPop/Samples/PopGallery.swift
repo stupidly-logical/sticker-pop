@@ -58,6 +58,7 @@ public struct PopGallery: View {
     @State private var tab = 0
     @State private var reminder = true
     @State private var budget = 12000.0
+    @State private var people = 2
     @State private var date = galleryToday
     @State private var pickDate = false
     @State private var hideSmall = false
@@ -246,6 +247,14 @@ public struct PopGallery: View {
                     }
                     PopSlider("Monthly budget", value: $budget, in: 0...20000, step: 500) { PopFormat.formatInr(Int64($0 * 100)) }
                     PopSlider("Locked", value: .constant(0.3)).disabled(true)
+                }
+
+                GallerySection(title: "Stepper") {
+                    HStack {
+                        PopText("Split between", PopTextSpecs.input)
+                        Spacer()
+                        PopStepper("People", value: $people, in: 1...20)
+                    }
                 }
 
                 GallerySection(title: "Settings rows") {

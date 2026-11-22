@@ -36,6 +36,7 @@ disappears.
 | PopSelect | field: white, 2 outline, radius 14, chevron; list rows white | chosen row yellow, 800, tick | paper fill, muted text, no list | 2.5 outline + ⚠ message | open: 2.5 outline |
 | PopMenu | white sticker, radius 16, 4/4 shadow, rows 15/700 | — | row inkMuted, no taps | — | row (hover, focus, press): yellow |
 | PopSlider | white track, mint fill, white knob with 3/3 shadow | focus: 3 knob outline | paper track, divider fill, no shadow | — | — |
+| PopStepper | − and + icon buttons, 20/800 value | — | a button at its limit: disabled | — | button moves by its shadow |
 | PopSettingsRow | icon, title/subtitle; value + chevron or switch | switch on | muted, no taps | — | — |
 | PopBanner (info, warning, success) | blue, orange or mint StickerCard, icon, title, message | — | — | — | — |
 | PopSkeleton (line, circle, block, list) | divider fill, no outline, pulsing | — | — | — | — |

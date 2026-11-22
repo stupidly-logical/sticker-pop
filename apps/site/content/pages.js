@@ -51,7 +51,7 @@ export const otherPages = [
       <h1>Install</h1>
       <p class="lede">Every version is a tagged <a href="https://github.com/stupidly-logical/sticker-pop/releases">GitHub release</a>, published to npm and pub.dev at the same time; Swift Package Manager installs straight from the tag. Pin the version so library changes never reach your app by surprise.</p>
       ${codeBlock({
-        compose: `# Add the repo as a submodule (JDK 21, Gradle 9.1+, AGP 8.11+)
+        compose: `# Add the repo as a submodule (JDK 21, Gradle 9.1+, AGP 8.13+)
 git submodule add https://github.com/stupidly-logical/sticker-pop.git third_party/sticker-pop
 git -C third_party/sticker-pop checkout v0.1.0
 

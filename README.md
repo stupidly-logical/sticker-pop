@@ -69,7 +69,7 @@ and pick *Up to Next Major* from `0.1.0`. Or in `Package.swift`:
 Call `StickerPopFonts.register()` once at launch.
 
 **Compose (Android)**: add the repo as a git submodule and include it as a
-source build (needs JDK 21, Gradle 9.1+ and AGP 8.11+):
+source build (needs JDK 21, Gradle 9.1+ and AGP 8.13+):
 
 ```sh
 git submodule add https://github.com/stupidly-logical/sticker-pop.git third_party/sticker-pop

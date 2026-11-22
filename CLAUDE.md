@@ -1,11 +1,12 @@
 # Working on Sticker Pop
 
-A standalone design system used by several apps. Read `README.md` first;
+A standalone design system used by several apps. Read `README.md` and `CONTRIBUTING.md` first;
 `docs/spec.md` is the spec, and its numbers are not suggestions.
 
 - Keep it app-agnostic: no product names, app IDs or app-specific data
   (category mappings, account types, copy about one product). Those live
-  in the apps that use the library. Package IDs use `dev.stickerpop`.
+  in the apps that use the library. Code packages use `dev.stickerpop`;
+  the Maven Central coordinates are `io.github.stupidly-logical:stickerpop`.
 - Tokens: edit only `tokens/sticker-pop.tokens.json`, then run
   `node tools/build-tokens.mjs`. Never hand-edit `*.g.dart`,
   `PopTokens.kt`, `PopTokens.swift` or `packages/web/src/tokens.*`.

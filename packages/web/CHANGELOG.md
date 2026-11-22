@@ -2,6 +2,11 @@
 
 All four libraries share one version.
 
+## Unreleased
+
+- Added `CONTRIBUTING.md`: setup, the rules every component follows, the
+  checklist for adding one, and how to update screenshot tests.
+
 ## 0.1.1 (2026-11-22)
 
 - SwiftUI now builds: 0.1.0 didn't compile (a gallery property declared

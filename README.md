@@ -259,6 +259,11 @@ committed (rendered on Linux).
 All four libraries share one version (`CHANGELOG.md`). Tag releases as
 `vX.Y.Z` so apps can pin them.
 
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md): setup, the rules every component
+follows, the checklist for adding one, and how to update screenshot tests.
+
 ## Licence
 
 MIT (`LICENSE`): use it anywhere, including in closed-source apps, as long as

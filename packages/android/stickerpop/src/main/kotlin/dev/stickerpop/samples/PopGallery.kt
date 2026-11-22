@@ -113,6 +113,7 @@ fun PopGallery(onOpenHome: () -> Unit = {}) {
     var reminder by remember { mutableStateOf(true) }
     var budget by remember { mutableStateOf(12000f) }
     var people by remember { mutableIntStateOf(2) }
+    var typed by remember { mutableStateOf("450") }
     val today = java.time.LocalDate.of(2026, 11, 21)
     var date by remember { mutableStateOf(today) }
     var pickDate by remember { mutableStateOf(false) }
@@ -287,6 +288,11 @@ fun PopGallery(onOpenHome: () -> Unit = {}) {
                     }
                     PopSlider(budget, { budget = it }, "Monthly budget", range = 0f..20000f, step = 500f, valueLabel = { PopFormat.formatInr((it * 100).toLong()) })
                     PopSlider(0.3f, null, "Locked")
+                }
+
+                Section("Number keypad") {
+                    StickerCard(Modifier.fillMaxWidth(), fill = PopColors.yellow) { PopText("₹" + typed.ifEmpty { "0" }, PopTextSpecs.amountEntry) }
+                    PopKeypad({ typed = applyPopKey(typed, it) })
                 }
 
                 Section("Stepper") {

@@ -113,6 +113,8 @@ object PopTextSpecs {
     val inputHint = PopTextSpec(size = 16.sp, weight = FontWeight(600), color = PopColors.inkMuted)
     val body = PopTextSpec(size = 15.sp, weight = FontWeight(600), lineHeight = 1.3f)
     val tileLabel = PopTextSpec(size = 15.sp, weight = FontWeight(800))
+    /** Number keypad digits */
+    val keypadKey = PopTextSpec(size = 26.sp, weight = FontWeight(800), tabular = true)
     /** Menu rows; 800 (tileLabel) for the selected or destructive row */
     val menuItem = PopTextSpec(size = 15.sp, weight = FontWeight(700))
     val textButton = PopTextSpec(size = 15.sp, weight = FontWeight(800))
@@ -228,6 +230,7 @@ object PopSize {
     val calendarDay: Dp = 40.dp
     val spinner: Dp = 24.dp
     val sliderKnob: Dp = 28.dp
+    val keypadKey: Dp = 56.dp
     val skeletonLine: Dp = 14.dp
     val checkbox: Dp = 24.dp
     val radioDot: Dp = 10.dp

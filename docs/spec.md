@@ -175,6 +175,8 @@ Type scale (size / weight / letter spacing):
 
 **Slider.** For a number in a range, like a budget limit. The track is the progress bar (white, 18 high, radius 9, 2 ink outline) filled mint up to the knob's centre; the knob is a 28 white circle with a 2.5 outline (3 when focused) and a 3/3 shadow; 48 tall to touch. Always show the exact value in text next to the label, and step in sensible units (₹500).
 
+**Number keypad.** For typing amounts under the amount field, in place of the system keyboard: a 3 × 4 grid, 8 apart, of white keys (56 high, radius 18, 2 outline, 3/3 shadow) holding 1–9, ".", 0 and a backspace icon; digits 26/800 tabular. A key presses 3/3 into its shadow, with a light haptic tick on phones. A shared helper (`applyPopKey`) keeps one decimal point, at most two decimal places and no leading zeros.
+
 **Stepper.** A small counter: two PopIconButtons (− and +) with the value between them in 20/800 tabular figures, at least 48 wide. Each button disables at its limit. For small whole numbers only.
 
 **Settings row.** A row for settings lists, inside a StickerList: 52 min height, 16 left padding, an optional 22 ink icon, a 16/700 title with an optional 13/600 muted subtitle, then either a PopSwitch (tapping the row flips it), or the current value in 16/700 muted and a 26 chevron when the row opens something. The whole row is the tap target.

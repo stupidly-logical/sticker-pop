@@ -137,6 +137,11 @@ export const tokens = {
       "size": 15,
       "weight": 800
     },
+    "keypadKey": {
+      "size": 26,
+      "weight": 800,
+      "tabular": true
+    },
     "menuItem": {
       "size": 15,
       "weight": 700
@@ -289,6 +294,7 @@ export const tokens = {
     "calendarDay": 40,
     "spinner": 24,
     "sliderKnob": 28,
+    "keypadKey": 56,
     "skeletonLine": 14,
     "checkbox": 24,
     "radioDot": 10,

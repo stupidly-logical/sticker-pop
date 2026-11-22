@@ -104,6 +104,8 @@ public enum PopTextSpecs {
     public static let inputHint = PopTextSpec(size: 16.0, weight: 600, color: .inkMuted)
     public static let body = PopTextSpec(size: 15.0, weight: 600, lineHeight: 1.3)
     public static let tileLabel = PopTextSpec(size: 15.0, weight: 800)
+    /// Number keypad digits
+    public static let keypadKey = PopTextSpec(size: 26.0, weight: 800, tabular: true)
     /// Menu rows; 800 (tileLabel) for the selected or destructive row
     public static let menuItem = PopTextSpec(size: 15.0, weight: 700)
     public static let textButton = PopTextSpec(size: 15.0, weight: 800)
@@ -223,6 +225,8 @@ public enum PopSize {
     public static let spinner: CGFloat = 24.0
     /// Slider knob; the track is the progress bar (18, radius 9)
     public static let sliderKnob: CGFloat = 28.0
+    /// Number keypad key height
+    public static let keypadKey: CGFloat = 56.0
     /// Height of a skeleton text line
     public static let skeletonLine: CGFloat = 14.0
     /// Checkbox and radio (padded to the 48 tap target)

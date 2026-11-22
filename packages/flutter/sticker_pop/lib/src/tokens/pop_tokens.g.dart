@@ -116,6 +116,8 @@ abstract final class PopTextSpecs {
   static const PopTextSpec inputHint = PopTextSpec(size: 16.0, weight: FontWeight.w600, color: PopColors.inkMuted);
   static const PopTextSpec body = PopTextSpec(size: 15.0, weight: FontWeight.w600, height: 1.3);
   static const PopTextSpec tileLabel = PopTextSpec(size: 15.0, weight: FontWeight.w800);
+  /// Number keypad digits
+  static const PopTextSpec keypadKey = PopTextSpec(size: 26.0, weight: FontWeight.w800, tabular: true);
   /// Menu rows; 800 (tileLabel) for the selected or destructive row
   static const PopTextSpec menuItem = PopTextSpec(size: 15.0, weight: FontWeight.w700);
   static const PopTextSpec textButton = PopTextSpec(size: 15.0, weight: FontWeight.w800);
@@ -235,6 +237,8 @@ abstract final class PopSize {
   static const double spinner = 24.0;
   /// Slider knob; the track is the progress bar (18, radius 9)
   static const double sliderKnob = 28.0;
+  /// Number keypad key height
+  static const double keypadKey = 56.0;
   /// Height of a skeleton text line
   static const double skeletonLine = 14.0;
   /// Checkbox and radio (padded to the 48 tap target)

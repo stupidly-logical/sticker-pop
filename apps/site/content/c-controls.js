@@ -237,6 +237,20 @@ export const controls = [
     a11y: 'Each tile and day says its full date ("21 November, today") and whether it is chosen. In the calendar, arrow keys move by day and week; the month title is announced when it changes.',
   },
   {
+    id: 'keypad', name: 'Number keypad', group: 'Inputs', platforms: ALL,
+    summary: 'A keypad for typing amounts, shown under the amount field in place of the system keyboard: big white sticker keys that press into their shadows. A helper keeps the amount tidy: one decimal point, two decimal places at most, no leading zeros.',
+    states: [{ label: 'Type an amount', html: '<div class="full" style="display:grid;gap:12px"><div class="sp-card sp-fill-yellow"><span class="sp-text-amount-entry" id="kp-out" data-value="450" aria-live="polite">₹450</span></div><div class="sp-keypad" data-keypad-for="kp-out"><button data-key="1" aria-label="1">1</button><button data-key="2" aria-label="2">2</button><button data-key="3" aria-label="3">3</button><button data-key="4" aria-label="4">4</button><button data-key="5" aria-label="5">5</button><button data-key="6" aria-label="6">6</button><button data-key="7" aria-label="7">7</button><button data-key="8" aria-label="8">8</button><button data-key="9" aria-label="9">9</button><button data-key="." aria-label="Decimal point">.</button><button data-key="0" aria-label="0">0</button><button data-key="⌫" aria-label="Delete"><span class="sp-icon">backspace</span></button></div></div>' }],
+    code: {
+      flutter: "PopKeypad(onKey: (k) => setState(() => amount = applyPopKey(amount, k)))",
+      compose: 'PopKeypad({ amount = applyPopKey(amount, it) })',
+      swift: 'PopKeypad { amount = applyPopKey(amount, $0) }',
+      html: '<div class="sp-keypad">\n  <button data-key="1">1</button> … <button data-key="." aria-label="Decimal point">.</button>\n  <button data-key="0">0</button>\n  <button data-key="⌫" aria-label="Delete"><span class="sp-icon">backspace</span></button>\n</div>\n\n<script type="module">\n  import { wirePopKeypads } from \'@sticker-pop/web/behaviors.mjs\';\n  import { applyPopKey } from \'@sticker-pop/web/format.mjs\';\n  wirePopKeypads();\n  document.addEventListener(\'pop-key\', (e) => { amount = applyPopKey(amount, e.detail.key); render(); });\n</script>',
+    },
+    spec: [['Grid', '3 × 4, 8 apart: 1–9, ".", 0, backspace'], ['Key', '56 high, white, radius 18, 2 outline, 3/3 shadow'], ['Digits', '26/800 tabular; backspace a 26 icon'], ['Press', 'moves 3/3 into its shadow; a light haptic tick on phones']],
+    rules: ['Pair it with the amount field; hide the system keyboard while it shows.', 'Leave out "." for whole-number amounts.'],
+    a11y: 'Each key is a button named by its digit, "Decimal point" or "Delete". On the web, the keypad can be used with the mouse or keyboard like any buttons.',
+  },
+  {
     id: 'amount-field', name: 'Amount field', group: 'Inputs', platforms: ALL,
     summary: 'The big amount entry: a bright card with a currency prefix at the same 32/800 size. Choose the colour by meaning, for example yellow for money out, mint for money in, pink for withdrawals.',
     states: [

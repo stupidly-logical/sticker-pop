@@ -28,6 +28,7 @@ class _PopGalleryState extends State<PopGallery> {
   bool _reminder = true;
   double _budget = 12000;
   int _people = 2;
+  String _typed = '450';
   static final DateTime _today = DateTime(2026, 11, 21);
   DateTime _date = DateTime(2026, 11, 21);
 
@@ -499,6 +500,18 @@ class _PopGalleryState extends State<PopGallery> {
                     onChanged: (x) => setState(() => _budget = x),
                   ),
                   const PopSlider(semanticLabel: 'Locked', value: 0.3, onChanged: null),
+                ],
+              ),
+
+              _Section(
+                'Number keypad',
+                children: <Widget>[
+                  StickerCard(
+                    color: PopColors.yellow,
+                    child: PopText('₹${_typed.isEmpty ? '0' : _typed}', spec: PopTextSpecs.amountEntry),
+                  ),
+                  const SizedBox(height: PopSpace.md),
+                  PopKeypad(onKey: (k) => setState(() => _typed = applyPopKey(_typed, k))),
                 ],
               ),
 

@@ -28,6 +28,22 @@ function signFor(paise, sign) {
 }
 
 /** ₹1,25,000 or ₹1,250.50. Paise show only when non-zero, unless alwaysPaise. */
+/**
+ * Applies one keypad key ("0"–"9", "." or "⌫") to an amount being typed:
+ * one decimal point, at most `decimals` decimal places, no leading zeros,
+ * at most `maxDigits` digits before the point.
+ */
+export function applyPopKey(current, key, { decimals = 2, maxDigits = 9 } = {}) {
+  if (key === '⌫') return current.slice(0, -1);
+  if (key === '.') return decimals === 0 || current.includes('.') ? current : current === '' ? '0.' : `${current}.`;
+  if (!/^\d$/.test(key)) return current;
+  const dot = current.indexOf('.');
+  if (dot >= 0 && current.length - dot - 1 >= decimals) return current;
+  if (dot < 0 && current.replace(/^0/, '').length >= maxDigits) return current;
+  if (current === '0') return key;
+  return current + key;
+}
+
 export function formatInr(paise, { sign = 'auto', alwaysPaise = false } = {}) {
   const abs = Math.abs(paise);
   const rupees = Math.floor(abs / 100);

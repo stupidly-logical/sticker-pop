@@ -20,6 +20,7 @@ export function wirePopControls(root = document) {
   wirePopTabs(root);
   wirePopSliders(root);
   wirePopSteppers(root);
+  wirePopKeypads(root);
   root.querySelectorAll('.sp-chip[aria-pressed]:not(:disabled)').forEach((b) =>
     b.addEventListener('click', () => b.setAttribute('aria-pressed', String(b.getAttribute('aria-pressed') !== 'true'))));
   root.querySelectorAll('.sp-segmented:not([aria-disabled]) > button').forEach((b) =>
@@ -680,5 +681,24 @@ export function wirePopSteppers(root = document) {
     down.addEventListener('click', () => set(value - step));
     up.addEventListener('click', () => set(value + step));
     render();
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Number keypad
+
+/**
+ * Wires each `.sp-keypad` (buttons with data-key="0"–"9", "." or "⌫"):
+ * clicks fire a bubbling `pop-key` event with `{ key }`. Pair it with
+ * `applyPopKey` from format.mjs.
+ */
+export function wirePopKeypads(root = document) {
+  root.querySelectorAll('.sp-keypad').forEach((pad) => {
+    if (pad.dataset.popWired) return;
+    pad.dataset.popWired = '1';
+    pad.addEventListener('click', (e) => {
+      const b = e.target.closest('button[data-key]');
+      if (b) pad.dispatchEvent(new CustomEvent('pop-key', { bubbles: true, detail: { key: b.dataset.key } }));
+    });
   });
 }

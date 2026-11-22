@@ -576,6 +576,30 @@ void main() {
     });
   });
 
+  group('PopKeypad', () {
+    test('applyPopKey keeps amounts tidy', () {
+      String type(String keys) => keys.split('').fold('', (s, k) => applyPopKey(s, k == '<' ? '⌫' : k));
+      expect(type('0012'), '12');
+      expect(type('.5'), '0.5');
+      expect(type('12.345'), '12.34');
+      expect(type('1.2.3'), '1.23');
+      expect(type('125<'), '12');
+      expect(type('1234567890'), '123456789');
+    });
+
+    testWidgets('keys type into an amount; backspace deletes', (tester) async {
+      var amount = '';
+      await pumpPop(tester, onPaper(StatefulBuilder(
+        builder: (context, setState) => PopKeypad(onKey: (k) => setState(() => amount = applyPopKey(amount, k))),
+      )));
+      for (final k in <String>['4', '5', '0', '.', '5']) {
+        await tester.tap(find.bySemanticsLabel(k == '.' ? 'Decimal point' : k));
+      }
+      await tester.tap(find.bySemanticsLabel('Delete'));
+      expect(amount, '450.');
+    });
+  });
+
   group('Tilt guard', () {
     test('cards reject tilt beyond ±3°', () {
       expect(() => StickerCard(tiltDegrees: 4, child: const SizedBox()), throwsAssertionError);

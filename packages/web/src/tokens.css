@@ -89,6 +89,7 @@
   --sp-size-calendar-day: 40px;
   --sp-size-spinner: 24px;
   --sp-size-slider-knob: 28px;
+  --sp-size-keypad-key: 56px;
   --sp-size-skeleton-line: 14px;
   --sp-size-checkbox: 24px;
   --sp-size-radio-dot: 10px;
@@ -232,6 +233,15 @@
   font-size: 15px;
   font-weight: 800;
   font-variation-settings: 'wght' 800;
+  color: var(--sp-color-ink);
+}
+.sp-text-keypad-key {
+  font-family: var(--sp-font-family);
+  font-size: 26px;
+  font-weight: 800;
+  font-variation-settings: 'wght' 800;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
   color: var(--sp-color-ink);
 }
 .sp-text-menu-item {

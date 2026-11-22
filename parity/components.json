@@ -383,6 +383,26 @@
       ]
     },
     {
+      "id": "keypad",
+      "flutter": [
+        "PopKeypad",
+        "applyPopKey"
+      ],
+      "compose": [
+        "PopKeypad",
+        "applyPopKey"
+      ],
+      "swiftui": [
+        "PopKeypad",
+        "applyPopKey"
+      ],
+      "web": [
+        ".sp-keypad",
+        "wirePopKeypads()",
+        "applyPopKey()"
+      ]
+    },
+    {
       "id": "field-row",
       "flutter": [
         "PopFieldRow"

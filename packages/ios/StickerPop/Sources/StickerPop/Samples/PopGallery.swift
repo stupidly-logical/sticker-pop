@@ -59,6 +59,7 @@ public struct PopGallery: View {
     @State private var reminder = true
     @State private var budget = 12000.0
     @State private var people = 2
+    @State private var typed = "450"
     @State private var date = galleryToday
     @State private var pickDate = false
     @State private var hideSmall = false
@@ -247,6 +248,11 @@ public struct PopGallery: View {
                     }
                     PopSlider("Monthly budget", value: $budget, in: 0...20000, step: 500) { PopFormat.formatInr(Int64($0 * 100)) }
                     PopSlider("Locked", value: .constant(0.3)).disabled(true)
+                }
+
+                GallerySection(title: "Number keypad") {
+                    StickerCard(fill: PopColors.yellow) { PopText("₹" + (typed.isEmpty ? "0" : typed), PopTextSpecs.amountEntry).frame(maxWidth: .infinity, alignment: .leading) }
+                    PopKeypad { typed = applyPopKey(typed, $0) }
                 }
 
                 GallerySection(title: "Stepper") {

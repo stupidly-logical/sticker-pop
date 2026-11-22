@@ -137,6 +137,11 @@ export declare const tokens: {
       readonly size: 15;
       readonly weight: 800;
     };
+    readonly keypadKey: {
+      readonly size: 26;
+      readonly weight: 800;
+      readonly tabular: true;
+    };
     readonly menuItem: {
       readonly size: 15;
       readonly weight: 700;
@@ -289,6 +294,7 @@ export declare const tokens: {
     readonly calendarDay: 40;
     readonly spinner: 24;
     readonly sliderKnob: 28;
+    readonly keypadKey: 56;
     readonly skeletonLine: 14;
     readonly checkbox: 24;
     readonly radioDot: 10;

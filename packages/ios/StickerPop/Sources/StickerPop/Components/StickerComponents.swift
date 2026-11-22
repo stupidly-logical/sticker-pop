@@ -258,7 +258,7 @@ public struct PopSwitch: View {
         .buttonStyle(.plain)
         .accessibilityLabel(label)
         .accessibilityValue(isOn ? "On" : "Off")
-        .accessibilityAddTraits(.isToggle)
+        .modifier(PopToggleTrait())
     }
 }
 
@@ -558,5 +558,17 @@ public struct PopQuickAddRow: View {
             .frame(maxWidth: .infinity)
         }
         .accessibilityLabel(label)
+    }
+}
+
+/// VoiceOver's "toggle" trait arrived in iOS 17 and macOS 14; older systems
+/// still hear the label and the "On" / "Off" value.
+struct PopToggleTrait: ViewModifier {
+    func body(content: Content) -> some View {
+        if #available(iOS 17, macOS 14, *) {
+            content.accessibilityAddTraits(.isToggle)
+        } else {
+            content
+        }
     }
 }

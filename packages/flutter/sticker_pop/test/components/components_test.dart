@@ -657,6 +657,21 @@ void main() {
     });
   });
 
+  group('PopTooltip', () {
+    testWidgets('a tap shows the bubble above, in ink', (tester) async {
+      await pumpPop(tester, onPaper(Center(child: PopTooltip(
+        message: 'Includes UPI and card payments.',
+        child: SizedBox.square(dimension: 48, child: Icon(Icons.info_outline_rounded)),
+      ))));
+      await tester.tap(find.byIcon(Icons.info_outline_rounded));
+      await tester.pump(const Duration(milliseconds: 300));
+      expect(find.text('Includes UPI and card payments.'), findsOneWidget);
+      expect(tester.getRect(find.text('Includes UPI and card payments.')).bottom, lessThan(tester.getRect(find.byIcon(Icons.info_outline_rounded)).top));
+      await tester.pump(const Duration(seconds: 4));
+      await tester.pumpAndSettle();
+    });
+  });
+
   group('Tilt guard', () {
     test('cards reject tilt beyond ±3°', () {
       expect(() => StickerCard(tiltDegrees: 4, child: const SizedBox()), throwsAssertionError);

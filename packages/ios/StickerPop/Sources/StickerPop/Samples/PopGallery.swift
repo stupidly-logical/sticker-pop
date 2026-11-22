@@ -373,6 +373,15 @@ public struct PopGallery: View {
                     }
                 }
 
+                GallerySection(title: "Tooltip") {
+                    HStack(spacing: 0) {
+                        PopText("Spent this month", PopTextSpecs.rowTitle)
+                        PopTooltip("Includes UPI, card and cash payments. Transfers between your accounts are left out.") {
+                            Image(systemName: "info.circle").font(.system(size: 18, weight: .bold)).frame(width: 48, height: 48)
+                        }
+                    }
+                }
+
                 GallerySection(title: "Stat tiles") {
                     HStack(alignment: .top, spacing: PopSpace.md) {
                         PopStatTile("Net worth", value: "₹12.4L", change: "3.1%", caption: "This month")

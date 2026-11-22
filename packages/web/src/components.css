@@ -513,6 +513,22 @@ button.sp-settings-row:hover, label.sp-settings-row:hover { background: var(--sp
 .sp-expandable__body { padding: var(--sp-space-lg); border-top: var(--sp-border-divider) solid var(--sp-color-divider); }
 @media (prefers-reduced-motion: reduce) { .sp-expandable > summary::after { transition: none; } }
 
+/* Tooltip: any element with data-tip (usually an ⓘ button). Shows on hover,
+   keyboard focus, or a tap (wirePopTooltips adds .is-open for 3 s). */
+[data-tip] { position: relative; }
+[data-tip]::after {
+  content: attr(data-tip); position: absolute; left: 50%; bottom: calc(100% + var(--sp-space-sm)); z-index: 6;
+  width: max-content; max-width: min(260px, 80vw); padding: var(--sp-space-sm) var(--sp-space-md);
+  background: var(--sp-color-ink); color: var(--sp-color-white); border-radius: var(--sp-radius-badge);
+  font-size: 13px; font-weight: 700; font-variation-settings: 'wght' 700; line-height: 1.35; text-align: left; white-space: normal;
+  translate: -50% 4px; opacity: 0; pointer-events: none; transition: opacity var(--sp-motion-fade) ease-out, translate var(--sp-motion-fade) ease-out;
+}
+[data-tip]:hover::after, [data-tip]:focus-visible::after, [data-tip].is-open::after { opacity: 1; translate: -50% 0; }
+.sp-info { display: inline-grid; place-items: center; width: var(--sp-size-tap-target); height: var(--sp-size-tap-target); padding: 0; background: none; border: 0; color: var(--sp-color-ink); cursor: help; border-radius: 50%; }
+.sp-info:focus-visible { outline: 3px solid var(--sp-color-ink); outline-offset: -6px; }
+.sp-visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) { [data-tip]::after { transition: none; translate: -50% 0; } }
+
 /* Field row */
 .sp-field-row { display: flex; align-items: center; min-height: var(--sp-size-row-min); padding: 6px 14px; border-bottom: var(--sp-border-divider) solid var(--sp-color-divider); }
 .sp-field-row:last-child { border-bottom: 0; }

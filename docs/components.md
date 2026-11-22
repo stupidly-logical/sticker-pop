@@ -41,6 +41,7 @@ disappears.
 | PopStepper | − and + icon buttons, 20/800 value | — | a button at its limit: disabled | — | button moves by its shadow |
 | PopSettingsRow | icon, title/subtitle; value + chevron or switch | switch on | muted, no taps | — | — |
 | PopExpandable | card with header row and chevron | open: chevron turned, body shown | — | — | — |
+| PopTooltip | ink bubble, 13/700 white, above an ⓘ | shown | — | — | — |
 | PopBanner (info, warning, success) | blue, orange or mint StickerCard, icon, title, message | — | — | — | — |
 | PopEmptyState | tilted lilac tile, 22/800 title, muted message, actions | — | — | orange tile | — |
 | PopSkeleton (line, circle, block, list) | divider fill, no outline, pulsing | — | — | — | — |

@@ -185,6 +185,8 @@ Type scale (size / weight / letter spacing):
 
 **Expandable card.** A StickerCard with no padding: a header row (52 min height, 16/800 title, optional 13/600 subtitle, a 26 chevron that turns 180°) and a body with 16 padding under a 2 divider that slides open in 250 ms (instant with reduced motion). For FAQs, breakdowns and details most people won't need; stack them 12 apart.
 
+**Tooltip.** A one-sentence explanation in an ink bubble (radius 10, 12 × 8 padding, up to 260 wide, 13/700 white) 8 above an ⓘ icon (22 in a 48 target), kept on screen. It shows on a tap or long-press on phones and on hover or keyboard focus on the web, and hides after 3 s. No links or buttons inside; screen readers get the text as the trigger's description.
+
 **Banner.** A message that stays in the page until it is dealt with: a StickerCard in blue (information), orange (needs attention) or mint (good news), never red. 16 left and 12 top and bottom padding; a 22 ink icon, 12 before an optional 16/800 title and the 15/600 message; an optional underlined text-button action; an optional 20 ✕ in a 40 target. One per screen, at the top of the content. A snackbar is for passing confirmations.
 
 **Empty and error screens.** For a whole screen with nothing to show yet, or one that couldn't load: a 96 tile (radius 22, 2.5 outline, 6/6 shadow, tilted −4°) with a 44 ink icon, lilac for empty and orange for errors or offline; then 24 below a 22/800 title, 8 below a 15/600 muted message, both centred; then a primary button and an optional text button. Up to 340 wide, centred. Say what will appear and how to start, or what went wrong and what to do.

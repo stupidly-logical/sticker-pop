@@ -66,6 +66,20 @@ export const overlays = [
     rules: ['Never for form errors: a floating snackbar covers the Save button.'],
   },
   {
+    id: 'tooltip', name: 'Tooltip', group: 'Overlays and feedback', platforms: ALL,
+    summary: 'A one-sentence explanation in an ink bubble above an ⓘ icon: shown on a tap or long-press on phones, on hover or keyboard focus on the web, and gone after 3 seconds. Anything people need to act on belongs on the screen, not in a tooltip.',
+    states: [{ label: 'Tap, hover or tab to the ⓘ', html: '<div class="row full" style="align-items:center;padding-top:72px"><span class="sp-text-row-title">Spent this month</span><button class="sp-info" aria-label="About spent this month" data-tip="Includes UPI, card and cash payments. Transfers between your accounts are left out."><span class="sp-icon">info</span></button></div>' }],
+    code: {
+      flutter: "PopTooltip(\n  message: 'Includes UPI, card and cash payments.',\n  child: const SizedBox.square(dimension: 48, child: Icon(Icons.info_outline_rounded, size: 22)),\n)",
+      compose: 'PopTooltip("Includes UPI, card and cash payments.") {\n    Box(Modifier.size(48.dp), contentAlignment = Alignment.Center) { PopIcon(Icons.Rounded.Info, 22.dp) }\n}',
+      swift: 'PopTooltip("Includes UPI, card and cash payments.") {\n    Image(systemName: "info.circle").frame(width: 48, height: 48)\n}',
+      html: '<button class="sp-info" aria-label="About spent this month"\n        data-tip="Includes UPI, card and cash payments.">\n  <span class="sp-icon">info</span>\n</button>\n\n<script type="module">\n  import { wirePopTooltips } from \'@sticker-pop/web/behaviors.mjs\';\n  wirePopTooltips();\n</script>',
+    },
+    spec: [['Bubble', 'ink, radius 10, 12 × 8 padding, up to 260 wide'], ['Text', '13/700 white'], ['Position', '8 above the trigger, centred, kept on screen'], ['Timing', 'shows after 400 ms on hover; hides after 3 s']],
+    rules: ['One sentence. No links or buttons inside.', 'Use a 22 ⓘ icon in a 48 target as the trigger.'],
+    a11y: 'The message is the trigger\'s description, so screen readers read it without opening the bubble.',
+  },
+  {
     id: 'banner', name: 'Banner', group: 'Overlays and feedback', platforms: ALL,
     summary: 'A message that stays in the page until it is dealt with, unlike a snackbar: a bright sticker card with an icon, an optional title, the message, and an optional action and close button. Blue for information, orange for something that needs attention, mint for good news. Never red.',
     states: [

@@ -27,6 +27,7 @@ export 'src/components/stat_tile.dart';
 export 'src/components/stepper.dart';
 export 'src/components/sticker_card.dart';
 export 'src/components/tabs.dart';
+export 'src/components/tooltip.dart';
 export 'src/components/top_bar.dart';
 export 'src/components/tour.dart';
 export 'src/format/pop_format.dart';

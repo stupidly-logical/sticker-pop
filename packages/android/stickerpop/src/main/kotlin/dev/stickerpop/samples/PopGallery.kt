@@ -418,6 +418,15 @@ fun PopGallery(onOpenHome: () -> Unit = {}) {
                     )
                 }
 
+                Section("Tooltip") {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        PopText("Spent this month", PopTextSpecs.rowTitle, Modifier.weight(1f, fill = false))
+                        PopTooltip("Includes UPI, card and cash payments. Transfers between your accounts are left out.") {
+                            Box(Modifier.size(48.dp), contentAlignment = Alignment.Center) { PopIcon(Icons.Rounded.Info, 22.dp) }
+                        }
+                    }
+                }
+
                 Section("Stat tiles") {
                     Row(horizontalArrangement = Arrangement.spacedBy(PopSpace.md)) {
                         PopStatTile("Net worth", "₹12.4L", Modifier.weight(1f), change = "3.1%", caption = "This month")

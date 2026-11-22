@@ -731,6 +731,20 @@ class _PopGalleryState extends State<PopGallery> {
               ),
 
               _Section(
+                'Tooltip',
+                children: const <Widget>[
+                  Row(children: <Widget>[
+                    Flexible(child: PopText('Spent this month', spec: PopTextSpecs.rowTitle)),
+                    SizedBox(width: PopSpace.sm),
+                    PopTooltip(
+                      message: 'Includes UPI, card and cash payments. Transfers between your accounts are left out.',
+                      child: SizedBox.square(dimension: PopSize.tapTarget, child: Icon(Icons.info_outline_rounded, size: PopSize.iconNav, color: PopColors.ink)),
+                    ),
+                  ]),
+                ],
+              ),
+
+              _Section(
                 'Stat tiles',
                 children: const <Widget>[
                   Row(

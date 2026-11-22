@@ -23,6 +23,7 @@ export function wirePopControls(root = document) {
   wirePopSteppers(root);
   wirePopKeypads(root);
   wirePopAvatars(root);
+  wirePopTooltips(root);
   root.querySelectorAll('.sp-chip[aria-pressed]:not(:disabled)').forEach((b) =>
     b.addEventListener('click', () => b.setAttribute('aria-pressed', String(b.getAttribute('aria-pressed') !== 'true'))));
   root.querySelectorAll('.sp-segmented:not([aria-disabled]) > button').forEach((b) =>
@@ -716,5 +717,33 @@ export function wirePopAvatars(root = document) {
     if (!a.style.getPropertyValue('--sp-avatar-fill')) a.style.setProperty('--sp-avatar-fill', `var(--sp-color-${popAvatarColor(name)})`);
     a.setAttribute('role', 'img');
     a.setAttribute('aria-label', name);
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Tooltip
+
+let tipSeq = 0;
+/**
+ * Wires every `[data-tip]` in `root`: a tap or click shows the bubble for
+ * 3 s (hover and keyboard focus show it through CSS), and the text is linked
+ * with aria-describedby so screen readers hear it.
+ */
+export function wirePopTooltips(root = document) {
+  root.querySelectorAll('[data-tip]').forEach((el) => {
+    if (el.dataset.popWired) return;
+    el.dataset.popWired = '1';
+    const note = document.createElement('span');
+    note.className = 'sp-visually-hidden';
+    note.id = `sp-tip-${++tipSeq}`;
+    note.textContent = el.dataset.tip;
+    el.after(note);
+    el.setAttribute('aria-describedby', note.id);
+    let timer;
+    el.addEventListener('click', () => {
+      el.classList.add('is-open');
+      clearTimeout(timer);
+      timer = setTimeout(() => el.classList.remove('is-open'), tokens.motion.snackbar);
+    });
   });
 }

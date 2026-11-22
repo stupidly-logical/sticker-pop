@@ -685,6 +685,22 @@
       ]
     },
     {
+      "id": "tooltip",
+      "flutter": [
+        "PopTooltip"
+      ],
+      "compose": [
+        "PopTooltip"
+      ],
+      "swiftui": [
+        "PopTooltip"
+      ],
+      "web": [
+        ".sp-info",
+        "wirePopTooltips()"
+      ]
+    },
+    {
       "id": "banner",
       "flutter": [
         "PopBanner",

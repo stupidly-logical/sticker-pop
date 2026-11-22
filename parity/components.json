@@ -109,6 +109,30 @@
       ]
     },
     {
+      "id": "avatar",
+      "flutter": [
+        "PopAvatar",
+        "popInitials",
+        "popAvatarColor"
+      ],
+      "compose": [
+        "PopAvatar",
+        "popInitials",
+        "popAvatarColor"
+      ],
+      "swiftui": [
+        "PopAvatar",
+        "popInitials",
+        "popAvatarColor"
+      ],
+      "web": [
+        ".sp-avatar",
+        "wirePopAvatars()",
+        "popInitials()",
+        "popAvatarColor()"
+      ]
+    },
+    {
       "id": "sticker-button",
       "flutter": [
         "StickerButton"

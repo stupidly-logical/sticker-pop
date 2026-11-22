@@ -1,6 +1,7 @@
 // Sticker Pop behaviours for the web: the interactive parts that CSS alone
 // can't do. No dependencies; works with the markup in components.css.
 import tokens from './tokens.mjs';
+import { popInitials, popAvatarColor } from './format.mjs';
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
@@ -21,6 +22,7 @@ export function wirePopControls(root = document) {
   wirePopSliders(root);
   wirePopSteppers(root);
   wirePopKeypads(root);
+  wirePopAvatars(root);
   root.querySelectorAll('.sp-chip[aria-pressed]:not(:disabled)').forEach((b) =>
     b.addEventListener('click', () => b.setAttribute('aria-pressed', String(b.getAttribute('aria-pressed') !== 'true'))));
   root.querySelectorAll('.sp-segmented:not([aria-disabled]) > button').forEach((b) =>
@@ -700,5 +702,19 @@ export function wirePopKeypads(root = document) {
       const b = e.target.closest('button[data-key]');
       if (b) pad.dispatchEvent(new CustomEvent('pop-key', { bubbles: true, detail: { key: b.dataset.key } }));
     });
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Avatar
+
+/** Fills each `.sp-avatar[data-name]` with its initials and the colour its name always gets, and labels it. */
+export function wirePopAvatars(root = document) {
+  root.querySelectorAll('.sp-avatar[data-name]').forEach((a) => {
+    const name = a.dataset.name;
+    a.textContent = popInitials(name);
+    if (!a.style.getPropertyValue('--sp-avatar-fill')) a.style.setProperty('--sp-avatar-fill', `var(--sp-color-${popAvatarColor(name)})`);
+    a.setAttribute('role', 'img');
+    a.setAttribute('aria-label', name);
   });
 }

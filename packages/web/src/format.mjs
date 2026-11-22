@@ -44,6 +44,22 @@ export function applyPopKey(current, key, { decimals = 2, maxDigits = 9 } = {}) 
   return current + key;
 }
 
+/** Up to two initials: the first letters of the first and last words. */
+export function popInitials(name) {
+  const words = String(name).trim().split(/\s+/).filter(Boolean);
+  if (!words.length) return '?';
+  return (Array.from(words[0])[0] + (words.length > 1 ? Array.from(words.at(-1))[0] : '')).toUpperCase();
+}
+
+/** Which bright a name gets, the same on every platform: the sum of its UTF-16 code units, modulo six. */
+export function popAvatarColor(name) {
+  const fills = ['yellow', 'pink', 'blue', 'mint', 'lilac', 'orange'];
+  let sum = 0;
+  const s = String(name).trim();
+  for (let i = 0; i < s.length; i++) sum += s.charCodeAt(i);
+  return fills[sum % fills.length];
+}
+
 export function formatInr(paise, { sign = 'auto', alwaysPaise = false } = {}) {
   const abs = Math.abs(paise);
   const rupees = Math.floor(abs / 100);

@@ -105,6 +105,8 @@ Type scale (size / weight / letter spacing):
 
 **StickerCard.** White (or a bright) fill, 2.5 ink outline, radius 22, default 4/4 ink hard shadow, padding 16. Variants: hero card (yellow, large shadow, optional slight tilt) and info card (blue, lilac or mint).
 
+**Avatar.** People, payees and shared accounts: up to two initials (first letters of the first and last words) in 800 at 38% of the size, in a bright circle with a 2 ink outline and no shadow. Sizes 32, 42 (default) and 56; the initials don't grow with system text size. The colour comes from the name: the sum of its UTF-16 code units modulo yellow, pink, blue, mint, lilac, orange, the same on every platform. Categories use the category dot, not an avatar.
+
 **StickerList.** A StickerCard with no padding (so a selected row's fill reaches the outline) holding rows separated by 2px `divider` lines. Each row:
 - 16 horizontal and 10–12 vertical padding, minimum height 52
 - a 42 round category dot, title 16/800 and a 13/600 muted second line

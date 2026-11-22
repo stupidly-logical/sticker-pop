@@ -599,6 +599,24 @@ class _PopGalleryState extends State<PopGallery> {
               ),
 
               _Section(
+                'Avatars',
+                children: const <Widget>[
+                  Wrap(
+                    spacing: PopSpace.md,
+                    runSpacing: PopSpace.md,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: <Widget>[
+                      PopAvatar(name: 'Asha Rao', size: 56),
+                      PopAvatar(name: 'Ravi Kumar'),
+                      PopAvatar(name: 'Priya'),
+                      PopAvatar(name: 'Home Loan'),
+                      PopAvatar(name: 'Neel Shah', size: 32),
+                    ],
+                  ),
+                ],
+              ),
+
+              _Section(
                 'Badges and category dots',
                 children: <Widget>[
                   const Wrap(

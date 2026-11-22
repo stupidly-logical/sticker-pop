@@ -600,6 +600,18 @@ void main() {
     });
   });
 
+  group('PopAvatar', () {
+    test('initials and colour are stable', () {
+      expect(popInitials('Asha Rao'), 'AR');
+      expect(popInitials('  priya  '), 'P');
+      expect(popInitials('Ravi Kumar Shah'), 'RS');
+      expect(popInitials(''), '?');
+      expect(popAvatarColor('Asha Rao'), popAvatarColor(' Asha Rao '));
+      // "Asha Rao": code units sum to 703; 703 % 6 = 1 → pink (the same rule on every platform).
+      expect(popAvatarColor('Asha Rao'), PopColors.pink);
+    });
+  });
+
   group('Tilt guard', () {
     test('cards reject tilt beyond ±3°', () {
       expect(() => StickerCard(tiltDegrees: 4, child: const SizedBox()), throwsAssertionError);

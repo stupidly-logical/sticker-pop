@@ -4,6 +4,7 @@
 /// repository root; everything else draws from them.
 library;
 
+export 'src/components/avatar.dart';
 export 'src/components/badges_and_lists.dart';
 export 'src/components/banner.dart';
 export 'src/components/buttons.dart';

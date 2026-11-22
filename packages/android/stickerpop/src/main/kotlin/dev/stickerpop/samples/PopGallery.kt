@@ -348,6 +348,16 @@ fun PopGallery(onOpenHome: () -> Unit = {}) {
                     }
                 }
 
+                Section("Avatars") {
+                    Row(horizontalArrangement = Arrangement.spacedBy(PopSpace.md), verticalAlignment = Alignment.CenterVertically) {
+                        PopAvatar("Asha Rao", size = 56.dp)
+                        PopAvatar("Ravi Kumar")
+                        PopAvatar("Priya")
+                        PopAvatar("Home Loan")
+                        PopAvatar("Neel Shah", size = 32.dp)
+                    }
+                }
+
                 Section("Badges and category dots") {
                     FlowRow(horizontalArrangement = Arrangement.spacedBy(PopSpace.md), verticalArrangement = Arrangement.spacedBy(PopSpace.md)) {
                         StickerBadge("UPI")

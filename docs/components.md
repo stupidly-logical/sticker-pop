@@ -17,6 +17,7 @@ disappears.
 | PopSwitch | white track | mint track, knob right (150 ms) | paper track, divider knob | — | — |
 | PopCheckbox (+ row) | white, 2 outline | mint, 2.5 outline, ink tick; some: dash | paper (divider when on), muted mark | — | — |
 | PopRadio (+ row) | white circle, 2 outline | yellow, 2.5 outline, 10 ink dot | paper (divider when on), muted dot | — | — |
+| PopAvatar | initials in a bright circle (from the name), 2 outline | — | — | — | — |
 | PopTextField | white, 2 outline, radius 14 | focused: 2.5 outline | paper fill, muted text | 2.5 outline + ⚠ 14/800 ink message | — |
 | PopAmountField | bright card (colour, label and currency symbol are parameters), prefix 32/800 | — | — | ⚠ message under the card | — |
 | PopFieldRow | 76 muted label column, 2px divider | — | — | — | — |

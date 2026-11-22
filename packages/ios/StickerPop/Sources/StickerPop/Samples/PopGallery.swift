@@ -309,6 +309,16 @@ public struct PopGallery: View {
                     PopTopBar("Scrolled under", scrolled: true, onBack: {}).galleryFrame()
                 }
 
+                GallerySection(title: "Avatars") {
+                    HStack(spacing: PopSpace.md) {
+                        PopAvatar("Asha Rao", size: 56)
+                        PopAvatar("Ravi Kumar")
+                        PopAvatar("Priya")
+                        PopAvatar("Home Loan")
+                        PopAvatar("Neel Shah", size: 32)
+                    }
+                }
+
                 GallerySection(title: "Badges and category dots") {
                     PopWrap(spacing: PopSpace.md, runSpacing: PopSpace.md) {
                         StickerBadge("UPI")

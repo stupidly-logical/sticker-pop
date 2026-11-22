@@ -97,4 +97,18 @@ export const surfaces = [
     rules: ['Settings that apply at once get a switch; ones with several values show the value and open a picker.', 'Group related rows in one list with a section label above.'],
     a11y: 'Each row reads as one control: its title, subtitle and value, as a button, or as a switch with its state.',
   },
+  {
+    id: 'avatar', name: 'Avatar', group: 'Surfaces', platforms: ALL,
+    summary: 'People, payees and shared accounts: initials in a bright circle with an ink outline. The colour comes from the name with the same rule on every platform, so a person keeps their colour everywhere.',
+    states: [{ label: '56, 42 and 32', html: '<div class="row full" style="gap:12px;align-items:center"><span class="sp-avatar sp-avatar--lg" data-name="Asha Rao"></span><span class="sp-avatar" data-name="Ravi Kumar"></span><span class="sp-avatar" data-name="Priya"></span><span class="sp-avatar" data-name="Home Loan"></span><span class="sp-avatar sp-avatar--sm" data-name="Neel Shah"></span></div>' }],
+    code: {
+      flutter: "PopAvatar(name: 'Asha Rao')\nPopAvatar(name: 'Neel Shah', size: 32)",
+      compose: 'PopAvatar("Asha Rao")\nPopAvatar("Neel Shah", size = 32.dp)',
+      swift: 'PopAvatar("Asha Rao")\nPopAvatar("Neel Shah", size: 32)',
+      html: '<span class="sp-avatar" data-name="Asha Rao"></span>\n<span class="sp-avatar sp-avatar--sm" data-name="Neel Shah"></span>\n\n<script type="module">\n  import { wirePopAvatars } from \'@sticker-pop/web/behaviors.mjs\';\n  wirePopAvatars(); // initials, colour and label\n</script>',
+    },
+    spec: [['Sizes', '32 (dense), 42 (rows, default), 56 (profiles)'], ['Circle', 'a bright, 2 ink outline, no shadow'], ['Initials', 'first letters of the first and last words, 38% of the size, 800; they don\'t grow with system text size'], ['Colour', 'sum of the name\'s UTF-16 code units, modulo yellow, pink, blue, mint, lilac, orange']],
+    rules: ['Not for categories: those use the category dot with an icon.', 'No photos of people in the illustrations; an app may show a user\'s own photo in place of initials.'],
+    a11y: 'Announced as an image with the full name.',
+  },
 ];

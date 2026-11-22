@@ -15,8 +15,8 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with: { node-version: 22 }
       - name: Versions match the tag
         run: node tools/check-version.mjs --tag "$GITHUB_REF_NAME"
@@ -41,8 +41,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions: { contents: read, id-token: write }
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with: { node-version: 22, registry-url: 'https://registry.npmjs.org' }
       - run: npm install -g npm@latest   # trusted publishing needs npm 11.5.1+
       - name: Publish @sticker-pop/web
@@ -65,7 +65,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions: { contents: read, id-token: write }
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: dart-lang/setup-dart@v1   # fetches the pub.dev token for this run
       - uses: subosito/flutter-action@v2
         with: { flutter-version: 3.50.0, channel: stable }

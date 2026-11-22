@@ -50,7 +50,7 @@ public struct PopGallery: View {
     @State private var tags = ["Office", "Trip"]
     @State private var note = ""
     @State private var payee = ""
-    @State private var account = "HDFC ·· 4821"
+    @State private var accountName = "HDFC ·· 4821"
     @State private var amount = "1250.50"
     @State private var account: String? = "hdfc"
     @State private var paidFrom: String? = nil
@@ -187,7 +187,7 @@ public struct PopGallery: View {
                 GallerySection(title: "Text fields") {
                     PopTextField("Add a note", text: $note, label: "Note")
                     PopTextField("Who was it?", text: $payee, label: "Payee", error: "Add who you paid.")
-                    PopTextField("Account", text: $account, label: "Account").disabled(true)
+                    PopTextField("Account", text: $accountName, label: "Account").disabled(true)
                     PopSearchField("Search transactions", text: $query, onCancel: { query = "" })
                     PopAmountField(value: $amount, label: "Expense")
                     StickerCard(padding: 0) {

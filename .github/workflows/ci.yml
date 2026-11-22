@@ -18,8 +18,8 @@ jobs:
     name: Tokens, parity, web and docs site
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with: { node-version: 22 }
       - run: node tools/build-tokens.mjs --check
       - run: node tools/check-version.mjs
@@ -32,21 +32,21 @@ jobs:
     name: Web (screenshots)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with: { node-version: 22 }
       - run: npm install --no-save playwright@1 && npx playwright install --with-deps chromium
       - run: node tools/build-site.mjs --no-app
       - name: Screenshot the web gallery and Home sample
         run: node packages/web/scripts/screenshots.mjs dist/site packages/web/screenshots
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with: { name: web-screenshots, path: packages/web/screenshots }
 
   flutter:
     name: Flutter
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: subosito/flutter-action@v2
         with: { flutter-version: 3.50.0, channel: stable }
       - working-directory: packages/flutter/sticker_pop
@@ -55,7 +55,7 @@ jobs:
           flutter analyze --no-fatal-infos
           flutter test --exclude-tags qa
           flutter test --tags qa --update-goldens test/qa
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         if: always()
         with: { name: flutter-layout-qa, path: packages/flutter/sticker_pop/test/qa/shots }
       - working-directory: packages/flutter/sticker_pop/example
@@ -64,7 +64,7 @@ jobs:
           flutter analyze --no-fatal-infos
           flutter build web --release --no-tree-shake-icons
       - if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with: { name: flutter-golden-failures, path: packages/flutter/sticker_pop/test/goldens/failures }
 
   compose:
@@ -72,10 +72,12 @@ jobs:
     runs-on: ubuntu-latest
     defaults: { run: { working-directory: packages/android } }
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
         with: { distribution: temurin, java-version: 21 }
       - uses: android-actions/setup-android@v3
+        # The default list asks for the retired 'tools' package, which no longer exists.
+        with: { packages: 'platform-tools' }
       - uses: gradle/actions/setup-gradle@v4
       - name: Compile, unit tests (shared formatting cases)
         run: ./gradlew :stickerpop:compileDebugKotlin :stickerpop:testDebugUnitTest --tests 'dev.stickerpop.PopFormatTest'
@@ -87,7 +89,7 @@ jobs:
             ./gradlew :stickerpop:recordPaparazziDebug
           fi
       - run: ./gradlew :sample:assembleDebug
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         if: always()
         with:
           name: compose-screenshots-and-sample
@@ -100,7 +102,7 @@ jobs:
     name: SwiftUI (iOS and macOS)
     runs-on: macos-15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Build and test (macOS)
         run: swift build && swift test
       - name: Build for iOS
@@ -111,6 +113,6 @@ jobs:
           xcodebuild test -scheme StickerPop-Package \
             -destination 'platform=iOS Simulator,name=iPhone 16' \
             -only-testing StickerPopTests/ScreensTests | xcbeautify || [ "${SNAPSHOT_RECORD:-0}" = "1" ]
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         if: always()
         with: { name: swiftui-screenshots, path: packages/ios/StickerPop/Tests/StickerPopTests/__Snapshots__ }

@@ -115,6 +115,7 @@ fun PopGallery(onOpenHome: () -> Unit = {}) {
     var budget by remember { mutableStateOf(12000f) }
     var people by remember { mutableIntStateOf(2) }
     var typed by remember { mutableStateOf("450") }
+    var tripTags by remember { mutableStateOf(listOf("Goa", "Family")) }
     val today = java.time.LocalDate.of(2026, 11, 21)
     var date by remember { mutableStateOf(today) }
     var pickDate by remember { mutableStateOf(false) }
@@ -244,6 +245,10 @@ fun PopGallery(onOpenHome: () -> Unit = {}) {
                         PopFieldRow("Paid to") { PopText("Chai Point", PopTextSpecs.rowTitle) }
                         PopFieldRow("Account", showChevron = true, divider = false, onClick = {}) { PopText("HDFC ·· 4821", PopTextSpecs.rowTitle) }
                     }
+                }
+
+                Section("Tag input") {
+                    PopTagInput(tripTags, { tripTags = it }, label = "Tags")
                 }
 
                 Section("Select and menu") {

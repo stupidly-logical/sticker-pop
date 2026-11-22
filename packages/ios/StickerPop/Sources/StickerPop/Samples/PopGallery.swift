@@ -60,6 +60,7 @@ public struct PopGallery: View {
     @State private var budget = 12000.0
     @State private var people = 2
     @State private var typed = "450"
+    @State private var tripTags = ["Goa", "Family"]
     @State private var date = galleryToday
     @State private var pickDate = false
     @State private var hideSmall = false
@@ -194,6 +195,10 @@ public struct PopGallery: View {
                             PopFieldRow("Account", showChevron: true, divider: false, action: {}) { PopText("HDFC ·· 4821", PopTextSpecs.rowTitle) }
                         }
                     }
+                }
+
+                GallerySection(title: "Tag input") {
+                    PopTagInput(tags: $tripTags, label: "Tags")
                 }
 
                 GallerySection(title: "Select and menu") {

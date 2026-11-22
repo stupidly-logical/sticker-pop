@@ -672,6 +672,26 @@ void main() {
     });
   });
 
+  group('PopTagInput', () {
+    testWidgets('Enter and comma add tags, duplicates skipped, ✕ removes', (tester) async {
+      var tags = <String>['Office'];
+      await pumpPop(tester, onPaper(StatefulBuilder(
+        builder: (context, setState) => PopTagInput(tags: tags, onChanged: (t) => setState(() => tags = t)),
+      )));
+      await tester.enterText(find.byType(TextField), 'Trip');
+      await tester.testTextInput.receiveAction(TextInputAction.done);
+      await tester.pump();
+      await tester.enterText(find.byType(TextField), 'office,');
+      await tester.pump();
+      await tester.enterText(find.byType(TextField), 'Goa,');
+      await tester.pump();
+      expect(tags, <String>['Office', 'Trip', 'Goa']);
+      await tester.tap(find.bySemanticsLabel('Remove Trip'));
+      await tester.pump();
+      expect(tags, <String>['Office', 'Goa']);
+    });
+  });
+
   group('Tilt guard', () {
     test('cards reject tilt beyond ±3°', () {
       expect(() => StickerCard(tiltDegrees: 4, child: const SizedBox()), throwsAssertionError);

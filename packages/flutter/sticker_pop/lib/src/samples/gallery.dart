@@ -29,6 +29,7 @@ class _PopGalleryState extends State<PopGallery> {
   double _budget = 12000;
   int _people = 2;
   String _typed = '450';
+  List<String> _tripTags = <String>['Goa', 'Family'];
   static final DateTime _today = DateTime(2026, 11, 21);
   DateTime _date = DateTime(2026, 11, 21);
 
@@ -390,6 +391,13 @@ class _PopGalleryState extends State<PopGallery> {
                       ],
                     ),
                   ),
+                ],
+              ),
+
+              _Section(
+                'Tag input',
+                children: <Widget>[
+                  PopTagInput(label: 'Tags', tags: _tripTags, onChanged: (t) => setState(() => _tripTags = t)),
                 ],
               ),
 

@@ -6,7 +6,7 @@ import { guidePages } from './content/guides.js';
 import { foundationPages } from './content/foundations.js';
 import { otherPages } from './content/pages.js';
 import { esc, kebab, store, contrast } from './content/util.js';
-import { stabilizePopChips, wirePopDials, layoutPopDial, wirePopMenus, wirePopSelects, wirePopTopBars, wirePopSearch, wirePopDateTiles, mountPopCalendar, wirePopTabs, wirePopSliders, wirePopSteppers, wirePopKeypads, wirePopAvatars, wirePopTooltips } from './sp/behaviors.mjs';
+import { stabilizePopChips, wirePopDials, layoutPopDial, wirePopMenus, wirePopSelects, wirePopTopBars, wirePopSearch, wirePopDateTiles, mountPopCalendar, wirePopTabs, wirePopSliders, wirePopSteppers, wirePopKeypads, wirePopAvatars, wirePopTooltips, wirePopTagInputs } from './sp/behaviors.mjs';
 import { applyPopKey } from './sp/format.mjs';
 
 const VERSION = '0.1.0';
@@ -98,6 +98,7 @@ function wireDemos(root) {
   wirePopKeypads(root);
   wirePopAvatars(root);
   wirePopTooltips(root);
+  wirePopTagInputs(root);
   root.querySelectorAll('[data-keypad-for]').forEach((pad) => { const out = document.getElementById(pad.dataset.keypadFor); let v = out.dataset.value ?? ''; pad.addEventListener('pop-key', (e) => { v = applyPopKey(v, e.detail.key); out.textContent = '₹' + (v || '0'); }); });
   root.querySelectorAll('[data-inr-for]').forEach((out) => { const i = document.getElementById(out.dataset.inrFor); const f = () => { out.textContent = '₹' + Number(i.value).toLocaleString('en-IN'); i.setAttribute('aria-valuetext', out.textContent); }; i.addEventListener('input', f); f(); });
   root.querySelectorAll('[data-calendar]').forEach((el) => mountPopCalendar(el, { value: new Date(2026, 10, 21), today: new Date(2026, 10, 21), max: new Date(2026, 10, 21), onChange: (d) => toast(`Picked ${d.getDate()} ${d.toLocaleString('en-GB', { month: 'short' })}`) }));

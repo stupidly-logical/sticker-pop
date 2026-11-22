@@ -183,6 +183,20 @@ export const controls = [
     rules: ['Never tilt inputs.', 'In sheets, form errors sit directly above the primary button.'],
   },
   {
+    id: 'tag-input', name: 'Tag input', group: 'Inputs', platforms: ALL,
+    summary: 'Free-form tags in a field: each one a removable chip, followed by a text field. Enter or a comma adds what was typed; backspace in an empty field removes the last tag. Duplicates are skipped.',
+    states: [{ label: 'Type a tag and press Enter or comma', html: '<div class="sp-field full"><label class="sp-field__label" for="tg-in">Tags</label><div class="sp-tags" data-tags="Goa,Family"><input class="sp-tags__input" id="tg-in" placeholder="Add a tag"></div></div>' }],
+    code: {
+      flutter: "PopTagInput(label: 'Tags', tags: tags, onChanged: (t) => setState(() => tags = t))",
+      compose: 'PopTagInput(tags, { tags = it }, label = "Tags")',
+      swift: 'PopTagInput(tags: $tags, label: "Tags")',
+      html: '<label class="sp-field__label" for="tags">Tags</label>\n<div class="sp-tags" data-tags="Goa,Family" data-name="tags">\n  <input class="sp-tags__input" id="tags" placeholder="Add a tag">\n</div>\n\n<script type="module">\n  import { wirePopTagInputs } from \'@sticker-pop/web/behaviors.mjs\';\n  wirePopTagInputs(); // fires pop-tags with { tags }\n</script>',
+    },
+    spec: [['Box', 'like a text field: white, 2 outline (focus 2.5), radius 14, 48 min height'], ['Tags', 'removable chips, 8 apart, wrapping'], ['Input', '16/700, at least 120 wide'], ['Adding', 'Enter (Done) or a comma; duplicates ignored, case-insensitively']],
+    rules: ['For a fixed set of choices, use chips or a select instead.', 'Keep tags short: one or two words.'],
+    a11y: 'Each chip\'s remove button is labelled "Remove Goa". The field is labelled by its label.',
+  },
+  {
     id: 'select', name: 'Select (dropdown)', group: 'Inputs', platforms: ALL,
     summary: 'Pick one of many: a field with the chosen option and a chevron. On phones it opens a bottom sheet list; on the web a sticker list pops up under the field. The chosen row is yellow with a tick. For two to five short options use a segmented control or chips instead.',
     states: [

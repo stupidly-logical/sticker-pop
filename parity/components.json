@@ -355,6 +355,23 @@
       ]
     },
     {
+      "id": "tag-input",
+      "flutter": [
+        "PopTagInput"
+      ],
+      "compose": [
+        "PopTagInput"
+      ],
+      "swiftui": [
+        "PopTagInput"
+      ],
+      "web": [
+        ".sp-tags",
+        ".sp-tags__input",
+        "wirePopTagInputs()"
+      ]
+    },
+    {
       "id": "select",
       "flutter": [
         "PopSelect",

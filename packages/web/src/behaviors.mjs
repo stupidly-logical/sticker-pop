@@ -24,6 +24,7 @@ export function wirePopControls(root = document) {
   wirePopKeypads(root);
   wirePopAvatars(root);
   wirePopTooltips(root);
+  wirePopTagInputs(root);
   root.querySelectorAll('.sp-chip[aria-pressed]:not(:disabled)').forEach((b) =>
     b.addEventListener('click', () => b.setAttribute('aria-pressed', String(b.getAttribute('aria-pressed') !== 'true'))));
   root.querySelectorAll('.sp-segmented:not([aria-disabled]) > button').forEach((b) =>
@@ -745,5 +746,57 @@ export function wirePopTooltips(root = document) {
       clearTimeout(timer);
       timer = setTimeout(() => el.classList.remove('is-open'), tokens.motion.snackbar);
     });
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Tag input
+
+/**
+ * Wires each `.sp-tags` (starting tags in data-tags, comma-separated; an
+ * optional data-name adds a hidden input for forms): Enter or a comma adds
+ * the typed tag as a removable chip, backspace in an empty field removes the
+ * last, duplicates are skipped. Fires a bubbling `pop-tags` event with
+ * `{ tags }`.
+ */
+export function wirePopTagInputs(root = document) {
+  root.querySelectorAll('.sp-tags').forEach((box) => {
+    if (box.dataset.popWired) return;
+    box.dataset.popWired = '1';
+    const input = box.querySelector('.sp-tags__input');
+    const placeholder = input.placeholder;
+    let tags = (box.dataset.tags ?? '').split(',').map((t) => t.trim()).filter(Boolean);
+    let hidden = null;
+    if (box.dataset.name) {
+      hidden = document.createElement('input');
+      hidden.type = 'hidden';
+      hidden.name = box.dataset.name;
+      box.append(hidden);
+    }
+    const render = () => {
+      box.querySelectorAll('.sp-chip').forEach((c) => c.remove());
+      for (const t of tags) {
+        const chip = document.createElement('span');
+        chip.className = 'sp-chip sp-chip--removable';
+        chip.innerHTML = `${esc(t)}<button type="button" class="sp-chip__remove" aria-label="Remove ${esc(t)}"><span class="sp-icon" style="font-size:16px">close</span></button>`;
+        chip.querySelector('button').addEventListener('click', (e) => { e.stopPropagation(); set(tags.filter((x) => x !== t)); input.focus(); });
+        input.before(chip);
+      }
+      input.placeholder = tags.length ? '' : placeholder;
+      if (hidden) hidden.value = tags.join(',');
+    };
+    const set = (next) => { tags = next; render(); box.dispatchEvent(new CustomEvent('pop-tags', { bubbles: true, detail: { tags: [...tags] } })); };
+    const add = () => {
+      const t = input.value.replace(/,/g, '').trim();
+      input.value = '';
+      if (t && !tags.some((x) => x.toLowerCase() === t.toLowerCase())) set([...tags, t]);
+    };
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); add(); }
+      if (e.key === 'Backspace' && !input.value && tags.length) set(tags.slice(0, -1));
+    });
+    input.addEventListener('blur', add);
+    box.addEventListener('click', (e) => { if (e.target === box) input.focus(); });
+    render();
   });
 }

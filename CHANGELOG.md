@@ -15,6 +15,7 @@ All four libraries share one version.
 - Loading states: skeleton lines, circles, blocks and lists, and a spinner,
   on all four platforms; still under reduced motion.
 - Date tiles and a month-calendar date picker on all four platforms.
+- Tag input (removable chips in a field) on all four platforms.
 - Tooltip (ink bubble above an ⓘ) on all four platforms.
 - Expandable card on all four platforms (a native details element on the web).
 - Stat tile (label, figure, change badge coloured by meaning) on all four

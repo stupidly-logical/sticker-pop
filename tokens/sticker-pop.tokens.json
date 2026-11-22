@@ -165,6 +165,7 @@
     "dateTileHeight": { "$value": 68 },
     "calendarDay": { "$value": 40, "$description": "Day cell in the date picker (padded to 44)" },
     "spinner": { "$value": 24 },
+    "sliderKnob": { "$value": 28, "$description": "Slider knob; the track is the progress bar (18, radius 9)" },
     "skeletonLine": { "$value": 14, "$description": "Height of a skeleton text line" },
     "checkbox": { "$value": 24, "$description": "Checkbox and radio (padded to the 48 tap target)" },
     "radioDot": { "$value": 10 },

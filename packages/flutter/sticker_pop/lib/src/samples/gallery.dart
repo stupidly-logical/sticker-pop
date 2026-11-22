@@ -26,6 +26,7 @@ class _PopGalleryState extends State<PopGallery> {
   String _period = 'Month';
   int _tab = 0;
   bool _reminder = true;
+  double _budget = 12000;
   static final DateTime _today = DateTime(2026, 11, 21);
   DateTime _date = DateTime(2026, 11, 21);
 
@@ -477,6 +478,26 @@ class _PopGalleryState extends State<PopGallery> {
                   StickerCard(
                     child: PopCalendar(selected: _date, today: _today, lastDate: _today, onSelected: (d) => setState(() => _date = d)),
                   ),
+                ],
+              ),
+
+              _Section(
+                'Slider',
+                children: <Widget>[
+                  Row(children: <Widget>[
+                    const Expanded(child: PopText('Monthly budget', spec: PopTextSpecs.fieldLabel)),
+                    PopText(formatInr((_budget * 100).round()), spec: PopTextSpecs.rowAmount),
+                  ]),
+                  PopSlider(
+                    semanticLabel: 'Monthly budget',
+                    min: 0,
+                    max: 20000,
+                    step: 500,
+                    value: _budget,
+                    valueLabel: (x) => formatInr((x * 100).round()),
+                    onChanged: (x) => setState(() => _budget = x),
+                  ),
+                  const PopSlider(semanticLabel: 'Locked', value: 0.3, onChanged: null),
                 ],
               ),
 

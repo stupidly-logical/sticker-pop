@@ -245,6 +245,22 @@
       ]
     },
     {
+      "id": "slider",
+      "flutter": [
+        "PopSlider"
+      ],
+      "compose": [
+        "PopSlider"
+      ],
+      "swiftui": [
+        "PopSlider"
+      ],
+      "web": [
+        ".sp-slider",
+        "wirePopSliders()"
+      ]
+    },
+    {
       "id": "text-field",
       "flutter": [
         "PopTextField",

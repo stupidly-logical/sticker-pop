@@ -288,6 +288,7 @@ export const tokens = {
     "dateTileHeight": 68,
     "calendarDay": 40,
     "spinner": 24,
+    "sliderKnob": 28,
     "skeletonLine": 14,
     "checkbox": 24,
     "radioDot": 10,

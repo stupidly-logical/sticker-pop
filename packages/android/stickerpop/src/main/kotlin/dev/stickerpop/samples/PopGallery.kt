@@ -111,6 +111,7 @@ fun PopGallery(onOpenHome: () -> Unit = {}) {
     var query by remember { mutableStateOf("") }
     var tab by remember { mutableIntStateOf(0) }
     var reminder by remember { mutableStateOf(true) }
+    var budget by remember { mutableStateOf(12000f) }
     val today = java.time.LocalDate.of(2026, 11, 21)
     var date by remember { mutableStateOf(today) }
     var pickDate by remember { mutableStateOf(false) }
@@ -276,6 +277,15 @@ fun PopGallery(onOpenHome: () -> Unit = {}) {
                     PopDateTiles((4 downTo 0).map { today.minusDays(it.toLong()) }, date, { date = it }, today, onMore = { pickDate = true })
                     StickerCard(Modifier.fillMaxWidth()) { PopCalendar(date, { date = it }, today, lastDate = today) }
                     if (pickDate) PopDatePickerSheet(today, date, { date = it; pickDate = false }, { pickDate = false }, lastDate = today)
+                }
+
+                Section("Slider") {
+                    Row(Modifier.fillMaxWidth()) {
+                        PopText("Monthly budget", PopTextSpecs.fieldLabel, Modifier.weight(1f))
+                        PopText(PopFormat.formatInr((budget * 100).toLong()), PopTextSpecs.rowAmount)
+                    }
+                    PopSlider(budget, { budget = it }, "Monthly budget", range = 0f..20000f, step = 500f, valueLabel = { PopFormat.formatInr((it * 100).toLong()) })
+                    PopSlider(0.3f, null, "Locked")
                 }
 
                 Section("Settings rows") {

@@ -18,6 +18,7 @@ export function wirePopControls(root = document) {
   wirePopSearch(root);
   wirePopDateTiles(root);
   wirePopTabs(root);
+  wirePopSliders(root);
   root.querySelectorAll('.sp-chip[aria-pressed]:not(:disabled)').forEach((b) =>
     b.addEventListener('click', () => b.setAttribute('aria-pressed', String(b.getAttribute('aria-pressed') !== 'true'))));
   root.querySelectorAll('.sp-segmented:not([aria-disabled]) > button').forEach((b) =>
@@ -629,5 +630,24 @@ export function wirePopTabs(root = document) {
       select(all[(to + all.length) % all.length], true);
     });
     select(tabs().find((t) => t.getAttribute('aria-selected') === 'true') ?? tabs()[0], false);
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Slider
+
+/** Keeps each `.sp-slider`'s mint fill (--sp-slider-fill) in step with its range input. */
+export function wirePopSliders(root = document) {
+  root.querySelectorAll('.sp-slider').forEach((box) => {
+    const input = box.querySelector('input[type="range"]');
+    if (!input || box.dataset.popWired) return;
+    box.dataset.popWired = '1';
+    const sync = () => {
+      const min = Number(input.min || 0);
+      const max = Number(input.max || 100);
+      box.style.setProperty('--sp-slider-fill', String(max === min ? 0 : (Number(input.value) - min) / (max - min)));
+    };
+    input.addEventListener('input', sync);
+    sync();
   });
 }

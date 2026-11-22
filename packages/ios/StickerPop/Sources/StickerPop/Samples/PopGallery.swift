@@ -57,6 +57,7 @@ public struct PopGallery: View {
     @State private var query = ""
     @State private var tab = 0
     @State private var reminder = true
+    @State private var budget = 12000.0
     @State private var date = galleryToday
     @State private var pickDate = false
     @State private var hideSmall = false
@@ -235,6 +236,16 @@ public struct PopGallery: View {
                     PopDateTiles((0...4).reversed().map { Calendar(identifier: .gregorian).date(byAdding: .day, value: -$0, to: galleryToday)! },
                                  selection: $date, today: galleryToday) { pickDate = true }
                     StickerCard { PopCalendar(selection: $date, today: galleryToday, in: Date.distantPast...galleryToday) }
+                }
+
+                GallerySection(title: "Slider") {
+                    HStack {
+                        PopText("Monthly budget", PopTextSpecs.fieldLabel)
+                        Spacer()
+                        PopText(PopFormat.formatInr(Int64(budget * 100)), PopTextSpecs.rowAmount)
+                    }
+                    PopSlider("Monthly budget", value: $budget, in: 0...20000, step: 500) { PopFormat.formatInr(Int64($0 * 100)) }
+                    PopSlider("Locked", value: .constant(0.3)).disabled(true)
                 }
 
                 GallerySection(title: "Settings rows") {

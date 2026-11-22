@@ -221,6 +221,8 @@ public enum PopSize {
     /// Day cell in the date picker (padded to 44)
     public static let calendarDay: CGFloat = 40.0
     public static let spinner: CGFloat = 24.0
+    /// Slider knob; the track is the progress bar (18, radius 9)
+    public static let sliderKnob: CGFloat = 28.0
     /// Height of a skeleton text line
     public static let skeletonLine: CGFloat = 14.0
     /// Checkbox and radio (padded to the 48 tap target)

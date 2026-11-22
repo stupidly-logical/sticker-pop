@@ -528,6 +528,33 @@ void main() {
     });
   });
 
+  group('PopSlider', () {
+    testWidgets('tap and drag set the value, snapped to the step; semantics step it', (tester) async {
+      final handle = tester.ensureSemantics();
+      var v = 10000.0;
+      await pumpPop(tester, onPaper(StatefulBuilder(
+        builder: (context, setState) => PopSlider(
+          semanticLabel: 'Monthly budget', min: 0, max: 20000, step: 500, value: v,
+          valueLabel: (x) => formatInr((x * 100).round()),
+          onChanged: (x) => setState(() => v = x),
+        ),
+      )));
+      final r = tester.getRect(find.byType(PopSlider));
+      await tester.tapAt(Offset(r.right - 2, r.center.dy));
+      await tester.pump();
+      expect(v, 20000);
+      await tester.dragFrom(Offset(r.right - 14, r.center.dy), Offset(-(r.width - 28) / 4, 0));
+      await tester.pump();
+      expect(v % 500, 0);
+      expect(v, closeTo(15000, 500));
+      final before = v;
+      tester.semantics.decrease(find.semantics.byLabel('Monthly budget'));
+      await tester.pump();
+      expect(v, before - 500);
+      handle.dispose();
+    });
+  });
+
   group('Tilt guard', () {
     test('cards reject tilt beyond ±3°', () {
       expect(() => StickerCard(tiltDegrees: 4, child: const SizedBox()), throwsAssertionError);

@@ -227,6 +227,7 @@ object PopSize {
     val dateTileHeight: Dp = 68.dp
     val calendarDay: Dp = 40.dp
     val spinner: Dp = 24.dp
+    val sliderKnob: Dp = 28.dp
     val skeletonLine: Dp = 14.dp
     val checkbox: Dp = 24.dp
     val radioDot: Dp = 10.dp

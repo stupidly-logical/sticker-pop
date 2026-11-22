@@ -15,6 +15,7 @@ All four libraries share one version.
 - Loading states: skeleton lines, circles, blocks and lists, and a spinner,
   on all four platforms; still under reduced motion.
 - Date tiles and a month-calendar date picker on all four platforms.
+- Slider (sticker knob on the progress-bar track) on all four platforms.
 - Settings row (value and chevron, or a switch) on all four platforms.
 - Banner (info, warning, success; action and dismiss) on all four platforms.
 - Tabs (selected tab in a yellow pill) on all four platforms.

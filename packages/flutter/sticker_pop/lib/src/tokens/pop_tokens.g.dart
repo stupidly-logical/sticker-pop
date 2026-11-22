@@ -233,6 +233,8 @@ abstract final class PopSize {
   /// Day cell in the date picker (padded to 44)
   static const double calendarDay = 40.0;
   static const double spinner = 24.0;
+  /// Slider knob; the track is the progress bar (18, radius 9)
+  static const double sliderKnob = 28.0;
   /// Height of a skeleton text line
   static const double skeletonLine = 14.0;
   /// Checkbox and radio (padded to the 48 tap target)

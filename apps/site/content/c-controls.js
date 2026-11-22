@@ -135,6 +135,23 @@ export const controls = [
     a11y: 'Announced as a radio button, "1 of 3", with its label and whether it is selected. The rows form one group.',
   },
   {
+    id: 'slider', name: 'Slider', group: 'Inputs', platforms: ALL,
+    summary: 'Pick a number in a range, like a monthly budget: a white track with an ink outline (the progress bar), filled mint up to a white sticker knob with a small hard shadow. Show the exact value next to its label.',
+    states: [
+      { label: 'Drag, tap or use the arrow keys', html: '<div class="full"><div class="row" style="justify-content:space-between"><label class="sp-field__label" for="sl-budget">Monthly budget</label><output class="sp-text-row-amount" data-inr-for="sl-budget"></output></div><div class="sp-slider"><input type="range" id="sl-budget" min="0" max="20000" step="500" value="12000"></div></div>' },
+      { label: 'Disabled', html: '<div class="sp-slider full"><input type="range" aria-label="Locked" value="30" disabled></div>' },
+    ],
+    code: {
+      flutter: "PopSlider(\n  semanticLabel: 'Monthly budget',\n  min: 0, max: 20000, step: 500,\n  value: budget,\n  valueLabel: (x) => formatInr((x * 100).round()),\n  onChanged: (x) => setState(() => budget = x),\n)",
+      compose: 'PopSlider(budget, { budget = it }, "Monthly budget", range = 0f..20000f, step = 500f,\n    valueLabel = { PopFormat.formatInr((it * 100).toLong()) })',
+      swift: 'PopSlider("Monthly budget", value: $budget, in: 0...20000, step: 500) { PopFormat.formatInr(Int64($0 * 100)) }',
+      html: '<label class="sp-field__label" for="budget">Monthly budget</label>\n<div class="sp-slider">\n  <input type="range" id="budget" min="0" max="20000" step="500" value="12000">\n</div>\n\n<script type="module">\n  import { wirePopSliders } from \'@sticker-pop/web/behaviors.mjs\';\n  wirePopSliders();\n</script>',
+    },
+    spec: [['Track', '18 high, radius 9, 2 ink outline, white (disabled paper)'], ['Fill', 'mint by default, up to the knob centre (disabled: divider)'], ['Knob', '28 white circle, 2.5 outline (focus 3), 3/3 shadow'], ['Height', '48 tap target']],
+    rules: ['Always show the exact value in text; the slider alone is too imprecise for money.', 'Pick a step that matches how people think: ₹500, not ₹1.', 'For an exact amount, use the amount field instead.'],
+    a11y: 'Announced as a slider with its label and value ("Monthly budget, ₹12,000"); swipe up or down, or the arrow keys, step it.',
+  },
+  {
     id: 'text-field', name: 'Text field', group: 'Inputs', platforms: ALL,
     summary: 'White, a 2 ink outline, radius 14, with a borderless input inside. Errors thicken the outline and add an ink message with ⚠, never red alone.',
     states: [

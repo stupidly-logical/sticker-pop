@@ -288,6 +288,7 @@ export declare const tokens: {
     readonly dateTileHeight: 68;
     readonly calendarDay: 40;
     readonly spinner: 24;
+    readonly sliderKnob: 28;
     readonly skeletonLine: 14;
     readonly checkbox: 24;
     readonly radioDot: 10;

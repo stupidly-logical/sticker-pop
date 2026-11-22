@@ -714,6 +714,20 @@ class _PopGalleryState extends State<PopGallery> {
               ),
 
               _Section(
+                'Stat tiles',
+                children: const <Widget>[
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Expanded(child: PopStatTile(label: 'Net worth', value: '₹12.4L', change: '3.1%', caption: 'This month')),
+                      SizedBox(width: PopSpace.md),
+                      Expanded(child: PopStatTile(label: 'Spent', value: '₹4,461', change: '8%', trend: PopTrend.downGood, color: PopColors.yellow)),
+                    ],
+                  ),
+                ],
+              ),
+
+              _Section(
                 'Progress and charts',
                 children: <Widget>[
                   const PopProgressBar(

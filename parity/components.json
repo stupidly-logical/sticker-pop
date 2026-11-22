@@ -442,6 +442,26 @@
       ]
     },
     {
+      "id": "stat-tile",
+      "flutter": [
+        "PopStatTile",
+        "PopTrend"
+      ],
+      "compose": [
+        "PopStatTile",
+        "PopTrend"
+      ],
+      "swiftui": [
+        "PopStatTile",
+        "PopTrend"
+      ],
+      "web": [
+        ".sp-stat",
+        ".sp-stat__value",
+        ".sp-stats"
+      ]
+    },
+    {
       "id": "progress-bar",
       "flutter": [
         "PopProgressBar"

@@ -9,6 +9,20 @@ const navHtml = (current = 0) => {
 
 export const display = [
   {
+    id: 'stat-tile', name: 'Stat tile', group: 'Data display', platforms: ALL,
+    summary: 'A headline number on a dashboard: a small caps label, a big tabular figure, and an optional change badge ("+3.1%", "−8%") and caption. The badge is mint when the change is good and orange when it isn\'t, whichever way it points: spending going down is good.',
+    states: [{ label: 'Two side by side', html: '<div class="sp-stats full"><div class="sp-card sp-stat" role="group" aria-label="Net worth, ₹12.4L, up 3.1%, This month"><span class="sp-text-section-label" aria-hidden="true">Net worth</span><span class="sp-stat__value" aria-hidden="true">₹12.4L</span><span class="sp-badge sp-fill-mint" aria-hidden="true">+3.1%</span><span class="sp-text-caption" aria-hidden="true">This month</span></div><div class="sp-card sp-stat sp-fill-yellow" role="group" aria-label="Spent, ₹4,461, down 8%"><span class="sp-text-section-label" aria-hidden="true">Spent</span><span class="sp-stat__value" aria-hidden="true">₹4,461</span><span class="sp-badge sp-fill-mint" aria-hidden="true">−8%</span></div></div>' }],
+    code: {
+      flutter: "PopStatTile(label: 'Spent', value: '₹4,461', change: '8%', trend: PopTrend.downGood, caption: 'vs October')",
+      compose: 'PopStatTile("Spent", "₹4,461", change = "8%", trend = PopTrend.DownGood, caption = "vs October")',
+      swift: 'PopStatTile("Spent", value: "₹4,461", change: "8%", trend: .downGood, caption: "vs October")',
+      html: '<div class="sp-stats">\n  <div class="sp-card sp-stat" role="group" aria-label="Spent, ₹4,461, down 8%">\n    <span class="sp-text-section-label" aria-hidden="true">Spent</span>\n    <span class="sp-stat__value" aria-hidden="true">₹4,461</span>\n    <span class="sp-badge sp-fill-mint" aria-hidden="true">−8%</span>\n  </div>\n</div>',
+    },
+    spec: [['Card', 'StickerCard, white or a bright'], ['Label', '13/800 caps'], ['Figure', '28/800 tabular, one line (shrinks to fit)'], ['Change', 'badge: + or − (a real minus) and the figure; mint when good, orange when not'], ['Caption', '13/600 muted']],
+    rules: ['Use compact amounts in tiles (₹12.4L, ₹51.2k).', 'Colour the change by meaning, not direction: spending down is mint.'],
+    a11y: 'Read as one sentence: "Spent, ₹4,461, down 8%, vs October".',
+  },
+  {
     id: 'progress-bar', name: 'Progress bar', group: 'Data display', platforms: ALL,
     summary: 'For goals and budgets: a white track 18 high with a 2 ink outline and a bright fill. State the numbers in words next to it.',
     states: [

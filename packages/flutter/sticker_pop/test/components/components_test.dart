@@ -633,6 +633,17 @@ void main() {
     });
   });
 
+  group('PopStatTile', () {
+    testWidgets('spending down is good: − in a mint badge, read as one sentence', (tester) async {
+      final handle = tester.ensureSemantics();
+      await pumpPop(tester, onPaper(const PopStatTile(label: 'Spent this month', value: '₹4,461', change: '8%', trend: PopTrend.downGood, caption: 'vs October')));
+      expect(find.text('−8%'), findsOneWidget);
+      expect(tester.widget<StickerBadge>(find.byType(StickerBadge)).color, PopColors.mint);
+      expect(find.bySemanticsLabel('Spent this month, ₹4,461, down 8%, vs October'), findsOneWidget);
+      handle.dispose();
+    });
+  });
+
   group('Tilt guard', () {
     test('cards reject tilt beyond ±3°', () {
       expect(() => StickerCard(tiltDegrees: 4, child: const SizedBox()), throwsAssertionError);

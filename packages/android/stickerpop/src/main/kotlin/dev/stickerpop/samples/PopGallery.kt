@@ -409,6 +409,13 @@ fun PopGallery(onOpenHome: () -> Unit = {}) {
                     )
                 }
 
+                Section("Stat tiles") {
+                    Row(horizontalArrangement = Arrangement.spacedBy(PopSpace.md)) {
+                        PopStatTile("Net worth", "₹12.4L", Modifier.weight(1f), change = "3.1%", caption = "This month")
+                        PopStatTile("Spent", "₹4,461", Modifier.weight(1f), change = "8%", trend = PopTrend.DownGood, fill = PopColors.yellow)
+                    }
+                }
+
                 Section("Progress and charts") {
                     PopProgressBar(0.8f, fill = PopColors.orange, label = "Food budget")
                     PopText("₹8,000 of ₹10,000 · 80% used", PopTextSpecs.caption)

@@ -199,6 +199,8 @@ Type scale (size / weight / letter spacing):
 - shown for 3 s, or 6 s with an action
 - only for "Saved" and "Deleted · Undo"-style confirmations
 
+**Stat tile.** A headline number on a dashboard: a StickerCard (white or a bright) with a 13/800 caps label, a 28/800 tabular figure on one line, an optional change badge ("+3.1%", "−8%" with a real minus), and an optional 13/600 caption. The badge is mint when the change is good and orange when it isn't, whichever way it points. Usually two side by side, with compact amounts.
+
 **Progress bar (goals, budgets).** White track 18 high with a 2 ink outline and radius 9; the fill is a bright colour, clipped by the track to radius 7, with a straight 2 ink line at its leading edge (none at 0% or 100%).
 
 **Charts.**

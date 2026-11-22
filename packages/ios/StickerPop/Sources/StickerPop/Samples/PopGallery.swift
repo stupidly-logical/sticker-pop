@@ -364,6 +364,13 @@ public struct PopGallery: View {
                     }
                 }
 
+                GallerySection(title: "Stat tiles") {
+                    HStack(alignment: .top, spacing: PopSpace.md) {
+                        PopStatTile("Net worth", value: "₹12.4L", change: "3.1%", caption: "This month")
+                        PopStatTile("Spent", value: "₹4,461", change: "8%", trend: .downGood, fill: PopColors.yellow)
+                    }
+                }
+
                 GallerySection(title: "Progress and charts") {
                     PopProgressBar(value: 0.8, fill: PopColors.orange, label: "Food budget")
                     PopText("₹8,000 of ₹10,000 · 80% used", PopTextSpecs.caption)

@@ -46,6 +46,7 @@ disappears.
 | PopSpinner | 24 divider ring, ink quarter arc turning | — | — | — | — |
 | PopDialog | paper card, 6/6 shadow, 20 inset | — | — | — | — |
 | Snackbar | ink, 15/700 white, yellow action; 3 s / 6 s | — | — | never used for errors | — |
+| PopStatTile | label, 28/800 figure, change badge (mint good / orange not), caption | — | — | — | when tappable: moves by shadow |
 | PopProgressBar | white track 18, 2 outline, bright fill clipped to radius 7, straight 2 ink leading edge | — | — | — | — |
 | PopDonut / PopBarChart / PopLegend | bright fills, ink outlines, yellow centre disc | highlighted bar: 3 outline + 2/2 shadow | — | — | — |
 | Tour (PopTourCard, PopProgressDots, spotlight) | yellow card ±1.5°, 72% ink scrim, yellow 3 cut-out | current dot 22 wide, reached dots pink | — | — | — |

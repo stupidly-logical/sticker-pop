@@ -509,6 +509,25 @@ void main() {
     });
   });
 
+  group('PopSettingsRow', () {
+    testWidgets('chevron row taps; switch row flips when the row is tapped', (tester) async {
+      var opened = false;
+      var on = false;
+      await pumpPop(tester, onPaper(StatefulBuilder(
+        builder: (context, setState) => StickerList(children: <Widget>[
+          PopSettingsRow(title: 'Language', value: 'English', icon: Icons.translate_rounded, onTap: () => opened = true),
+          PopSettingsRow(title: 'Daily reminder', subtitle: 'At 9 pm', switchValue: on, onSwitch: (v) => setState(() => on = v)),
+        ]),
+      )));
+      await tester.tap(find.text('Language'));
+      await tester.tap(find.text('Daily reminder'));
+      await tester.pump();
+      expect(opened, isTrue);
+      expect(on, isTrue);
+      expect(find.byIcon(Icons.chevron_right_rounded), findsOneWidget);
+    });
+  });
+
   group('Tilt guard', () {
     test('cards reject tilt beyond ±3°', () {
       expect(() => StickerCard(tiltDegrees: 4, child: const SizedBox()), throwsAssertionError);

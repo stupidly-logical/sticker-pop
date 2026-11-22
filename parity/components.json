@@ -63,6 +63,22 @@
       ]
     },
     {
+      "id": "settings-row",
+      "flutter": [
+        "PopSettingsRow"
+      ],
+      "compose": [
+        "PopSettingsRow"
+      ],
+      "swiftui": [
+        "PopSettingsRow"
+      ],
+      "web": [
+        ".sp-settings-row",
+        ".sp-settings-row__value"
+      ]
+    },
+    {
       "id": "sticker-badge",
       "flutter": [
         "StickerBadge"

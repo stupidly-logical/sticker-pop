@@ -25,6 +25,7 @@ class _PopGalleryState extends State<PopGallery> {
   bool _hideSmall = false;
   String _period = 'Month';
   int _tab = 0;
+  bool _reminder = true;
   static final DateTime _today = DateTime(2026, 11, 21);
   DateTime _date = DateTime(2026, 11, 21);
 
@@ -475,6 +476,20 @@ class _PopGalleryState extends State<PopGallery> {
                   const SizedBox(height: PopSpace.lg),
                   StickerCard(
                     child: PopCalendar(selected: _date, today: _today, lastDate: _today, onSelected: (d) => setState(() => _date = d)),
+                  ),
+                ],
+              ),
+
+              _Section(
+                'Settings rows',
+                children: <Widget>[
+                  StickerList(
+                    children: <Widget>[
+                      PopSettingsRow(title: 'Language', icon: Icons.translate_rounded, value: 'English', onTap: () {}),
+                      PopSettingsRow(title: 'Daily reminder', subtitle: 'At 9 pm', icon: Icons.notifications_rounded, switchValue: _reminder, onSwitch: (v) => setState(() => _reminder = v)),
+                      PopSettingsRow(title: 'Export data', icon: Icons.ios_share_rounded, onTap: () {}),
+                      const PopSettingsRow(title: 'Version', icon: Icons.info_outline_rounded, value: '0.1.0'),
+                    ],
                   ),
                 ],
               ),

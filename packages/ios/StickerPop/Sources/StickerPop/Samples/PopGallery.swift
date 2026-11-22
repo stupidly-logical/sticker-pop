@@ -56,6 +56,7 @@ public struct PopGallery: View {
     @State private var transfers = true
     @State private var query = ""
     @State private var tab = 0
+    @State private var reminder = true
     @State private var date = galleryToday
     @State private var pickDate = false
     @State private var hideSmall = false
@@ -234,6 +235,20 @@ public struct PopGallery: View {
                     PopDateTiles((0...4).reversed().map { Calendar(identifier: .gregorian).date(byAdding: .day, value: -$0, to: galleryToday)! },
                                  selection: $date, today: galleryToday) { pickDate = true }
                     StickerCard { PopCalendar(selection: $date, today: galleryToday, in: Date.distantPast...galleryToday) }
+                }
+
+                GallerySection(title: "Settings rows") {
+                    StickerCard(padding: 0) {
+                        VStack(spacing: 0) {
+                            PopSettingsRow("Language", systemImage: "character.bubble", value: "English") {}
+                            Rectangle().fill(PopColors.divider).frame(height: PopBorder.divider)
+                            PopSettingsRow("Daily reminder", subtitle: "At 9 pm", systemImage: "bell", isOn: $reminder)
+                            Rectangle().fill(PopColors.divider).frame(height: PopBorder.divider)
+                            PopSettingsRow("Export data", systemImage: "square.and.arrow.up") {}
+                            Rectangle().fill(PopColors.divider).frame(height: PopBorder.divider)
+                            PopSettingsRow("Version", systemImage: "info.circle", value: "0.1.0")
+                        }
+                    }
                 }
 
                 GallerySection(title: "Banners") {

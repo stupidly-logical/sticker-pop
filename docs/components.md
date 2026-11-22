@@ -35,6 +35,7 @@ disappears.
 | PopCalendar | day numbers 16/700; today: 2 ink ring | yellow circle, 2.5 outline, 800 | out of range: muted | — | — |
 | PopSelect | field: white, 2 outline, radius 14, chevron; list rows white | chosen row yellow, 800, tick | paper fill, muted text, no list | 2.5 outline + ⚠ message | open: 2.5 outline |
 | PopMenu | white sticker, radius 16, 4/4 shadow, rows 15/700 | — | row inkMuted, no taps | — | row (hover, focus, press): yellow |
+| PopSettingsRow | icon, title/subtitle; value + chevron or switch | switch on | muted, no taps | — | — |
 | PopBanner (info, warning, success) | blue, orange or mint StickerCard, icon, title, message | — | — | — | — |
 | PopSkeleton (line, circle, block, list) | divider fill, no outline, pulsing | — | — | — | — |
 | PopSpinner | 24 divider ring, ink quarter arc turning | — | — | — | — |

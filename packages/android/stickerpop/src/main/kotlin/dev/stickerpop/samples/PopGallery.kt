@@ -23,6 +23,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.AccountBalance
 import androidx.compose.material.icons.rounded.Bolt
+import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.rounded.IosShare
+import androidx.compose.material.icons.rounded.Notifications
+import androidx.compose.material.icons.rounded.Translate
 import androidx.compose.ui.draw.clip
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.CalendarMonth
@@ -106,6 +110,7 @@ fun PopGallery(onOpenHome: () -> Unit = {}) {
     var transfers by remember { mutableStateOf(true) }
     var query by remember { mutableStateOf("") }
     var tab by remember { mutableIntStateOf(0) }
+    var reminder by remember { mutableStateOf(true) }
     val today = java.time.LocalDate.of(2026, 11, 21)
     var date by remember { mutableStateOf(today) }
     var pickDate by remember { mutableStateOf(false) }
@@ -271,6 +276,15 @@ fun PopGallery(onOpenHome: () -> Unit = {}) {
                     PopDateTiles((4 downTo 0).map { today.minusDays(it.toLong()) }, date, { date = it }, today, onMore = { pickDate = true })
                     StickerCard(Modifier.fillMaxWidth()) { PopCalendar(date, { date = it }, today, lastDate = today) }
                     if (pickDate) PopDatePickerSheet(today, date, { date = it; pickDate = false }, { pickDate = false }, lastDate = today)
+                }
+
+                Section("Settings rows") {
+                    StickerList(rows = listOf(
+                        { PopSettingsRow("Language", icon = Icons.Rounded.Translate, value = "English", onClick = {}) },
+                        { PopSettingsRow("Daily reminder", subtitle = "At 9 pm", icon = Icons.Rounded.Notifications, checked = reminder, onCheckedChange = { reminder = it }) },
+                        { PopSettingsRow("Export data", icon = Icons.Rounded.IosShare, onClick = {}) },
+                        { PopSettingsRow("Version", icon = Icons.Rounded.Info, value = "0.1.0") },
+                    ))
                 }
 
                 Section("Banners") {

@@ -49,6 +49,9 @@ jobs:
         working-directory: packages/web
         run: |
           version="$(node -p "require('./package.json').version")"
+          if ! npm view @sticker-pop/web name >/dev/null 2>&1; then
+            echo "::notice::@sticker-pop/web isn't on npm yet; publish it once by hand (README: First release on the registries)"; exit 0
+          fi
           if npm view "@sticker-pop/web@$version" version >/dev/null 2>&1; then
             echo "@sticker-pop/web $version is already on npm"; exit 0
           fi
@@ -70,6 +73,9 @@ jobs:
         working-directory: packages/flutter/sticker_pop
         run: |
           version="${GITHUB_REF_NAME#v}"
+          if ! curl -sf https://pub.dev/api/packages/sticker_pop >/dev/null; then
+            echo "::notice::sticker_pop isn't on pub.dev yet; publish it once by hand (README: First release on the registries)"; exit 0
+          fi
           if curl -sf "https://pub.dev/api/packages/sticker_pop/versions/$version" >/dev/null; then
             echo "sticker_pop $version is already on pub.dev"; exit 0
           fi

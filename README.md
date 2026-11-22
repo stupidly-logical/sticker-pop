@@ -134,8 +134,10 @@ the registries" below.
 ### First release on the registries
 
 npm and pub.dev only let CI publish a package that already exists, so the
-very first version goes up by hand, once. Do this before the first
-`bash tools/publish.sh`:
+very first version goes up by hand, once. Do it whenever you like, before or
+after pushing to GitHub; it's best after, so the package pages can link to a
+live repo and docs. Until a package exists, the release workflow skips it
+with a note instead of failing.
 
 1. **npm.** Create a free organisation named `sticker-pop` on npmjs.com (it
    owns the `@sticker-pop` scope), then:
@@ -155,7 +157,7 @@ very first version goes up by hand, once. Do this before the first
    at https://swiftpackageindex.com/add-a-package.
 
 From then on, every tag publishes both packages from CI with no tokens. A
-version that's already on a registry is skipped, so the first tag is fine.
+version that's already on a registry is skipped.
 
 ## What belongs in the library, and what belongs in an app
 

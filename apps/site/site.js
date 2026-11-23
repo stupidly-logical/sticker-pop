@@ -206,6 +206,8 @@ function componentPage(c) {
 const ctx = { esc, kebab, tokens, codeBlock, contrast, components };
 const allPages = [...otherPages, ...foundationPages, ...guidePages];
 
+const menuBtn = document.querySelector('.menu-btn');
+
 function route() {
   const path = location.hash.replace(/^#\/?/, '').replace(/^components\//, 'c-');
   let html;
@@ -223,15 +225,26 @@ function route() {
   renderNav(path);
   wireCode(main);
   wireDemos(main);
-  nav.classList.remove('is-open');
-  document.querySelector('.menu-btn').setAttribute('aria-expanded', 'false');
+  setMenu(false);
   window.scrollTo(0, 0);
   main.focus({ preventScroll: true });
 }
 
-document.querySelector('.menu-btn').addEventListener('click', (e) => {
-  const open = nav.classList.toggle('is-open');
-  e.currentTarget.setAttribute('aria-expanded', open);
+// Phone menu: the button opens and closes it, Escape closes it and returns
+// focus to the button, and the page behind doesn't scroll while it's open.
+function setMenu(open) {
+  nav.classList.toggle('is-open', open);
+  document.body.classList.toggle('nav-open', open);
+  menuBtn.setAttribute('aria-expanded', String(open));
+}
+menuBtn.addEventListener('click', () => setMenu(!nav.classList.contains('is-open')));
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && nav.classList.contains('is-open')) {
+    setMenu(false);
+    menuBtn.focus();
+  }
 });
+// Rotating to a wide screen shows the sidebar again: don't leave the page locked.
+matchMedia('(min-width: 861px)').addEventListener('change', (e) => { if (e.matches) setMenu(false); });
 window.addEventListener('hashchange', route);
 route();

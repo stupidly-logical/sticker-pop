@@ -21,8 +21,16 @@ code, pre { font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; fo
 @media (max-width: 860px) {
   .layout { grid-template-columns: 1fr; }
   .menu-btn { display: inline-grid; }
-  .sidebar { display: none; position: fixed; inset: 64px 0 0 0; z-index: 4; height: auto; background: var(--sp-color-paper); border-top: 2.5px solid var(--sp-color-ink); }
+  /* The open menu fills the screen under the top bar and scrolls inside
+     itself. align-self: stretch matters: the desktop rule's align-self: start
+     would otherwise size the fixed panel to its full content height. */
+  .sidebar {
+    display: none; position: fixed; inset: 64px 0 0 0; z-index: 4; height: auto; align-self: stretch;
+    overflow-y: auto; overscroll-behavior: contain; padding-bottom: 32px;
+    background: var(--sp-color-paper); border-top: 2.5px solid var(--sp-color-ink);
+  }
   .sidebar.is-open { display: block; }
+  body.nav-open { overflow: hidden; }
 }
 
 /* overflow-x: clip keeps tilted stickers from causing a sideways scroll on phones. */

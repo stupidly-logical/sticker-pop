@@ -4,6 +4,8 @@ All four libraries share one version.
 
 ## Unreleased
 
+- Docs site: the phone menu now scrolls (it used to grow past the bottom of
+  the screen), closes with Escape, and stops the page behind it scrolling.
 - Added `CONTRIBUTING.md`: setup, the rules every component follows, the
   checklist for adding one, and how to update screenshot tests.
 
